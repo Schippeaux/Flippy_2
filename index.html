@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.2</title>
+<title>Learning Spanish — v23.3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -562,6 +562,13 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-study-hint { font-family:'Inconsolata',monospace; font-size:0.62rem; color:var(--text-light); margin-top:0.6rem; line-height:1.5; }
 .vc-sets { display:flex; flex-wrap:wrap; gap:0.4rem; }
 
+/* Verbs: spaced-repetition rating bar */
+.vc-rate-bar { flex-shrink:0; display:flex; gap:0.6rem; padding:0.6rem 1.25rem; }
+.vc-rate-btn { flex:1; padding:0.85rem 0.5rem; border:none; border-radius:12px; font-family:'Inconsolata',monospace; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; background:var(--bg); color:var(--text-mid); border:1px solid var(--border); }
+.vc-rate-btn:active { transform:scale(0.97); }
+.vc-rate-btn.again { background:rgba(196,98,45,0.12); color:var(--terracotta); border-color:transparent; }
+.vc-rate-btn.got, .vc-rate-btn.primary { background:var(--text-dark); color:var(--card-bg); border-color:transparent; }
+
 /* Empty state */
 .vc-empty { padding:3rem 1.25rem; text-align:center; font-family:'Inconsolata',monospace; font-size:0.78rem; color:var(--text-light); }
 
@@ -586,7 +593,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.2</div>
+    <div class="splash-sub">Buenos Aires · v23.3</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -771,6 +778,8 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="vc-study-head">
       <div class="vc-settings-section-label" style="margin-top:0">Verb sets</div>
       <div class="vc-sets" id="vcSetPills"></div>
+      <div class="vc-settings-section-label">Study style</div>
+      <div class="vc-sets" id="vcStylePills"></div>
       <div class="vc-study-hint" id="vcStudyHint"></div>
     </div>
     <div class="vc-verb-list" id="vcStudyList"></div>
@@ -881,6 +890,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
       </div>
     </div>
   </div>
+
+  <!-- Spaced-repetition rating bar (Show answer / Again · Got it / Done · Another) -->
+  <div class="vc-rate-bar" id="vcRateBar" style="display:none"></div>
 
   <!-- Bottom bar -->
   <div class="deck-bottom-bar active" id="vcBottomBar">
@@ -56316,6 +56328,7 @@ const VC_SET_DEFS = [
 ];
 const VC_SETS_KEY         = STORE_PREFIX + 'vc_sets';
 const VC_EXPLORE_FLIP_KEY = STORE_PREFIX + 'vc_explore_flip';
+const VC_STUDY_BROWSE_KEY = STORE_PREFIX + 'vc_study_browse';
 
 function vcLoadSettings() {
   const dialect = appGetDialect();
@@ -56495,6 +56508,8 @@ function vcApplySettings() {
 let vcTab = 'explore';              // 'explore' | 'understanding' | 'speaking'
 let vcStudyActive = false;          // true while a Understand/Speak study deck is open
 let vcSets = [1];                   // selected verb sets (freq tiers)
+let vbSr = null;                    // active spaced-repetition session (see VERB SR)
+let vcStudyBrowse = false;          // false: spaced repetition (tracked) · true: shuffled browse
 let vcExploreFlip = false;          // false: Spanish first · true: English first
 
 function vcLoadPrefs() {
@@ -56503,6 +56518,7 @@ function vcLoadPrefs() {
     if (Array.isArray(sets) && sets.length) vcSets = sets.filter(n => VC_SET_DEFS.some(d => d.key === n));
     if (!vcSets.length) vcSets = [1];
     vcExploreFlip = localStorage.getItem(VC_EXPLORE_FLIP_KEY) === '1';
+    vcStudyBrowse = localStorage.getItem(VC_STUDY_BROWSE_KEY) === '1';
   } catch {}
 }
 
@@ -56517,6 +56533,7 @@ function openVerbConjugator() {
 function closeVerbConjugator() {
   vcBrowseActive = false;
   vcStudyActive  = false;
+  vbSr = null;
   document.getElementById('vcSettingsPanel').classList.add('hidden');
   goHome();
 }
@@ -56534,7 +56551,7 @@ function vcSetTab(tab) {
 
 function vcRefreshVerbScreens() {
   if (vcTab === 'explore') vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
-  else { vcRenderSetPills(); vcRenderStudyList(); }
+  else { vcRenderSetPills(); vcRenderStylePills(); vcRenderStudyList(); }
 }
 
 function vcToggleExploreFlip() {
@@ -56620,14 +56637,35 @@ function vcPersonsShort(persons) {
   return persons.map(p => (VC_PERSON_LABELS[p] || p).replace(/ \/ /g, '/')).join(' · ');
 }
 
+function vcRenderStylePills() {
+  const el = document.getElementById('vcStylePills');
+  if (!el) return;
+  el.innerHTML = '';
+  [[false, 'Spaced repetition'], [true, 'Browse (untracked)']].forEach(([browse, label]) => {
+    const pill = document.createElement('span');
+    pill.className = 'vc-check-pill' + (vcStudyBrowse === browse ? ' active' : '');
+    pill.textContent = label;
+    pill.onclick = () => {
+      vcStudyBrowse = browse;
+      try { localStorage.setItem(VC_STUDY_BROWSE_KEY, browse ? '1' : '0'); } catch {}
+      vcRenderStylePills();
+      vcRenderStudyList();
+    };
+    el.appendChild(pill);
+  });
+}
+
 function vcRenderStudyList() {
   const list = document.getElementById('vcStudyList');
   if (!list) return;
   list.innerHTML = '';
   const mode = vcPracticeDirection;
+  const sr   = !vcStudyBrowse;
   document.getElementById('vcStudyHint').textContent =
     (mode === 'understanding' ? 'Spanish → recognise it. ' : 'English → say it. ') +
-    'Cards are shuffled · tap to flip · swipe for next. Persons: ' + vcPersonsShort(vcSettings.persons) + ' (⚙ to change).';
+    (sr ? 'Flip the card, then rate it: Got it or Again. Sessions are 20 cards, due ones first. '
+        : 'Shuffled and untracked — swipe for next. ') +
+    'Persons: ' + vcPersonsShort(vcSettings.persons) + ' (⚙ to change).';
 
   const rows = [{
     kind: 'infinitive',
@@ -56640,15 +56678,26 @@ function vcRenderStudyList() {
   })));
 
   rows.forEach(r => {
-    const count = vcBuildStudyDeck(r.kind, mode, false).length;
+    let badge, sub = r.sub, count;
+    if (sr) {
+      const st = vbDeckStats(r.kind);
+      count = st.total;
+      badge = !st.total ? '0 cards'
+            : st.left   ? `resume · ${st.left} left`
+            : `${st.due} due · ${st.fresh} new`;
+      if (st.conf !== null) sub += ` · ${st.conf}% known`;
+    } else {
+      count = vcBuildStudyDeck(r.kind, mode, false).length;
+      badge = `${count} cards`;
+    }
     const row = document.createElement('div');
     row.className = 'vc-verb-row';
     row.innerHTML = `
       <div class="vc-verb-left">
         <span class="vc-verb-infinitive">${r.title}</span>
-        <span class="vc-verb-meaning">${r.sub}</span>
+        <span class="vc-verb-meaning">${sub}</span>
       </div>
-      <span class="vc-regularity-badge">${count} cards</span>
+      <span class="vc-regularity-badge">${badge}</span>
       <span class="vc-verb-arrow">›</span>`;
     row.onclick = () => { if (count) vcOpenStudyDeck(r.kind); };
     list.appendChild(row);
@@ -56661,8 +56710,10 @@ function vcRenderStudyList() {
 function vcBuildStudyDeck(kind, mode, shuffle) {
   const verbs = vcVerbsInSets();
   const cards = [];
+  // Card ids key the saved review history (sr_comp_VB_* / sr_recall_VB_*), so they must be
+  // stable: built from the Spanish infinitive, tense and form/person — never from list position.
   if (kind === 'infinitive') {
-    verbs.forEach(v => cards.push({ study:true, kind:'inf', verb:v }));
+    verbs.forEach(v => cards.push({ id:`VB_INF_${v.infinitive}`, study:true, kind:'inf', verb:v }));
   } else {
     const persons = vcSettings.persons;
     verbs.forEach(v => {
@@ -56676,11 +56727,11 @@ function vcBuildStudyDeck(kind, mode, shuffle) {
           if (!groups.has(f)) groups.set(f, []);
           groups.get(f).push(p);
         });
-        groups.forEach((ps, f) => cards.push({ study:true, kind:'form', verb:v, tense:kind, form:f, persons:ps }));
+        groups.forEach((ps, f) => cards.push({ id:`VB_${kind}_${v.infinitive}_${f}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:ps }));
       } else {
         persons.forEach(p => {
           const f = conjs[p];
-          if (f) cards.push({ study:true, kind:'form', verb:v, tense:kind, form:f, persons:[p] });
+          if (f) cards.push({ id:`VB_${kind}_${v.infinitive}_${p}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:[p] });
         });
       }
     });
@@ -56694,12 +56745,114 @@ function vcBuildStudyDeck(kind, mode, shuffle) {
   return cards;
 }
 
-function vcOpenStudyDeck(kind) {
-  const deck = vcBuildStudyDeck(kind, vcPracticeDirection, true);
-  if (!deck.length) return;
+// ══ VERB SR — spaced repetition for the Understand / Speak decks ══════════
+// Reuses the grammar SR engine (Card, SRFormula, getCardsForToday, srSaveSession …) and the same
+// storage layout, so export/import covers it:
+//     sr_comp_VB_<kind>    Understand deck      sr_recall_VB_<kind>   Speak deck
+//     sr_comp_session_VB_<kind> / sr_recall_session_VB_<kind>   in-progress session
+// <kind> is 'infinitive' or a tense key. Only cards that have been reviewed are stored.
+// Binary rating like grammar: swipe left / "Got it" = 4, swipe right / "Again" = 1.
+class VerbCard extends Card {
+  // Unlike grammar's Card, ease is capped (see 05_KNOWN_ISSUES #1) so a card can't leave rotation for years.
+  updateEF(rating) {
+    const delta = SRFormula.efChange[rating] || 0;
+    this.ef = Math.min(SRFormula.efThreshold, Math.max(SRFormula.minEF, this.ef + delta));
+  }
+  // ...and the interval itself is capped: ease alone still lets intervals compound into years.
+  calculateNextInterval(rating) {
+    return Math.min(VB_MAX_INTERVAL_DAYS, super.calculateNextInterval(rating));
+  }
+}
+const VB_MAX_INTERVAL_DAYS = 180;
+
+function vbChapterId(kind) { return 'VB_' + kind; }
+function vbSrMode()        { return vcPracticeDirection === 'understanding' ? 'comp' : 'recall'; }
+
+function vbReadSaved(mode, kind) {
+  try { return JSON.parse(localStorage.getItem(_srModeKey(mode, vbChapterId(kind))) || '[]'); }
+  catch (e) { return []; }
+}
+
+// Build VerbCards for the pool, restoring saved history by id
+function vbLoadDeck(mode, kind, pool) {
+  const saved = {};
+  vbReadSaved(mode, kind).forEach(sv => { saved[sv.id] = sv; });
+  return pool.map(cd => {
+    const c  = new VerbCard(cd.id);
+    const sv = saved[cd.id];
+    if (sv) {
+      c.ef                 = sv.ef                 ?? SRFormula.minEF;
+      c.dueDate            = sv.dueDate            ?? 0;
+      c.interval           = sv.interval           ?? 0;
+      c.lastReviewDay      = sv.lastReviewDay      ?? -999;
+      c.consecutiveCorrect = sv.consecutiveCorrect ?? 0;
+      c.consecutive4s      = sv.consecutive4s      ?? 0;
+      c.reviews            = sv.reviews            ?? [];
+    }
+    return c;
+  });
+}
+
+// Merge reviewed cards into storage — cards outside the current pool (other verb sets /
+// persons / dialect) keep their history.
+function vbSaveDeck(mode, kind, deck) {
+  const merged = {};
+  vbReadSaved(mode, kind).forEach(sv => { merged[sv.id] = sv; });
+  deck.forEach(c => {
+    if (!c.reviews.length) return;
+    merged[c.id] = { id:c.id, ef:c.ef, dueDate:c.dueDate, interval:c.interval,
+      lastReviewDay:c.lastReviewDay, consecutiveCorrect:c.consecutiveCorrect,
+      consecutive4s:c.consecutive4s, reviews:c.reviews };
+  });
+  try { localStorage.setItem(_srModeKey(mode, vbChapterId(kind)), JSON.stringify(Object.values(merged))); }
+  catch (e) { /* storage full or blocked: keep studying, progress just won't persist */ }
+}
+
+// Counts shown on the Understand / Speak deck list
+function vbDeckStats(kind) {
+  const mode  = vbSrMode();
+  const pool  = vcBuildStudyDeck(kind, vcPracticeDirection, false);
+  const deck  = vbLoadDeck(mode, kind, pool);
+  const today = srToday();
+  const reviewed = deck.filter(c => c.reviews.length > 0);
+  const sess = srLoadSession(mode, vbChapterId(kind));
+  const inPool = new Set(pool.map(c => c.id));
+  const left = sess ? sess.queue.slice(sess.currentIdx).filter(id => inPool.has(id)).length : 0;
+  return {
+    total: pool.length,
+    due:   reviewed.filter(c => c.dueDate <= today).length,
+    fresh: deck.length - reviewed.length,
+    conf:  reviewed.length ? Math.round(getChapterConfidence(deck)) : null,
+    left,
+  };
+}
+
+function vbStartSession(kind) {
+  const mode = vbSrMode();
+  const pool = vcBuildStudyDeck(kind, vcPracticeDirection, false);
+  if (!pool.length) return;
+  const deck    = vbLoadDeck(mode, kind, pool);
+  const cardMap = {};
+  pool.forEach(c => { cardMap[c.id] = c; });
+  const cid   = vbChapterId(kind);
+  const today = srToday();
+
+  let queue, idx = 0;
+  const saved = srLoadSession(mode, cid);
+  const resumable = saved && saved.queue.slice(saved.currentIdx).some(id => cardMap[id]);
+  if (resumable) {
+    queue = saved.queue.filter(id => cardMap[id]);
+    idx   = saved.queue.slice(0, saved.currentIdx).filter(id => cardMap[id]).length;
+  } else {
+    queue = getCardsForToday(deck, today).slice(0, SR_DAILY_LIMIT).map(c => c.id);
+    srSaveSession(mode, cid, undefined, queue, 0);
+  }
+
+  vbSr = { kind, mode, cid, deck, cardMap, queue, idx,
+           ratings:[0,0,0,0,0], preConf: Math.round(getChapterConfidence(deck)), complete:false };
   vcStudyActive  = true;
-  vcDeck         = deck;
-  vcCardIndex    = 0;
+  vcDeck         = queue.map(id => cardMap[id]);
+  vcCardIndex    = idx;
   vcRevealed     = false;
   vcBrowseActive = true;
   document.getElementById('vcDeckTitle').textContent =
@@ -56711,9 +56864,99 @@ function vcOpenStudyDeck(kind) {
   showScreen('vcDeckScreen');
 }
 
+function vbRate(rating) {
+  const s = vbSr;
+  if (!s || s.complete || !vcRevealed) return;      // must flip first
+  const card = vcDeck[vcCardIndex];
+  const vc   = card && s.deck.find(c => c.id === card.id);
+  if (vc) {
+    _playRatingSound(rating >= 4);
+    vc.recordReview(srToday(), rating);
+    vbSaveDeck(s.mode, s.kind, s.deck);
+    s.ratings[rating]++;
+  }
+  s.idx++;
+  vcCardIndex = s.idx;
+  srSaveSession(s.mode, s.cid, undefined, s.queue, s.idx);
+  if (s.idx >= s.queue.length) vbSessionComplete();
+  else vcShowCard();
+}
+
+function vbSessionComplete() {
+  const s = vbSr;
+  srClearSession(s.mode, s.cid);
+  s.complete     = true;
+  vcBrowseActive = false;
+  vcRevealed     = false;
+  const today = srToday();
+  const post  = Math.round(getChapterConfidence(s.deck));
+  const d     = post - s.preConf;
+  const dueTomorrow = s.deck.filter(c => c.reviews.length && c.dueDate === today + 1).length;
+
+  document.getElementById('vcCardFace').classList.remove('is-back');
+  document.getElementById('vcCardScene').classList.remove('card-flipped');
+  document.getElementById('vcTenseLabel').textContent  = '';
+  document.getElementById('vcPersonLabel').textContent = '';
+  document.getElementById('vcCardCounter').textContent = '';
+  const tag = document.getElementById('vcCardTag');
+  tag.className = 'card-tag en'; tag.textContent = 'DONE';
+  document.getElementById('vcCardTarget').textContent = 'Session complete';
+  const ctx = document.getElementById('vcCardContext');
+  ctx.style.whiteSpace = 'pre-line';
+  ctx.textContent = `Got it ${s.ratings[4]} · Again ${s.ratings[1]}\n` +
+                    `Known: ${post}% (${d >= 0 ? '+' : ''}${d})\n` +
+                    `${dueTomorrow} due tomorrow`;
+  vbUpdateBar();
+}
+
+// The bar under the card: Show answer → Again / Got it → Done / Another session
+function vbUpdateBar() {
+  const bar     = document.getElementById('vcRateBar');
+  const shuffle = document.querySelector('#vcBottomBar .vc-shuffle-btn');
+  const L = document.querySelector('#vcSwipeIndicators .swipe-ind-left .swipe-ind-label');
+  const R = document.querySelector('#vcSwipeIndicators .swipe-ind-right .swipe-ind-label');
+  if (!bar) return;
+  if (shuffle) shuffle.style.display = vbSr ? 'none' : '';
+  const rating = !!vbSr && !vbSr.complete;
+  if (L) L.textContent = !rating ? 'Next' : (vcRevealed ? 'Got it' : '');
+  if (R) R.textContent = !rating ? 'Prev' : (vcRevealed ? 'Again'  : '');
+  if (!vbSr) { bar.style.display = 'none'; bar.innerHTML = ''; return; }
+  bar.style.display = 'flex';
+  if (vbSr.complete) {
+    bar.innerHTML = `<button class="vc-rate-btn" onclick="closeVerbDeck()">Done</button>` +
+                    `<button class="vc-rate-btn primary" onclick="vbStartSession(vbSr.kind)">Another ${SR_DAILY_LIMIT}</button>`;
+  } else if (vcRevealed) {
+    bar.innerHTML = `<button class="vc-rate-btn again" onclick="vbRate(1)">Again</button>` +
+                    `<button class="vc-rate-btn got" onclick="vbRate(4)">Got it</button>`;
+  } else {
+    bar.innerHTML = `<button class="vc-rate-btn primary" onclick="vcReveal()">Show answer</button>`;
+  }
+}
+
+function vcOpenStudyDeck(kind) {
+  if (!vcStudyBrowse) { vbStartSession(kind); return; }      // tracked (default)
+  const deck = vcBuildStudyDeck(kind, vcPracticeDirection, true);
+  if (!deck.length) return;
+  vbSr           = null;
+  vcStudyActive  = true;
+  vcDeck         = deck;
+  vcCardIndex    = 0;
+  vcRevealed     = false;
+  vcBrowseActive = true;
+  document.getElementById('vcDeckTitle').textContent =
+    (vcPracticeDirection === 'understanding' ? 'Understand' : 'Speak') + ' · ' +
+    (kind === 'infinitive' ? 'Infinitives' : (VC_TENSE_LABELS[kind] || kind)) + ' · browse';
+  document.querySelector('#vcDeckScreen .vc-gear-btn').style.display = 'none';
+  _vcSyncMuteBtn();
+  vbUpdateBar();
+  vcShowCard();
+  showScreen('vcDeckScreen');
+}
+
 // Render the front of a study card
 function vcShowStudyCard(card) {
   const mode = vcPracticeDirection;
+  document.getElementById('vcCardContext').style.whiteSpace = '';
   document.getElementById('vcCardFace').classList.remove('is-back');
   document.getElementById('vcCardScene').classList.remove('card-flipped');
   document.getElementById('vcCardCounter').textContent = `${vcCardIndex + 1} / ${vcDeck.length}`;
@@ -56746,6 +56989,7 @@ function vcShowStudyCard(card) {
     }
   }
   _vcUpdateSwipeHints(false);
+  vbUpdateBar();
 }
 
 // Render the back of a study card
@@ -56774,6 +57018,7 @@ function vcRevealStudy(card) {
     ctx.textContent = card.verb.infinitive;
   }
   _vcUpdateSwipeHints(true);
+  vbUpdateBar();
 }
 
 // ── VC VERB DETAIL SCREEN (conjugation table) ──
@@ -56851,6 +57096,7 @@ function openVerbDeck(verbIndex, direction) {
   if (!vcSettings) vcSettings = vcLoadSettings();
   vcCurrentVerbIndex = verbIndex;
   vcStudyActive = false;
+  vbSr = null; vbUpdateBar();
   if (direction) vcPracticeDirection = direction;
   const verb = verbConjugationData[verbIndex];
 
@@ -56872,6 +57118,7 @@ function openVerbDeck(verbIndex, direction) {
 
 function closeVerbDeck() {
   vcBrowseActive = false;
+  vbSr = null; vbUpdateBar();     // progress is saved after every rating; leaving mid-session resumes later
   document.getElementById('vcDeckSettingsPanel').classList.add('hidden');
   if (vcStudyActive) {            // study deck → back to the Understand / Speak list
     vcStudyActive = false;
@@ -57593,8 +57840,13 @@ function goLessons() {
       if (srInSession) {
         dx < 0 ? srRate(4) : srRate(1);
       } else if (vcBrowseActive) {
-        // VC Browse: left = next, right = prev
-        dx < 0 ? vcNext() : vcPrev();
+        if (vbSr) {
+          // Verb SR: after flipping, left = Got it, right = Again (same as grammar)
+          if (vcRevealed) { dx < 0 ? vbRate(4) : vbRate(1); }
+        } else {
+          // VC Browse: left = next, right = prev
+          dx < 0 ? vcNext() : vcPrev();
+        }
       } else {
         // Grammar/Vocab Browse: left = next, right = prev
         dx < 0 ? next() : prev();
@@ -57617,6 +57869,7 @@ function goLessons() {
     if (e.target.closest && (
         e.target.closest('.hint-overlay') ||
         e.target.closest('#vcBottomBar') ||
+        e.target.closest('#vcRateBar') ||
         e.target.closest('.deck-bottom-bar'))) return;
     if (vcBrowseActive) {
       vcReveal();
