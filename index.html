@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.5</title>
+<title>Learning Spanish — v23.6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -597,7 +597,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.5</div>
+    <div class="splash-sub">Buenos Aires · v23.6</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -41143,6 +41143,7 @@ const verbConjugationData = [
   gerundio:    "abriendo",
   participio:  "abierto",
   notes:       "Irregular past participle: abierto.",
+  infinitivo: { es: "Quiero abrir la ventana.", en: "I want to open the window." },
 
   conjugaciones: {
     presente: {
@@ -41320,6 +41321,7 @@ const verbConjugationData = [
   gerundio:    "acabando",
   participio:  "acabado",
   notes:       "acabar de + infinitive = to have just done something.",
+  infinitivo: { es: "Vamos a acabar antes de las seis.", en: "We're going to finish before six." },
 
   conjugaciones: {
     presente: {
@@ -41497,6 +41499,7 @@ const verbConjugationData = [
   gerundio:    "acostándose",
   participio:  "acostado",
   notes:       "Reflexive. me acuesto, te acostás, se acuesta...",
+  infinitivo: { es: "Es hora de acostarse temprano.", en: "It's time to go to bed early." },
 
   conjugaciones: {
     presente: {
@@ -41674,6 +41677,7 @@ const verbConjugationData = [
   gerundio:    "agarrando",
   participio:  "agarrado",
   notes:       "Very frequent in Rioplatense; broader use than in other dialects.",
+  infinitivo: { es: "Voy a agarrar el paraguas.", en: "I'm going to grab the umbrella." },
 
   conjugaciones: {
     presente: {
@@ -41851,6 +41855,7 @@ const verbConjugationData = [
   gerundio:    "agregando",
   participio:  "agregado",
   notes:       "Preferred over añadir in Rioplatense.",
+  infinitivo: { es: "Hay que agregar un poco de sal.", en: "You need to add a little salt." },
 
   conjugaciones: {
     presente: {
@@ -42028,6 +42033,7 @@ const verbConjugationData = [
   gerundio:    "aguantando",
   participio:  "aguantado",
   notes:       "Common in Rioplatense; also means to hold on / to last.",
+  infinitivo: { es: "No puedo aguantar este calor.", en: "I can't stand this heat." },
 
   conjugaciones: {
     presente: {
@@ -42205,6 +42211,7 @@ const verbConjugationData = [
   gerundio:    "alegrándose",
   participio:  "alegrado",
   notes:       "Reflexive.",
+  infinitivo: { es: "Es fácil alegrarse con una buena noticia.", en: "It's easy to be glad about good news." },
 
   conjugaciones: {
     presente: {
@@ -42382,6 +42389,7 @@ const verbConjugationData = [
   gerundio:    "amando",
   participio:  "amado",
   notes:       "Stronger than querer; used for deep love.",
+  infinitivo: { es: "Es lindo amar lo que uno hace.", en: "It's nice to love what you do." },
 
   conjugaciones: {
     presente: {
@@ -42559,6 +42567,7 @@ const verbConjugationData = [
   gerundio:    "apareciendo",
   participio:  "aparecido",
   notes:       "Irregular yo: aparezco.",
+  infinitivo: { es: "Va a aparecer en cualquier momento.", en: "He's going to show up any minute." },
 
   conjugaciones: {
     presente: {
@@ -42736,6 +42745,7 @@ const verbConjugationData = [
   gerundio:    "aprendiendo",
   participio:  "aprendido",
   notes:       "",
+  infinitivo: { es: "Quiero aprender a tocar la guitarra.", en: "I want to learn to play the guitar." },
 
   conjugaciones: {
     presente: {
@@ -42913,6 +42923,7 @@ const verbConjugationData = [
   gerundio:    "ayudando",
   participio:  "ayudado",
   notes:       "",
+  infinitivo: { es: "Siempre me gusta ayudar a mis amigos.", en: "I always like to help my friends." },
 
   conjugaciones: {
     presente: {
@@ -43090,6 +43101,7 @@ const verbConjugationData = [
   gerundio:    "bailando",
   participio:  "bailado",
   notes:       "",
+  infinitivo: { es: "Nos encanta bailar tango los sábados.", en: "We love to dance tango on Saturdays." },
 
   conjugaciones: {
     presente: {
@@ -43267,6 +43279,7 @@ const verbConjugationData = [
   gerundio:    "bajando",
   participio:  "bajado",
   notes:       "",
+  infinitivo: { es: "Hay que bajar por la escalera.", en: "You have to go down the stairs." },
 
   conjugaciones: {
     presente: {
@@ -43444,6 +43457,7 @@ const verbConjugationData = [
   gerundio:    "bañándose",
   participio:  "bañado",
   notes:       "Reflexive. In Rioplatense bañarse typically means to shower.",
+  infinitivo: { es: "Voy a bañarme antes de cenar.", en: "I'm going to shower before dinner." },
 
   conjugaciones: {
     presente: {
@@ -43621,6 +43635,7 @@ const verbConjugationData = [
   gerundio:    "bebiendo",
   participio:  "bebido",
   notes:       "Interchangeable with tomar in Rioplatense; tomar is more colloquial.",
+  infinitivo: { es: "No debemos beber tanto café.", en: "We shouldn't drink so much coffee." },
 
   conjugaciones: {
     presente: {
@@ -43798,6 +43813,7 @@ const verbConjugationData = [
   gerundio:    "buscando",
   participio:  "buscado",
   notes:       "Spelling change c→qu before e (busqué).",
+  infinitivo: { es: "Voy a buscar las llaves.", en: "I'm going to look for the keys." },
 
   conjugaciones: {
     presente: {
@@ -43975,6 +43991,7 @@ const verbConjugationData = [
   gerundio:    "cayendo",
   participio:  "caído",
   notes:       "Irregular yo: caigo. Reflexive caerse = to fall down.",
+  infinitivo: { es: "Es fácil caer en esa trampa.", en: "It's easy to fall into that trap." },
 
   conjugaciones: {
     presente: {
@@ -44152,6 +44169,7 @@ const verbConjugationData = [
   gerundio:    "caminando",
   participio:  "caminado",
   notes:       "",
+  infinitivo: { es: "Me gusta caminar por el parque.", en: "I like to walk in the park." },
 
   conjugaciones: {
     presente: {
@@ -44329,6 +44347,7 @@ const verbConjugationData = [
   gerundio:    "cantando",
   participio:  "cantado",
   notes:       "",
+  infinitivo: { es: "Me encanta cantar en la ducha.", en: "I love to sing in the shower." },
 
   conjugaciones: {
     presente: {
@@ -44506,6 +44525,7 @@ const verbConjugationData = [
   gerundio:    "casándose",
   participio:  "casado",
   notes:       "Reflexive. casarse con alguien.",
+  infinitivo: { es: "Piensan casarse el año que viene.", en: "They plan to get married next year." },
 
   conjugaciones: {
     presente: {
@@ -44683,6 +44703,7 @@ const verbConjugationData = [
   gerundio:    "cerrando",
   participio:  "cerrado",
   notes:       "",
+  infinitivo: { es: "Hay que cerrar la puerta con llave.", en: "You have to lock the door." },
 
   conjugaciones: {
     presente: {
@@ -44860,6 +44881,7 @@ const verbConjugationData = [
   gerundio:    "cocinando",
   participio:  "cocinado",
   notes:       "",
+  infinitivo: { es: "Me gusta cocinar para mis amigos.", en: "I like to cook for my friends." },
 
   conjugaciones: {
     presente: {
@@ -45037,6 +45059,7 @@ const verbConjugationData = [
   gerundio:    "comenzando",
   participio:  "comenzado",
   notes:       "Spelling change z→c before e (comencé). Near-synonym of empezar.",
+  infinitivo: { es: "La clase va a comenzar ahora.", en: "The class is about to begin now." },
 
   conjugaciones: {
     presente: {
@@ -45214,6 +45237,7 @@ const verbConjugationData = [
   gerundio:    "comiendo",
   participio:  "comido",
   notes:       "",
+  infinitivo: { es: "Vamos a comer afuera esta noche.", en: "We're going to eat out tonight." },
 
   conjugaciones: {
     presente: {
@@ -45391,6 +45415,7 @@ const verbConjugationData = [
   gerundio:    "comprando",
   participio:  "comprado",
   notes:       "",
+  infinitivo: { es: "Necesito comprar pan y leche.", en: "I need to buy bread and milk." },
 
   conjugaciones: {
     presente: {
@@ -45568,6 +45593,7 @@ const verbConjugationData = [
   gerundio:    "conociendo",
   participio:  "conocido",
   notes:       "Irregular yo: conozco. Distinct from saber (facts).",
+  infinitivo: { es: "Quiero conocer Buenos Aires algún día.", en: "I want to get to know Buenos Aires someday." },
 
   conjugaciones: {
     presente: {
@@ -45745,6 +45771,7 @@ const verbConjugationData = [
   gerundio:    "consiguiendo",
   participio:  "conseguido",
   notes:       "Irregular yo: consigo. Spelling change gu→g before a/o.",
+  infinitivo: { es: "Es difícil conseguir entradas para el partido.", en: "It's hard to get tickets for the match." },
 
   conjugaciones: {
     presente: {
@@ -45922,6 +45949,7 @@ const verbConjugationData = [
   gerundio:    "contando",
   participio:  "contado",
   notes:       "",
+  infinitivo: { es: "Voy a contar una historia corta.", en: "I'm going to tell a short story." },
 
   conjugaciones: {
     presente: {
@@ -46099,6 +46127,7 @@ const verbConjugationData = [
   gerundio:    "contestando",
   participio:  "contestado",
   notes:       "",
+  infinitivo: { es: "Tengo que contestar este mensaje.", en: "I have to answer this message." },
 
   conjugaciones: {
     presente: {
@@ -46276,6 +46305,7 @@ const verbConjugationData = [
   gerundio:    "convirtiéndose",
   participio:  "convertido",
   notes:       "Reflexive verb with e→ie stem change. Requires reflexive pronouns (me, te, se, nos, os, se).",
+  infinitivo: { es: "Quiere convertirse en un gran chef.", en: "He wants to become a great chef." },
 
   conjugaciones: {
     presente: {
@@ -46453,6 +46483,7 @@ const verbConjugationData = [
   gerundio:    "corriendo",
   participio:  "corrido",
   notes:       "",
+  infinitivo: { es: "Me gusta correr por la mañana.", en: "I like to run in the morning." },
 
   conjugaciones: {
     presente: {
@@ -46630,6 +46661,7 @@ const verbConjugationData = [
   gerundio:    "cortando",
   participio:  "cortado",
   notes:       "",
+  infinitivo: { es: "Hay que cortar el pasto.", en: "The grass needs to be cut." },
 
   conjugaciones: {
     presente: {
@@ -46807,6 +46839,7 @@ const verbConjugationData = [
   gerundio:    "creciendo",
   participio:  "crecido",
   notes:       "Irregular yo: crezco.",
+  infinitivo: { es: "Quiero ver crecer a mis hijos.", en: "I want to watch my kids grow up." },
 
   conjugaciones: {
     presente: {
@@ -46984,6 +47017,7 @@ const verbConjugationData = [
   gerundio:    "creyendo",
   participio:  "creído",
   notes:       "Note accent on 'creído' in perfecto forms.",
+  infinitivo: { es: "Es difícil creer esa historia.", en: "It's hard to believe that story." },
 
   conjugaciones: {
     presente: {
@@ -47161,6 +47195,7 @@ const verbConjugationData = [
   gerundio:    "dando",
   participio:  "dado",
   notes:       "Highly irregular: doy, dé, diera, etc. Note accent on subjPresente forms (dé, dés, dé, demos, deis, den).",
+  infinitivo: { es: "Voy a dar una clase mañana.", en: "I'm going to give a class tomorrow." },
 
   conjugaciones: {
     presente: {
@@ -47338,6 +47373,7 @@ const verbConjugationData = [
   gerundio:    "debiendo",
   participio:  "debido",
   notes:       "Often expresses obligation or probability. Can mean 'should' or 'must'.",
+  infinitivo: { es: "Odio deber plata a mis amigos.", en: "I hate owing money to my friends." },
 
   conjugaciones: {
     presente: {
@@ -47515,6 +47551,7 @@ const verbConjugationData = [
   gerundio:    "decidiendo",
   participio:  "decidido",
   notes:       "",
+  infinitivo: { es: "Tenemos que decidir ahora mismo.", en: "We have to decide right now." },
 
   conjugaciones: {
     presente: {
@@ -47692,6 +47729,7 @@ const verbConjugationData = [
   gerundio:    "diciendo",
   participio:  "dicho",
   notes:       "Highly irregular. Future/conditional: diré, dirá. Subjunctive: diga, dijera. Past participle: dicho.",
+  infinitivo: { es: "Quiero decir algo importante.", en: "I want to say something important." },
 
   conjugaciones: {
     presente: {
@@ -47869,6 +47907,7 @@ const verbConjugationData = [
   gerundio:    "dejando",
   participio:  "dejado",
   notes:       "Means both 'to leave' (a place) and 'to let/allow' depending on context.",
+  infinitivo: { es: "Voy a dejar las llaves acá.", en: "I'm going to leave the keys here." },
 
   conjugaciones: {
     presente: {
@@ -48046,6 +48085,7 @@ const verbConjugationData = [
   gerundio:    "dependiendo",
   participio:  "dependido",
   notes:       "Often used with preposition 'de' (depender de).",
+  infinitivo: { es: "Eso va a depender del clima.", en: "That is going to depend on the weather." },
 
   conjugaciones: {
     presente: {
@@ -48223,6 +48263,7 @@ const verbConjugationData = [
   gerundio:    "desapareciendo",
   participio:  "desaparecido",
   notes:       "Irregular yo: desaparezco. Like 'aparecer'.",
+  infinitivo: { es: "Las llaves suelen desaparecer de repente.", en: "Keys tend to vanish suddenly." },
 
   conjugaciones: {
     presente: {
@@ -48400,6 +48441,7 @@ const verbConjugationData = [
   gerundio:    "descansando",
   participio:  "descansado",
   notes:       "",
+  infinitivo: { es: "Necesito descansar un rato.", en: "I need to rest for a while." },
 
   conjugaciones: {
     presente: {
@@ -48577,6 +48619,7 @@ const verbConjugationData = [
   gerundio:    "despertándose",
   participio:  "despertado",
   notes:       "Reflexive. me despierto, te despertás, se despierta...",
+  infinitivo: { es: "Me cuesta despertarme temprano.", en: "It's hard for me to wake up early." },
 
   conjugaciones: {
     presente: {
@@ -48754,6 +48797,7 @@ const verbConjugationData = [
   gerundio:    "disfrutando",
   participio:  "disfrutado",
   notes:       "disfrutar de algo.",
+  infinitivo: { es: "Quiero disfrutar de las vacaciones.", en: "I want to enjoy the vacation." },
 
   conjugaciones: {
     presente: {
@@ -48931,6 +48975,7 @@ const verbConjugationData = [
   gerundio:    "durmiendo",
   participio:  "dormido",
   notes:       "Also u in gerund and 3rd person preterit: durmiendo, durmió.",
+  infinitivo: { es: "Necesito dormir ocho horas.", en: "I need to sleep eight hours." },
 
   conjugaciones: {
     presente: {
@@ -49108,6 +49153,7 @@ const verbConjugationData = [
   gerundio:    "eligiendo",
   participio:  "elegido",
   notes:       "Irregular yo: elijo. Spelling change g→j before a/o.",
+  infinitivo: { es: "Es difícil elegir un solo postre.", en: "It's hard to choose just one dessert." },
 
   conjugaciones: {
     presente: {
@@ -49285,6 +49331,7 @@ const verbConjugationData = [
   gerundio:    "empezando",
   participio:  "empezado",
   notes:       "Spelling change z→c before e (empecé). Near-synonym of comenzar.",
+  infinitivo: { es: "Vamos a empezar la reunión ahora.", en: "We're going to start the meeting now." },
 
   conjugaciones: {
     presente: {
@@ -49462,6 +49509,7 @@ const verbConjugationData = [
   gerundio:    "encontrando",
   participio:  "encontrado",
   notes:       "",
+  infinitivo: { es: "Quiero encontrar un departamento barato.", en: "I want to find a cheap apartment." },
 
   conjugaciones: {
     presente: {
@@ -49639,6 +49687,7 @@ const verbConjugationData = [
   gerundio:    "enojándose",
   participio:  "enojado",
   notes:       "Reflexive. Common in Rioplatense; preferred over enfadarse.",
+  infinitivo: { es: "No vale la pena enojarse por eso.", en: "It's not worth getting angry about that." },
 
   conjugaciones: {
     presente: {
@@ -49816,6 +49865,7 @@ const verbConjugationData = [
   gerundio:    "enseñando",
   participio:  "enseñado",
   notes:       "",
+  infinitivo: { es: "Me gusta enseñar a los chicos.", en: "I like teaching the kids." },
 
   conjugaciones: {
     presente: {
@@ -49993,6 +50043,7 @@ const verbConjugationData = [
   gerundio:    "entendiendo",
   participio:  "entendido",
   notes:       "",
+  infinitivo: { es: "Cuesta entender esta lección.", en: "This lesson is hard to understand." },
 
   conjugaciones: {
     presente: {
@@ -50170,6 +50221,7 @@ const verbConjugationData = [
   gerundio:    "entrando",
   participio:  "entrado",
   notes:       "",
+  infinitivo: { es: "Hay que entrar por atrás.", en: "You have to go in through the back." },
 
   conjugaciones: {
     presente: {
@@ -50347,6 +50399,7 @@ const verbConjugationData = [
   gerundio:    "enviando",
   participio:  "enviado",
   notes:       "Accent shift in present: envío, enviás, envía...",
+  infinitivo: { es: "Voy a enviar el mail ahora.", en: "I'm going to send the email now." },
 
   conjugaciones: {
     presente: {
@@ -50524,6 +50577,7 @@ const verbConjugationData = [
   gerundio:    "escribiendo",
   participio:  "escrito",
   notes:       "Irregular past participle: escrito.",
+  infinitivo: { es: "Quiero escribir un libro algún día.", en: "I want to write a book someday." },
 
   conjugaciones: {
     presente: {
@@ -50701,6 +50755,7 @@ const verbConjugationData = [
   gerundio:    "escuchando",
   participio:  "escuchado",
   notes:       "",
+  infinitivo: { es: "Me gusta escuchar música mientras cocino.", en: "I like listening to music while I cook." },
 
   conjugaciones: {
     presente: {
@@ -50878,6 +50933,7 @@ const verbConjugationData = [
   gerundio:    "esperando",
   participio:  "esperado",
   notes:       "",
+  infinitivo: { es: "Tenemos que esperar el colectivo.", en: "We have to wait for the bus." },
 
   conjugaciones: {
     presente: {
@@ -51055,6 +51111,7 @@ const verbConjugationData = [
   gerundio:    "estando",
   participio:  "estado",
   notes:       "Estoy, estás, está... Contrasts with ser (identity/permanent).",
+  infinitivo: { es: "Quiero estar en casa temprano.", en: "I want to be home early." },
 
   conjugaciones: {
     presente: {
@@ -51232,6 +51289,7 @@ const verbConjugationData = [
   gerundio:    "existiendo",
   participio:  "existido",
   notes:       "",
+  infinitivo: { es: "Los dragones no pueden existir.", en: "Dragons can't exist." },
 
   conjugaciones: {
     presente: { yo: "existo", vos: "existís", tu: "existes", el: "existe", nosotros: "existimos", vosotros: "existís", ellos: "existen" },
@@ -51337,6 +51395,7 @@ const verbConjugationData = [
   gerundio:    "explicando",
   participio:  "explicado",
   notes:       "Spelling change c→qu before e (expliqué).",
+  infinitivo: { es: "Voy a explicar cómo funciona.", en: "I'm going to explain how it works." },
 
   conjugaciones: {
     presente: { yo: "explico", vos: "explicás", tu: "explicas", el: "explica", nosotros: "explicamos", vosotros: "explicáis", ellos: "explican" },
@@ -51365,6 +51424,7 @@ const verbConjugationData = [
   {
   infinitive: "fallar",
   freq:        3, meaning: "to fail / to miss / to let down", regularity: "regular -ar", gerundio: "fallando", participio: "fallado", notes: "",
+  infinitivo: { es: "El motor puede fallar en cualquier momento.", en: "The engine can fail at any moment." },
   conjugaciones: {
     presente: { yo: "fallo", vos: "fallás", tu: "fallas", el: "falla", nosotros: "fallamos", vosotros: "fallais", ellos: "fallan" },
     indefinido: { yo: "fallé", vos: "fallaste", tu: "fallaste", el: "falló", nosotros: "fallamos", vosotros: "fallasteis", ellos: "fallaron" },
@@ -51391,6 +51451,7 @@ const verbConjugationData = [
   {
   infinitive: "faltar",
   freq:        2, meaning: "to be missing / to lack", regularity: "regular -ar", gerundio: "faltando", participio: "faltado", notes: "Reverse construction like gustar: me falta tiempo.",
+  infinitivo: { es: "No quiero faltar a la clase.", en: "I don't want to miss class." },
   conjugaciones: {
     presente: { yo: "falto", vos: "faltás", tu: "faltas", el: "falta", nosotros: "faltamos", vosotros: "faltáis", ellos: "faltan" },
     indefinido: { yo: "falté", vos: "faltaste", tu: "faltaste", el: "faltó", nosotros: "faltamos", vosotros: "faltasteis", ellos: "faltaron" },
@@ -51417,6 +51478,7 @@ const verbConjugationData = [
   {
   infinitive: "fijarse",
   freq:        2, meaning: "to notice / to pay attention", regularity: "regular -ar", gerundio: "fijándose", participio: "fijado", notes: "Reflexive. Very common in Rioplatense: ¡Fijate! = Look!",
+  infinitivo: { es: "Es importante fijarse en los detalles.", en: "It's important to pay attention to details." },
   conjugaciones: {
     presente: { yo: "me fijo", vos: "te fijás", tu: "te fijas", el: "se fija", nosotros: "nos fijamos", vosotros: "os fijáis", ellos: "se fijan" },
     indefinido: { yo: "me fijé", vos: "te fijaste", tu: "te fijaste", el: "se fijó", nosotros: "nos fijamos", vosotros: "os fijasteis", ellos: "se fijaron" },
@@ -51443,6 +51505,7 @@ const verbConjugationData = [
   {
   infinitive: "ganar",
   freq:        2, meaning: "to win / to earn", regularity: "regular -ar", gerundio: "ganando", participio: "ganado", notes: "",
+  infinitivo: { es: "Quiero ganar el partido de hoy.", en: "I want to win today's match." },
   conjugaciones: {
     presente: { yo: "gano", vos: "ganás", tu: "ganas", el: "gana", nosotros: "ganamos", vosotros: "ganáis", ellos: "ganan" },
     indefinido: { yo: "gané", vos: "ganaste", tu: "ganaste", el: "ganó", nosotros: "ganamos", vosotros: "ganasteis", ellos: "ganaron" },
@@ -51469,6 +51532,7 @@ const verbConjugationData = [
   {
   infinitive: "gritar",
   freq:        2, meaning: "to shout / to scream", regularity: "regular -ar", gerundio: "gritando", participio: "gritado", notes: "",
+  infinitivo: { es: "No hace falta gritar tanto.", en: "There's no need to shout so much." },
   conjugaciones: {
     presente: { yo: "grito", vos: "gritás", tu: "gritas", el: "grita", nosotros: "gritamos", vosotros: "gritáis", ellos: "gritan" },
     indefinido: { yo: "grité", vos: "gritaste", tu: "gritaste", el: "gritó", nosotros: "gritamos", vosotros: "gritasteis", ellos: "gritaron" },
@@ -51495,6 +51559,7 @@ const verbConjugationData = [
   {
   infinitive: "gustar",
   freq:        1, meaning: "to like (to be pleasing to)", regularity: "regular -ar", gerundio: "gustando", participio: "gustado", notes: "Reverse construction: me gusta(n). Subject is the thing liked.",
+  infinitivo: { es: "Me va a gustar este lugar.", en: "I'm going to like this place." },
   conjugaciones: {
     presente: { yo: "gusto", vos: "gustás", tu: "gustas", el: "gusta", nosotros: "gustamos", vosotros: "gustáis", ellos: "gustan" },
     indefinido: { yo: "gusté", vos: "gustaste", tu: "gustaste", el: "gustó", nosotros: "gustamos", vosotros: "gustasteis", ellos: "gustaron" },
@@ -51521,6 +51586,7 @@ const verbConjugationData = [
   {
   infinitive: "haber",
   freq:        1, meaning: "to have (auxiliary) / there to be", regularity: "irregular", gerundio: "habiendo", participio: "habido", notes: "he/has/ha/hemos/habéis/han (auxiliary). hay = there is/are.",
+  infinitivo: { es: "Tiene que haber otra solución.", en: "There has to be another solution." },
   conjugaciones: {
     presente: { yo: "he", vos: "has", tu: "has", el: "ha", nosotros: "hemos", vosotros: "habéis", ellos: "han" },
     indefinido: { yo: "hube", vos: "hubiste", tu: "hubiste", el: "hubo", nosotros: "hubimos", vosotros: "hubisteis", ellos: "hubieron" },
@@ -51552,6 +51618,7 @@ const verbConjugationData = [
   gerundio:    "hablando",
   participio:  "hablado",
   notes:       "The model regular -ar verb.",
+  infinitivo: { es: "Quiero hablar con el gerente.", en: "I want to talk to the manager." },
 
   conjugaciones: {
     presente: {
@@ -51724,6 +51791,7 @@ const verbConjugationData = [
   {
   infinitive: "hacer",
   freq:        1, meaning: "to do / to make", regularity: "irregular", gerundio: "haciendo", participio: "hecho", notes: "Irregular throughout: hago, hice, haré...",
+  infinitivo: { es: "Voy a hacer la cena hoy.", en: "I'm going to make dinner today." },
   conjugaciones: {
     presente: { yo: "hago", vos: "hacés", tu: "haces", el: "hace", nosotros: "hacemos", vosotros: "hacéis", ellos: "hacen" },
     indefinido: { yo: "hice", vos: "hiciste", tu: "hiciste", el: "hizo", nosotros: "hicimos", vosotros: "hicisteis", ellos: "hicieron" },
@@ -51750,6 +51818,7 @@ const verbConjugationData = [
   {
   infinitive: "imaginar",
   freq:        3, meaning: "to imagine", regularity: "regular -ar", gerundio: "imaginando", participio: "imaginado", notes: "",
+  infinitivo: { es: "Es difícil imaginar una vida sin música.", en: "It's hard to imagine life without music." },
   conjugaciones: {
     presente: { yo: "imagino", vos: "imaginás", tu: "imaginas", el: "imagina", nosotros: "imaginamos", vosotros: "imaginais", ellos: "imaginan" },
     indefinido: { yo: "imaginé", vos: "imaginaste", tu: "imaginaste", el: "imaginó", nosotros: "imaginamos", vosotros: "imaginasteis", ellos: "imaginaron" },
@@ -51776,6 +51845,7 @@ const verbConjugationData = [
   {
   infinitive: "importar",
   freq:        2, meaning: "to matter / to be important", regularity: "regular -ar", gerundio: "importando", participio: "importado", notes: "Reverse construction: no me importa = it doesn't matter to me.",
+  infinitivo: { es: "Esto no debería importar tanto.", en: "This shouldn't matter so much." },
   conjugaciones: {
     presente: { yo: "importo", vos: "importás", tu: "importas", el: "importa", nosotros: "importamos", vosotros: "importáis", ellos: "importan" },
     indefinido: { yo: "importé", vos: "importaste", tu: "importaste", el: "importó", nosotros: "importamos", vosotros: "importasteis", ellos: "importaron" },
@@ -51802,6 +51872,7 @@ const verbConjugationData = [
   {
   infinitive: "intentar",
   freq:        2, meaning: "to try / to attempt", regularity: "regular -ar", gerundio: "intentando", participio: "intentado", notes: "",
+  infinitivo: { es: "Voy a intentar de nuevo mañana.", en: "I'm going to try again tomorrow." },
   conjugaciones: {
     presente: { yo: "intento", vos: "intentás", tu: "intentas", el: "intenta", nosotros: "intentamos", vosotros: "intentáis", ellos: "intentan" },
     indefinido: { yo: "intenté", vos: "intentaste", tu: "intentaste", el: "intentó", nosotros: "intentamos", vosotros: "intentasteis", ellos: "intentaron" },
@@ -51828,6 +51899,7 @@ const verbConjugationData = [
   {
   infinitive: "invitar",
   freq:        2, meaning: "to invite / to treat (pay for)", regularity: "regular -ar", gerundio: "invitando", participio: "invitado", notes: "Te invito = it's on me (Rioplatense usage).",
+  infinitivo: { es: "Hoy me toca invitar a mí.", en: "It's my turn to treat today." },
   conjugaciones: {
     presente: { yo: "invito", vos: "invitás", tu: "invitas", el: "invita", nosotros: "invitamos", vosotros: "invitáis", ellos: "invitan" },
     indefinido: { yo: "invité", vos: "invitaste", tu: "invitaste", el: "invitó", nosotros: "invitamos", vosotros: "invitasteis", ellos: "invitaron" },
@@ -51854,6 +51926,7 @@ const verbConjugationData = [
   {
   infinitive: "ir",
   freq:        1, meaning: "to go", regularity: "irregular", gerundio: "yendo", participio: "ido", notes: "Completely irregular: voy, vas, va, vamos, van. Preterit: fui (same as ser).",
+  infinitivo: { es: "Quiero ir a la playa mañana.", en: "I want to go to the beach tomorrow." },
   conjugaciones: {
     presente: { yo: "voy", vos: "vas", tu: "vas", el: "va", nosotros: "vamos", vosotros: "vais", ellos: "van" },
     indefinido: { yo: "fui", vos: "fuiste", tu: "fuiste", el: "fue", nosotros: "fuimos", vosotros: "fuisteis", ellos: "fueron" },
@@ -51880,6 +51953,7 @@ const verbConjugationData = [
   {
   infinitive: "irse",
   freq:        2, meaning: "to leave / to go away", regularity: "irregular", gerundio: "yéndose", participio: "ido", notes: "Reflexive form of ir. me voy, te vas... ¡Me voy! = I'm leaving!",
+  infinitivo: { es: "Tengo que irme antes de las seis.", en: "I have to leave before six." },
   conjugaciones: {
     presente: { yo: "me voy", vos: "te vas", tu: "te vas", el: "se va", nosotros: "nos vamos", vosotros: "os vais", ellos: "se van" },
     indefinido: { yo: "me fui", vos: "te fuiste", tu: "te fuiste", el: "se fue", nosotros: "nos fuimos", vosotros: "os fuisteis", ellos: "se fueron" },
@@ -51906,6 +51980,7 @@ const verbConjugationData = [
   {
   infinitive: "jugar",
   freq:        2, meaning: "to play", regularity: "stem-changing u→ue", gerundio: "jugando", participio: "jugado", notes: "Spelling change g→gu before e (jugué). jugar a + sport/game.",
+  infinitivo: { es: "Nos gusta jugar al fútbol juntos.", en: "We like playing soccer together." },
   conjugaciones: {
     presente: { yo: "juego", vos: "jugás", tu: "juegas", el: "juega", nosotros: "jugamos", vosotros: "jugáis", ellos: "juegan" },
     indefinido: { yo: "jugué", vos: "jugaste", tu: "jugaste", el: "jugó", nosotros: "jugamos", vosotros: "jugasteis", ellos: "jugaron" },
@@ -51932,6 +52007,7 @@ const verbConjugationData = [
   {
   infinitive: "lavar",
   freq:        3, meaning: "to wash", regularity: "regular -ar", gerundio: "lavando", participio: "lavado", notes: "Reflexive lavarse = to wash oneself.",
+  infinitivo: { es: "Hay que lavar los platos.", en: "The dishes need to be washed." },
   conjugaciones: {
     presente: { yo: "lavo", vos: "lavás", tu: "lavas", el: "lava", nosotros: "lavamos", vosotros: "laváis", ellos: "lavan" },
     indefinido: { yo: "lavé", vos: "lavaste", tu: "lavaste", el: "lavó", nosotros: "lavamos", vosotros: "lavasteis", ellos: "lavaron" },
@@ -51958,6 +52034,7 @@ const verbConjugationData = [
   {
   infinitive: "leer",
   freq:        2, meaning: "to read", regularity: "regular -er", gerundio: "leyendo", participio: "leído", notes: "Spelling change in preterit: leyó, leyeron.",
+  infinitivo: { es: "Me gusta leer antes de dormir.", en: "I like to read before sleeping." },
   conjugaciones: {
     presente: { yo: "leo", vos: "leés", tu: "lees", el: "lee", nosotros: "leemos", vosotros: "leéis", ellos: "leen" },
     indefinido: { yo: "leí", vos: "leíste", tu: "leíste", el: "leyó", nosotros: "leímos", vosotros: "leísteis", ellos: "leyeron" },
@@ -51984,6 +52061,7 @@ const verbConjugationData = [
   {
   infinitive: "levantarse",
   freq:        3, meaning: "to get up / to stand up", regularity: "regular -ar", gerundio: "levantándose", participio: "levantado", notes: "Reflexive.",
+  infinitivo: { es: "Voy a levantarme a las siete.", en: "I'm going to get up at seven." },
   conjugaciones: {
     presente: { yo: "me levanto", vos: "te levantás", tu: "te levantas", el: "se levanta", nosotros: "nos levantamos", vosotros: "os levantáis", ellos: "se levantan" },
     indefinido: { yo: "me levanté", vos: "te levantaste", tu: "te levantaste", el: "se levantó", nosotros: "nos levantamos", vosotros: "os levantasteis", ellos: "se levantaron" },
@@ -52010,6 +52088,7 @@ const verbConjugationData = [
   {
   infinitive: "limpiar",
   freq:        3, meaning: "to clean", regularity: "regular -ar", gerundio: "limpiando", participio: "limpiado", notes: "",
+  infinitivo: { es: "Tenemos que limpiar la casa hoy.", en: "We have to clean the house today." },
   conjugaciones: {
     presente: { yo: "limpio", vos: "limpiás", tu: "limpias", el: "limpia", nosotros: "limpiamos", vosotros: "limpiáis", ellos: "limpian" },
     indefinido: { yo: "limpié", vos: "limpiaste", tu: "limpiaste", el: "limpió", nosotros: "limpiamos", vosotros: "limpiasteis", ellos: "limpiaron" },
@@ -52041,6 +52120,7 @@ const verbConjugationData = [
   gerundio:    "llamando",
   participio:  "llamado",
   notes:       "Reflexive llamarse = to be called/named.",
+  infinitivo: { es: "Voy a llamar a mi mamá.", en: "I'm going to call my mom." },
 
   conjugaciones: {
     presente: { yo: "llamo", vos: "llamás", tu: "llamas", el: "llama", nosotros: "llamamos", vosotros: "llamáis", ellos: "llaman" },
@@ -52074,6 +52154,7 @@ const verbConjugationData = [
   gerundio:    "llegando",
   participio:  "llegado",
   notes:       "Spelling change g→gu before e (llegué).",
+  infinitivo: { es: "Vamos a llegar tarde al cine.", en: "We're going to be late to the movies." },
 
   conjugaciones: {
     presente: { yo: "llego", vos: "llegás", tu: "llegas", el: "llega", nosotros: "llegamos", vosotros: "llegáis", ellos: "llegan" },
@@ -52107,6 +52188,7 @@ const verbConjugationData = [
   gerundio:    "llevando",
   participio:  "llevado",
   notes:       "Very versatile. llevar puesto = to be wearing.",
+  infinitivo: { es: "Voy a llevar el paraguas hoy.", en: "I'm going to take the umbrella today." },
 
   conjugaciones: {
     presente: { yo: "llevo", vos: "llevás", tu: "llevas", el: "lleva", nosotros: "llevamos", vosotros: "lleváis", ellos: "llevan" },
@@ -52140,6 +52222,7 @@ const verbConjugationData = [
   gerundio:    "llorando",
   participio:  "llorado",
   notes:       "Regular -ar verb. Common in emotional contexts.",
+  infinitivo: { es: "Es normal llorar con esa película.", en: "It's normal to cry at that movie." },
 
   conjugaciones: {
     presente: { yo: "lloro", vos: "llorás", tu: "lloras", el: "llora", nosotros: "lloramos", vosotros: "lloráis", ellos: "lloran" },
@@ -52173,6 +52256,7 @@ const verbConjugationData = [
   gerundio:    "logrando",
   participio:  "logrado",
   notes:       "lograr + infinitive = to manage to do something.",
+  infinitivo: { es: "Quiero lograr mis metas este año.", en: "I want to achieve my goals this year." },
 
   conjugaciones: {
     presente: { yo: "logro", vos: "lograś", tu: "logras", el: "logra", nosotros: "logramos", vosotros: "lograís", ellos: "logran" },
@@ -52206,6 +52290,7 @@ const verbConjugationData = [
   gerundio:    "mandando",
   participio:  "mandado",
   notes:       "Regular -ar. Can mean to send, order, or command depending on context.",
+  infinitivo: { es: "Voy a mandar un mensaje ahora.", en: "I'm going to send a message now." },
 
   conjugaciones: {
     presente: { yo: "mando", vos: "mandás", tu: "mandas", el: "manda", nosotros: "mandamos", vosotros: "mandáis", ellos: "mandan" },
@@ -52239,6 +52324,7 @@ const verbConjugationData = [
   gerundio:    "manejando",
   participio:  "manejado",
   notes:       "Rioplatense for 'to drive' (not conducir). Versatile meaning.",
+  infinitivo: { es: "Todavía no sé manejar de noche.", en: "I still can't drive at night." },
 
   conjugaciones: {
     presente: { yo: "manejo", vos: "manejás", tu: "manejas", el: "maneja", nosotros: "manejamos", vosotros: "manejáis", ellos: "manejan" },
@@ -52272,6 +52358,7 @@ const verbConjugationData = [
   gerundio:    "metiendo",
   participio:  "metido",
   notes:       "Regular -er. Less common than poner but used in specific contexts.",
+  infinitivo: { es: "Hay que meter la ropa adentro.", en: "You have to bring the clothes inside." },
 
   conjugaciones: {
     presente: { yo: "meto", vos: "metés", tu: "metes", el: "mete", nosotros: "metemos", vosotros: "metéis", ellos: "meten" },
@@ -52305,6 +52392,7 @@ const verbConjugationData = [
   gerundio:    "mirando",
   participio:  "mirado",
   notes:       "Very common. Regular -ar.",
+  infinitivo: { es: "Me gusta mirar películas los domingos.", en: "I like watching movies on Sundays." },
 
   conjugaciones: {
     presente: { yo: "miro", vos: "mirás", tu: "miras", el: "mira", nosotros: "miramos", vosotros: "miráis", ellos: "miran" },
@@ -52338,6 +52426,7 @@ const verbConjugationData = [
   gerundio:    "molestando",
   participio:  "molestado",
   notes:       "Reverse construction: me molesta (it bothers me), not yo molesto algo.",
+  infinitivo: { es: "No quiero molestar a nadie.", en: "I don't want to bother anyone." },
 
   conjugaciones: {
     presente: { yo: "molesto", vos: "molestás", tu: "molestas", el: "molesta", nosotros: "molestamos", vosotros: "molestáis", ellos: "molestan" },
@@ -52371,6 +52460,7 @@ const verbConjugationData = [
   gerundio:    "muriendo",
   participio:  "muerto",
   notes:       "Stem-changing o→ue. Also u in gerund (muriendo) and 3rd preterit (murió). Irregular participio: muerto.",
+  infinitivo: { es: "Nadie quiere morir de hambre.", en: "Nobody wants to die of hunger." },
 
   conjugaciones: {
     presente: { yo: "muero", vos: "morís", tu: "mueres", el: "muere", nosotros: "morimos", vosotros: "morís", ellos: "mueren" },
@@ -52403,6 +52493,7 @@ const verbConjugationData = [
   gerundio:    "mostrando",
   participio:  "mostrado",
   notes:       "Stem-changing o→ue. Boot pattern applies (not in nosotros/vosotros).",
+  infinitivo: { es: "Voy a mostrar las fotos del viaje.", en: "I'm going to show the photos from the trip." },
 
   conjugaciones: {
     presente: { yo: "muestro", vos: "mostrás", tu: "muestras", el: "muestra", nosotros: "mostramos", vosotros: "mostráis", ellos: "muestran" },
@@ -52436,6 +52527,7 @@ const verbConjugationData = [
   gerundio:    "naciendo",
   participio:  "nacido",
   notes:       "Irregular yo present: nazco (not naco).",
+  infinitivo: { es: "Mi sobrino va a nacer en mayo.", en: "My nephew is going to be born in May." },
 
   conjugaciones: {
     presente: { yo: "nazco", vos: "nacés", tu: "naces", el: "nace", nosotros: "nacemos", vosotros: "nacéis", ellos: "nacen" },
@@ -52469,6 +52561,7 @@ const verbConjugationData = [
   gerundio:    "necesitando",
   participio:  "necesitado",
   notes:       "Very common. Regular -ar.",
+  infinitivo: { es: "Voy a necesitar tu ayuda mañana.", en: "I'm going to need your help tomorrow." },
 
   conjugaciones: {
     presente: { yo: "necesito", vos: "necesitás", tu: "necesitas", el: "necesita", nosotros: "necesitamos", vosotros: "necesitáis", ellos: "necesitan" },
@@ -52502,6 +52595,7 @@ const verbConjugationData = [
   gerundio:    "notando",
   participio:  "notado",
   notes:       "Regular -ar. Common in formal contexts.",
+  infinitivo: { es: "Es fácil notar la diferencia.", en: "It's easy to notice the difference." },
 
   conjugaciones: {
     presente: { yo: "noto", vos: "notás", tu: "notas", el: "nota", nosotros: "notamos", vosotros: "notáis", ellos: "notan" },
@@ -52535,6 +52629,7 @@ const verbConjugationData = [
   gerundio:    "ocurriendo",
   participio:  "ocurrido",
   notes:       "Regular -ir. Usually impersonal (le ocurre, me ocurre).",
+  infinitivo: { es: "Esto no debería ocurrir de nuevo.", en: "This shouldn't happen again." },
 
   conjugaciones: {
     presente: { yo: "ocurro", vos: "ocurrís", tu: "ocurres", el: "ocurre", nosotros: "ocurrimos", vosotros: "ocurrís", ellos: "ocurren" },
@@ -52568,6 +52663,7 @@ const verbConjugationData = [
   gerundio:    "odiando",
   participio:  "odiado",
   notes:       "Regular -ar. Strong emotion verb.",
+  infinitivo: { es: "No vale la pena odiar a nadie.", en: "It's not worth hating anyone." },
 
   conjugaciones: {
     presente: { yo: "odio", vos: "odiás", tu: "odias", el: "odia", nosotros: "odiamos", vosotros: "odiáis", ellos: "odian" },
@@ -52601,6 +52697,7 @@ const verbConjugationData = [
   gerundio:    "oyendo",
   participio:  "oído",
   notes:       "Highly irregular: oigo/oyes/oye/oímos/oís/oyen (pres); oyó/oyeron (preterit 3rd); oyendo (gerund).",
+  infinitivo: { es: "Quiero oír tu opinión.", en: "I want to hear your opinion." },
 
   conjugaciones: {
     presente: { yo: "oigo", vos: "oís", tu: "oyes", el: "oye", nosotros: "oímos", vosotros: "oís", ellos: "oyen" },
@@ -52634,6 +52731,7 @@ const verbConjugationData = [
   gerundio:    "olvidando",
   participio:  "olvidado",
   notes:       "Regular -ar. Reflexive olvidarse common: se me olvidó (I forgot).",
+  infinitivo: { es: "No quiero olvidar este día.", en: "I don't want to forget this day." },
 
   conjugaciones: {
     presente: { yo: "olvido", vos: "olvidás", tu: "olvidas", el: "olvida", nosotros: "olvidamos", vosotros: "olvidáis", ellos: "olvidan" },
@@ -52667,6 +52765,7 @@ const verbConjugationData = [
   gerundio:    "pagando",
   participio:  "pagado",
   notes:       "Spelling change g→gu before e (pagué in preterit 1st person).",
+  infinitivo: { es: "Voy a pagar con tarjeta.", en: "I'm going to pay by card." },
 
   conjugaciones: {
     presente: { yo: "pago", vos: "pagás", tu: "pagas", el: "paga", nosotros: "pagamos", vosotros: "pagáis", ellos: "pagan" },
@@ -52700,6 +52799,7 @@ const verbConjugationData = [
   gerundio:    "pareciendo",
   participio:  "parecido",
   notes:       "Irregular yo present: parezco. Reverse construction: me parece (it seems to me).",
+  infinitivo: { es: "Esto puede parecer raro, pero es cierto.", en: "This may seem strange, but it's true." },
 
   conjugaciones: {
     presente: { yo: "parezco", vos: "parecés", tu: "pareces", el: "parece", nosotros: "parecemos", vosotros: "parecéis", ellos: "parecen" },
@@ -52733,6 +52833,7 @@ const verbConjugationData = [
   gerundio:    "pasando",
   participio:  "pasado",
   notes:       "Very versatile. Regular -ar.",
+  infinitivo: { es: "Queremos pasar el verano en Bariloche.", en: "We want to spend the summer in Bariloche." },
 
   conjugaciones: {
     presente: { yo: "paso", vos: "pasás", tu: "pasas", el: "pasa", nosotros: "pasamos", vosotros: "pasáis", ellos: "pasan" },
@@ -52761,6 +52862,7 @@ const verbConjugationData = [
   {
   infinitive: "pedir",
   freq:        1, meaning: "to ask for / to order", regularity: "stem-changing e→i", gerundio: "pidiendo", participio: "pedido", notes: "Used for ordering food/drinks. Distinct from preguntar (to ask a question).",
+  infinitivo: { es: "Voy a pedir una pizza.", en: "I'm going to order a pizza." },
   conjugaciones: {
     presente: { yo: "pido", vos: "pedís", tu: "pides", el: "pide", nosotros: "pedimos", vosotros: "pedís", ellos: "piden" },
     indefinido: { yo: "pedí", vos: "pediste", tu: "pediste", el: "pidió", nosotros: "pedimos", vosotros: "pedisteis", ellos: "pidieron" },
@@ -52787,6 +52889,7 @@ const verbConjugationData = [
   {
   infinitive: "pensar",
   freq:        1, meaning: "to think", regularity: "stem-changing e→ie", gerundio: "pensando", participio: "pensado", notes: "pensar en = to think about. pensar + inf = to plan to.",
+  infinitivo: { es: "Necesito pensar un poco más.", en: "I need to think a bit more." },
   conjugaciones: {
     presente: { yo: "pienso", vos: "pensás", tu: "piensas", el: "piensa", nosotros: "pensamos", vosotros: "pensáis", ellos: "piensan" },
     indefinido: { yo: "pensé", vos: "pensaste", tu: "pensaste", el: "pensó", nosotros: "pensamos", vosotros: "pensasteis", ellos: "pensaron" },
@@ -52813,6 +52916,7 @@ const verbConjugationData = [
   {
   infinitive: "perder",
   freq:        2, meaning: "to lose / to miss / to waste", regularity: "stem-changing e→ie", gerundio: "perdiendo", participio: "perdido", notes: "perder tiempo = to waste time. perder el tren = to miss the train.",
+  infinitivo: { es: "No quiero perder el tren.", en: "I don't want to miss the train." },
   conjugaciones: {
     presente: { yo: "pierdo", vos: "perdés", tu: "pierdes", el: "pierde", nosotros: "perdemos", vosotros: "perdéis", ellos: "pierden" },
     indefinido: { yo: "perdí", vos: "perdiste", tu: "perdiste", el: "perdió", nosotros: "perdimos", vosotros: "perdisteis", ellos: "perdieron" },
@@ -52839,6 +52943,7 @@ const verbConjugationData = [
   {
   infinitive: "permitir",
   freq:        2, meaning: "to allow / to permit / to let", regularity: "regular -ir", gerundio: "permitiendo", participio: "permitido", notes: "permitir + inf = to allow (someone) to (do something). permitir que = to allow that.",
+  infinitivo: { es: "No van a permitir fumar acá.", en: "They won't allow smoking here." },
   conjugaciones: {
     presente: { yo: "permito", vos: "permitís", tu: "permites", el: "permite", nosotros: "permitimos", vosotros: "permitís", ellos: "permiten" },
     indefinido: { yo: "permití", vos: "permitiste", tu: "permitiste", el: "permitió", nosotros: "permitimos", vosotros: "permitisteis", ellos: "permitieron" },
@@ -52865,6 +52970,7 @@ const verbConjugationData = [
   {
   infinitive: "poder",
   freq:        1, meaning: "to be able to / can", regularity: "stem-changing o→ue", gerundio: "pudiendo", participio: "podido", notes: "Also irregular preterit: pude, pudiste...",
+  infinitivo: { es: "Quiero poder viajar más seguido.", en: "I want to be able to travel more often." },
   conjugaciones: {
     presente: { yo: "puedo", vos: "podés", tu: "puedes", el: "puede", nosotros: "podemos", vosotros: "podéis", ellos: "pueden" },
     indefinido: { yo: "pude", vos: "pudiste", tu: "pudiste", el: "pudo", nosotros: "pudimos", vosotros: "pudisteis", ellos: "pudieron" },
@@ -52891,6 +52997,7 @@ const verbConjugationData = [
   {
   infinitive: "poner",
   freq:        1, meaning: "to put / to place / to set", regularity: "irregular", gerundio: "poniendo", participio: "puesto", notes: "pongo, puse, pondré... Irregular participle: puesto.",
+  infinitivo: { es: "Voy a poner la mesa.", en: "I'm going to set the table." },
   conjugaciones: {
     presente: { yo: "pongo", vos: "ponés", tu: "pones", el: "pone", nosotros: "ponemos", vosotros: "ponéis", ellos: "ponen" },
     indefinido: { yo: "puse", vos: "pusiste", tu: "pusiste", el: "puso", nosotros: "pusimos", vosotros: "pusisteis", ellos: "pusieron" },
@@ -52917,6 +53024,7 @@ const verbConjugationData = [
   {
   infinitive: "ponerse",
   freq:        2, meaning: "to put on / to become / to get (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "poniéndose", participio: "puesto", notes: "ponerse + adj = to become (happy, sad, etc). ponerse ropa = to put on clothes. Irregular participle: puesto.",
+  infinitivo: { es: "Voy a ponerme el abrigo.", en: "I'm going to put on my coat." },
   conjugaciones: {
     presente: { yo: "me pongo", vos: "te ponés", tu: "te pones", el: "se pone", nosotros: "nos ponemos", vosotros: "os ponéis", ellos: "se ponen" },
     indefinido: { yo: "me puse", vos: "te pusiste", tu: "te pusiste", el: "se puso", nosotros: "nos pusimos", vosotros: "os pusisteis", ellos: "se pusieron" },
@@ -52943,6 +53051,7 @@ const verbConjugationData = [
   {
   infinitive: "practicar",
   freq:        2, meaning: "to practice / to play (a sport)", regularity: "regular -ar", gerundio: "practicando", participio: "practicado", notes: "Common in sports context: practicar fútbol = to play football.",
+  infinitivo: { es: "Quiero practicar español todos los días.", en: "I want to practice Spanish every day." },
   conjugaciones: {
     presente: { yo: "practico", vos: "practicás", tu: "practicas", el: "practica", nosotros: "practicamos", vosotros: "practicáis", ellos: "practican" },
     indefinido: { yo: "practiqué", vos: "practicaste", tu: "practicaste", el: "practicó", nosotros: "practicamos", vosotros: "practicasteis", ellos: "practicaron" },
@@ -52969,6 +53078,7 @@ const verbConjugationData = [
   {
   infinitive: "preferir",
   freq:        2, meaning: "to prefer / to like better", regularity: "stem-changing e→ie, e→i", gerundio: "prefiriendo", participio: "preferido", notes: "preferir + inf = to prefer to (do something). Preterit uses e→i: preferí, preferiste.",
+  infinitivo: { es: "Suelo preferir el campo a la ciudad.", en: "I usually prefer the countryside to the city." },
   conjugaciones: {
     presente: { yo: "prefiero", vos: "preferís", tu: "prefieres", el: "prefiere", nosotros: "preferimos", vosotros: "preferís", ellos: "prefieren" },
     indefinido: { yo: "preferí", vos: "preferiste", tu: "preferiste", el: "prefirió", nosotros: "preferimos", vosotros: "preferisteis", ellos: "prefirieron" },
@@ -52995,6 +53105,7 @@ const verbConjugationData = [
   {
   infinitive: "preguntar",
   freq:        2, meaning: "to ask (a question) / to inquire", regularity: "regular -ar", gerundio: "preguntando", participio: "preguntado", notes: "Distinct from pedir (to ask for). preguntar por = to ask about / to inquire after.",
+  infinitivo: { es: "Voy a preguntar por el precio.", en: "I'm going to ask about the price." },
   conjugaciones: {
     presente: { yo: "pregunto", vos: "preguntás", tu: "preguntas", el: "pregunta", nosotros: "preguntamos", vosotros: "preguntáis", ellos: "preguntan" },
     indefinido: { yo: "pregunté", vos: "preguntaste", tu: "preguntaste", el: "preguntó", nosotros: "preguntamos", vosotros: "preguntasteis", ellos: "preguntaron" },
@@ -53021,6 +53132,7 @@ const verbConjugationData = [
   {
   infinitive: "preocuparse",
   freq:        2, meaning: "to worry / to be concerned", regularity: "reflexive regular -ar", gerundio: "preocupándose", participio: "preocupado", notes: "preocuparse por = to worry about. Always reflexive.",
+  infinitivo: { es: "No hay que preocuparse por eso.", en: "There's no need to worry about that." },
   conjugaciones: {
     presente: { yo: "me preocupo", vos: "te preocupás", tu: "te preocupas", el: "se preocupa", nosotros: "nos preocupamos", vosotros: "os preocupáis", ellos: "se preocupan" },
     indefinido: { yo: "me preocupé", vos: "te preocupaste", tu: "te preocupaste", el: "se preocupó", nosotros: "nos preocupamos", vosotros: "os preocupasteis", ellos: "se preocuparon" },
@@ -53047,6 +53159,7 @@ const verbConjugationData = [
   {
   infinitive: "preparar",
   freq:        2, meaning: "to prepare / to get ready / to make", regularity: "regular -ar", gerundio: "preparando", participio: "preparado", notes: "Common in cooking and planning contexts.",
+  infinitivo: { es: "Voy a preparar un asado.", en: "I'm going to prepare a barbecue." },
   conjugaciones: {
     presente: { yo: "preparo", vos: "preparás", tu: "preparas", el: "prepara", nosotros: "preparamos", vosotros: "preparáis", ellos: "preparan" },
     indefinido: { yo: "preparé", vos: "preparaste", tu: "preparaste", el: "preparó", nosotros: "preparamos", vosotros: "preparasteis", ellos: "prepararon" },
@@ -53073,6 +53186,7 @@ const verbConjugationData = [
   {
   infinitive: "quedar",
   freq:        2, meaning: "to remain / to stay / to fit / to be left", regularity: "regular -ar", gerundio: "quedando", participio: "quedado", notes: "quedar + adj = to stay/be in a state. quedar en = to agree on. quedar bien/mal = to fit well/poorly.",
+  infinitivo: { es: "Podemos quedar a las ocho.", en: "We can meet at eight." },
   conjugaciones: {
     presente: { yo: "quedo", vos: "quedás", tu: "quedas", el: "queda", nosotros: "quedamos", vosotros: "quedáis", ellos: "quedan" },
     indefinido: { yo: "quedé", vos: "quedaste", tu: "quedaste", el: "quedó", nosotros: "quedamos", vosotros: "quedasteis", ellos: "quedaron" },
@@ -53099,6 +53213,7 @@ const verbConjugationData = [
   {
   infinitive: "quedarse",
   freq:        2, meaning: "to stay / to remain / to keep", regularity: "reflexive regular -ar", gerundio: "quedándose", participio: "quedado", notes: "quedarse con = to keep / to stay with. Always reflexive. Similar to quedar but emphasizes remaining/staying in a place.",
+  infinitivo: { es: "Quiero quedarme en casa hoy.", en: "I want to stay home today." },
   conjugaciones: {
     presente: { yo: "me quedo", vos: "te quedás", tu: "te quedas", el: "se queda", nosotros: "nos quedamos", vosotros: "os quedáis", ellos: "se quedan" },
     indefinido: { yo: "me quedé", vos: "te quedaste", tu: "te quedaste", el: "se quedó", nosotros: "nos quedamos", vosotros: "os quedasteis", ellos: "se quedaron" },
@@ -53125,6 +53240,7 @@ const verbConjugationData = [
   {
   infinitive: "querer",
   freq:        1, meaning: "to want / to wish / to love", regularity: "stem-changing e→ie", gerundio: "queriendo", participio: "querido", notes: "querer a = to love (a person). querer + inf = to want to (do something)",
+  infinitivo: { es: "Hay que querer lo que uno hace.", en: "You have to love what you do." },
   conjugaciones: {
     presente: { yo: "quiero", vos: "querés", tu: "quieres", el: "quiere", nosotros: "queremos", vosotros: "queréis", ellos: "quieren" },
     indefinido: { yo: "quise", vos: "quisiste", tu: "quisiste", el: "quiso", nosotros: "quisimos", vosotros: "quisisteis", ellos: "quisieron" },
@@ -53151,6 +53267,7 @@ const verbConjugationData = [
   {
   infinitive: "recibir",
   freq:        2, meaning: "to receive / to get / to accept", regularity: "regular -ir", gerundio: "recibiendo", participio: "recibido", notes: "Common in formal and everyday contexts.",
+  infinitivo: { es: "Voy a recibir un paquete mañana.", en: "I'm going to receive a package tomorrow." },
   conjugaciones: {
     presente: { yo: "recibo", vos: "recibís", tu: "recibes", el: "recibe", nosotros: "recibimos", vosotros: "recibís", ellos: "reciben" },
     indefinido: { yo: "recibí", vos: "recibiste", tu: "recibiste", el: "recibió", nosotros: "recibimos", vosotros: "recibisteis", ellos: "recibieron" },
@@ -53177,6 +53294,7 @@ const verbConjugationData = [
   {
   infinitive: "recordar",
   freq:        2, meaning: "to remember / to recall / to remind", regularity: "stem-changing o→ue", gerundio: "recordando", participio: "recordado", notes: "recordar a alguien = to remind someone. recordar que = to remember that.",
+  infinitivo: { es: "Quiero recordar este viaje siempre.", en: "I want to remember this trip forever." },
   conjugaciones: {
     presente: { yo: "recuerdo", vos: "recordás", tu: "recuerdas", el: "recuerda", nosotros: "recordamos", vosotros: "recordáis", ellos: "recuerdan" },
     indefinido: { yo: "recordé", vos: "recordaste", tu: "recordaste", el: "recordó", nosotros: "recordamos", vosotros: "recordasteis", ellos: "recordaron" },
@@ -53203,6 +53321,7 @@ const verbConjugationData = [
   {
   infinitive: "regresar",
   freq:        2, meaning: "to return / to go back / to come back", regularity: "regular -ar", gerundio: "regresando", participio: "regresado", notes: "Common in Latin America. Similar to volver but more common in certain regions.",
+  infinitivo: { es: "Vamos a regresar el domingo.", en: "We're going to come back on Sunday." },
   conjugaciones: {
     presente: { yo: "regreso", vos: "regresás", tu: "regresas", el: "regresa", nosotros: "regresamos", vosotros: "regresáis", ellos: "regresan" },
     indefinido: { yo: "regresé", vos: "regresaste", tu: "regresaste", el: "regresó", nosotros: "regresamos", vosotros: "regresasteis", ellos: "regresaron" },
@@ -53227,32 +53346,6 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "reír",
-  freq:        2, meaning: "to laugh / to smile", regularity: "irregular e→í accent", gerundio: "riendo", participio: "reído", notes: "Note accent on í. Related to sonreír (to smile). Preterit: reí, reíste...",
-  conjugaciones: {
-    presente: { yo: "río", vos: "reís", tu: "ríes", el: "ríe", nosotros: "reímos", vosotros: "reís", ellos: "ríen" },
-    indefinido: { yo: "reí", vos: "reíste", tu: "reíste", el: "rió", nosotros: "reímos", vosotros: "reísteis", ellos: "rieron" },
-    imperfecto: { yo: "reía", vos: "reías", tu: "reías", el: "reía", nosotros: "reíamos", vosotros: "reíais", ellos: "reían" },
-    perfecto: { yo: "he reído", vos: "has reído", tu: "has reído", el: "ha reído", nosotros: "hemos reído", vosotros: "habéis reído", ellos: "han reído" },
-    futuro: { yo: "reiré", vos: "reirás", tu: "reirás", el: "reirá", nosotros: "reiremos", vosotros: "reiréis", ellos: "reirán" },
-    condicional: { yo: "reiría", vos: "reirías", tu: "reirías", el: "reiría", nosotros: "reiríamos", vosotros: "reiríais", ellos: "reirían" },
-    subjPresente: { yo: "ría", vos: "rías", tu: "rías", el: "ría", nosotros: "riamos", vosotros: "riáis", ellos: "rían" },
-    subjImperfecto: { yo: "riera", vos: "rieras", tu: "rieras", el: "riera", nosotros: "riéramos", vosotros: "rierais", ellos: "rieran" },
-    progresivo: { yo: "estoy riendo", vos: "estás riendo", tu: "estás riendo", el: "está riendo", nosotros: "estamos riendo", vosotros: "estáis riendo", ellos: "están riendo" }
-  },
-  oraciones: {
-    presente: { yo: { es: "Río mucho.", en: "I laugh a lot." }, vos: { es: "¿Reís?", en: "Do you laugh?" }, tu: { es: "Ríes bien.", en: "You laugh well." }, el: { es: "Él ríe.", en: "He laughs." }, nosotros: { es: "Reímos juntos.", en: "We laugh together." }, vosotros: { es: "¿Reís?", en: "Do you laugh?" }, ellos: { es: "Ellos ríen.", en: "They laugh." } },
-    indefinido: { yo: { es: "Reí ayer.", en: "I laughed yesterday." }, vos: { es: "¿Reíste?", en: "Did you laugh?" }, tu: { es: "Reíste bien.", en: "You laughed well." }, el: { es: "Él rió.", en: "He laughed." }, nosotros: { es: "Reímos juntos.", en: "We laughed together." }, vosotros: { es: "¿Reísteis?", en: "Did you laugh?" }, ellos: { es: "Ellos rieron.", en: "They laughed." } },
-    imperfecto: { yo: { es: "Reía siempre.", en: "I always laughed." }, vos: { es: "¿Reías?", en: "Did you use to laugh?" }, tu: { es: "Reías bien.", en: "You used to laugh well." }, el: { es: "Él reía cada día.", en: "He laughed every day." }, nosotros: { es: "Reíamos juntos.", en: "We used to laugh together." }, vosotros: { es: "¿Reíais?", en: "Did you use to laugh?" }, ellos: { es: "Ellos reían.", en: "They used to laugh." } },
-    perfecto: { yo: { es: "He reído mucho.", en: "I have laughed a lot." }, vos: { es: "¿Has reído?", en: "Have you laughed?" }, tu: { es: "Has reído bien.", en: "You have laughed well." }, el: { es: "Ha reído.", en: "He has laughed." }, nosotros: { es: "Hemos reído juntos.", en: "We have laughed together." }, vosotros: { es: "¿Habéis reído?", en: "Have you laughed?" }, ellos: { es: "Han reído.", en: "They have laughed." } },
-    futuro: { yo: { es: "Reiré mañana.", en: "I will laugh tomorrow." }, vos: { es: "¿Reirás?", en: "Will you laugh?" }, tu: { es: "Reirás bien.", en: "You will laugh well." }, el: { es: "Él reirá.", en: "He will laugh." }, nosotros: { es: "Reiremos juntos.", en: "We will laugh together." }, vosotros: { es: "¿Reiréis?", en: "Will you laugh?" }, ellos: { es: "Ellos reirán.", en: "They will laugh." } },
-    condicional: { yo: { es: "Reiría si pudiera.", en: "I would laugh if I could." }, vos: { es: "¿Reirías?", en: "Would you laugh?" }, tu: { es: "Reirías bien.", en: "You would laugh well." }, el: { es: "Él reiría.", en: "He would laugh." }, nosotros: { es: "Reiríamos juntos.", en: "We would laugh together." }, vosotros: { es: "¿Reiríais?", en: "Would you laugh?" }, ellos: { es: "Reirían si pudieran.", en: "They would laugh if they could." } },
-    subjPresente: { yo: { es: "Espero que ría.", en: "I hope he laughs." }, vos: { es: "Es importante que rías.", en: "It's important that you laugh." }, tu: { es: "Ojalá rías.", en: "Hopefully you laugh." }, el: { es: "Necesito que ría.", en: "I need him to laugh." }, nosotros: { es: "Esperamos que riamos.", en: "We hope we laugh." }, vosotros: { es: "Es mejor que riáis.", en: "It's better that you laugh." }, ellos: { es: "Es probable que rían.", en: "It's likely that they laugh." } },
-    subjImperfecto: { yo: { es: "Si riera, sería feliz.", en: "If I laughed, I would be happy." }, vos: { es: "Ojalá rieras.",  en: "I wish you would laugh." }, tu: { es: "Si rieras, sería perfecto.", en: "If you laughed, it would be perfect." }, el: { es: "Si él riera, estaría contento.",  en: "If he laughed, he would be happy." }, nosotros: { es: "Si riéramos juntos, sería mejor.", en: "If we laughed together, it would be better." }, vosotros: { es: "Si rierais, ayudaríais.",  en: "If you laughed, you would help." }, ellos: { es: "Si rieran, lo harían.",  en: "If they laughed, they would do it." } },
-    progresivo: { yo: { es: "Estoy riendo.", en: "I am laughing." }, vos: { es: "¿Estás riendo?", en: "Are you laughing?" }, tu: { es: "Estás riendo bien.", en: "You are laughing well." }, el: { es: "Está riendo.", en: "He is laughing." }, nosotros: { es: "Estamos riendo juntos.", en: "We are laughing together." }, vosotros: { es: "¿Estáis riendo?", en: "Are you laughing?" }, ellos: { es: "Están riendo ahora.", en: "They are laughing now." } }
-  }
-},
-  {
   infinitive:  "reír",
   freq:        2,
   meaning:     "to laugh",
@@ -53260,6 +53353,7 @@ const verbConjugationData = [
   gerundio:    "riendo",
   participio:  "reído",
   notes:       "Stem-changing e→i. Preterit: reí/reíste/rió/reímos/reísteis/rieron. Gerund: riendo.",
+  infinitivo: { es: "Me encanta reír con mis amigos.", en: "I love laughing with my friends." },
 
   conjugaciones: {
     presente: { yo: "río", vos: "reís", tu: "ríes", el: "ríe", nosotros: "reímos", vosotros: "reís", ellos: "ríen" },
@@ -53288,6 +53382,7 @@ const verbConjugationData = [
   {
   infinitive: "resolver",
   freq:        2, meaning: "to solve / to resolve / to settle", regularity: "stem-changing o→ue, irregular participle", gerundio: "resolviendo", participio: "resuelto", notes: "Irregular participle: resuelto. resolver un problema = to solve a problem.",
+  infinitivo: { es: "Tenemos que resolver este problema hoy.", en: "We have to solve this problem today." },
   conjugaciones: {
     presente: { yo: "resuelvo", vos: "resolvés", tu: "resuelves", el: "resuelve", nosotros: "resolvemos", vosotros: "resolvéis", ellos: "resuelven" },
     indefinido: { yo: "resolví", vos: "resolviste", tu: "resolviste", el: "resolvió", nosotros: "resolvimos", vosotros: "resolvisteis", ellos: "resolvieron" },
@@ -53314,6 +53409,7 @@ const verbConjugationData = [
   {
   infinitive: "responder",
   freq:        2, meaning: "to answer / to reply / to respond", regularity: "regular -er", gerundio: "respondiendo", participio: "respondido", notes: "responder a = to answer/reply to. responder por = to be responsible for.",
+  infinitivo: { es: "Voy a responder el mail más tarde.", en: "I'm going to reply to the email later." },
   conjugaciones: {
     presente: { yo: "respondo", vos: "respondés", tu: "respondes", el: "responde", nosotros: "respondemos", vosotros: "respondéis", ellos: "responden" },
     indefinido: { yo: "respondí", vos: "respondiste", tu: "respondiste", el: "respondió", nosotros: "respondimos", vosotros: "respondisteis", ellos: "respondieron" },
@@ -53340,6 +53436,7 @@ const verbConjugationData = [
   {
   infinitive: "reunirse",
   freq:        3, meaning: "to meet / to gather / to join", regularity: "reflexive regular -ir", gerundio: "reuniéndose", participio: "reunido", notes: "Always reflexive. reunirse con = to meet up with. reunirse en = to meet at.",
+  infinitivo: { es: "Podemos reunirnos el lunes por la tarde.", en: "We can meet on Monday afternoon." },
   conjugaciones: {
     presente: { yo: "me reúno", vos: "te reunís", tu: "te reúnes", el: "se reúne", nosotros: "nos reunimos", vosotros: "os reunís", ellos: "se reúnen" },
     indefinido: { yo: "me reuní", vos: "te reuniste", tu: "te reuniste", el: "se reunió", nosotros: "nos reunimos", vosotros: "os reunisteis", ellos: "se reunieron" },
@@ -53366,6 +53463,7 @@ const verbConjugationData = [
   {
   infinitive: "revisar",
   freq:        3, meaning: "to review / to check / to examine", regularity: "regular -ar", gerundio: "revisando", participio: "revisado", notes: "Common in academic and professional contexts. revisar un trabajo = to check/review work.",
+  infinitivo: { es: "Voy a revisar el informe otra vez.", en: "I'm going to check the report again." },
   conjugaciones: {
     presente: { yo: "reviso", vos: "revisás", tu: "revisas", el: "revisa", nosotros: "revisamos", vosotros: "revisáis", ellos: "revisan" },
     indefinido: { yo: "revisé", vos: "revisaste", tu: "revisaste", el: "revisó", nosotros: "revisamos", vosotros: "revisasteis", ellos: "revisaron" },
@@ -53392,6 +53490,7 @@ const verbConjugationData = [
   {
   infinitive: "romper",
   freq:        2, meaning: "to break / to tear / to snap", regularity: "regular -er", gerundio: "rompiendo", participio: "roto", notes: "Irregular participle: roto (not rompido).",
+  infinitivo: { es: "Es fácil romper un vaso así.", en: "It's easy to break a glass like this." },
   conjugaciones: {
     presente: { yo: "rompo", vos: "rompés", tu: "rompes", el: "rompe", nosotros: "rompemos", vosotros: "rompéis", ellos: "rompen" },
     indefinido: { yo: "rompí", vos: "rompiste", tu: "rompiste", el: "rompió", nosotros: "rompimos", vosotros: "rompisteis", ellos: "rompieron" },
@@ -53418,6 +53517,7 @@ const verbConjugationData = [
   {
   infinitive: "saber",
   freq:        1, meaning: "to know / to know how to", regularity: "highly irregular", gerundio: "sabiendo", participio: "sabido", notes: "sé (I know), supo (he knew), sabré (I will know). Irregular throughout. Preterit: supe, supiste...",
+  infinitivo: { es: "Quiero saber la verdad.", en: "I want to know the truth." },
   conjugaciones: {
     presente: { yo: "sé", vos: "sabés", tu: "sabes", el: "sabe", nosotros: "sabemos", vosotros: "sabéis", ellos: "saben" },
     indefinido: { yo: "supe", vos: "supiste", tu: "supiste", el: "supo", nosotros: "supimos", vosotros: "supisteis", ellos: "supieron" },
@@ -53444,6 +53544,7 @@ const verbConjugationData = [
   {
   infinitive: "sacar",
   freq:        2, meaning: "to take out / to remove / to take (photos/exams)", regularity: "regular -ar", gerundio: "sacando", participio: "sacado", notes: "sacar fotos = to take photos. sacar nota = to get a grade.",
+  infinitivo: { es: "Voy a sacar la basura.", en: "I'm going to take out the trash." },
   conjugaciones: {
     presente: { yo: "saco", vos: "sacás", tu: "sacas", el: "saca", nosotros: "sacamos", vosotros: "sacáis", ellos: "sacan" },
     indefinido: { yo: "saqué", vos: "sacaste", tu: "sacaste", el: "sacó", nosotros: "sacamos", vosotros: "sacasteis", ellos: "sacaron" },
@@ -53470,6 +53571,7 @@ const verbConjugationData = [
   {
   infinitive: "salir",
   freq:        1, meaning: "to leave / to go out / to exit", regularity: "irregular", gerundio: "saliendo", participio: "salido", notes: "Irregular yo form (salgo). Regular otherwise except preterit is completely regular.",
+  infinitivo: { es: "Vamos a salir a cenar esta noche.", en: "We're going to go out to dinner tonight." },
   conjugaciones: {
     presente: { yo: "salgo", vos: "salís", tu: "sales", el: "sale", nosotros: "salimos", vosotros: "salís", ellos: "salen" },
     indefinido: { yo: "salí", vos: "saliste", tu: "saliste", el: "salió", nosotros: "salimos", vosotros: "salisteíis", ellos: "salieron" },
@@ -53496,6 +53598,7 @@ const verbConjugationData = [
   {
   infinitive: "seguir",
   freq:        1, meaning: "to follow / to continue / to keep going", regularity: "stem-changing e→i, irregular yo", gerundio: "siguiendo", participio: "seguido", notes: "Irregular yo form (sigo). Stem change in preterit: seguí, siguiste...",
+  infinitivo: { es: "Hay que seguir hasta la esquina.", en: "You have to keep going to the corner." },
   conjugaciones: {
     presente: { yo: "sigo", vos: "seguís", tu: "sigues", el: "sigue", nosotros: "seguimos", vosotros: "seguís", ellos: "siguen" },
     indefinido: { yo: "seguí", vos: "seguiste", tu: "seguiste", el: "siguió", nosotros: "seguimos", vosotros: "seguisteis", ellos: "siguieron" },
@@ -53522,6 +53625,7 @@ const verbConjugationData = [
   {
   infinitive: "sentir",
   freq:        2, meaning: "to feel / to sense / to hear", regularity: "stem-changing e→ie, e→i", gerundio: "sintiendo", participio: "sentido", notes: "sentir + sustantivo = to feel/sense something. sentir que = to feel that.",
+  infinitivo: { es: "Me gusta sentir el sol.", en: "I like feeling the sun." },
   conjugaciones: {
     presente: { yo: "siento", vos: "sentís", tu: "sientes", el: "siente", nosotros: "sentimos", vosotros: "sentís", ellos: "sienten" },
     indefinido: { yo: "sentí", vos: "sentiste", tu: "sentiste", el: "sintió", nosotros: "sentimos", vosotros: "sentisteis", ellos: "sintieron" },
@@ -53548,6 +53652,7 @@ const verbConjugationData = [
   {
   infinitive: "sentirse",
   freq:        2, meaning: "to feel / to feel oneself (emotional state)", regularity: "reflexive stem-changing e→ie, e→i", gerundio: "sintiéndose", participio: "sentido", notes: "Always reflexive. sentirse + adj = to feel (adjective). Similar to estar but more emotional.",
+  infinitivo: { es: "Quiero sentirme mejor pronto.", en: "I want to feel better soon." },
   conjugaciones: {
     presente: { yo: "me siento", vos: "te sentís", tu: "te sientes", el: "se siente", nosotros: "nos sentimos", vosotros: "os sentís", ellos: "se sienten" },
     indefinido: { yo: "me sentí", vos: "te sentiste", tu: "te sentiste", el: "se sintió", nosotros: "nos sentimos", vosotros: "os sentisteis", ellos: "se sintieron" },
@@ -53574,6 +53679,7 @@ const verbConjugationData = [
   {
   infinitive: "ser",
   freq:        1, meaning: "to be (permanent, identity, profession)", regularity: "highly irregular", gerundio: "siendo", participio: "sido", notes: "Most irregular verb in Spanish. Completely unpredictable conjugation. Key difference from estar.",
+  infinitivo: { es: "Quiero ser médico algún día.", en: "I want to be a doctor someday." },
   conjugaciones: {
     presente: { yo: "soy", vos: "sos", tu: "eres", el: "es", nosotros: "somos", vosotros: "sois", ellos: "son" },
     indefinido: { yo: "fui", vos: "fuiste", tu: "fuiste", el: "fue", nosotros: "fuimos", vosotros: "fuisteis", ellos: "fueron" },
@@ -53600,6 +53706,7 @@ const verbConjugationData = [
   {
   infinitive: "soler",
   freq:        3, meaning: "to usually do / to be accustomed to / to be in the habit of", regularity: "stem-changing o→ue", gerundio: "soliendo", participio: "solido", notes: "Only used in present/imperfect. soler + inf = to usually (do). No preterit or future form used.",
+  infinitivo: { es: "Soler significa hacer algo habitualmente.", en: "'Soler' means to do something habitually." },
   conjugaciones: {
     presente: { yo: "suelo", vos: "solés", tu: "sueles", el: "suele", nosotros: "solemos", vosotros: "soléis", ellos: "suelen" },
     indefinido: { yo: "solí", vos: "soliste", tu: "soliste", el: "solió", nosotros: "solimos", vosotros: "solisteis", ellos: "solieron" },
@@ -53626,6 +53733,7 @@ const verbConjugationData = [
   {
   infinitive: "subir",
   freq:        2, meaning: "to go up / to climb / to upload / to raise", regularity: "regular -ir", gerundio: "subiendo", participio: "subido", notes: "subir + sustantivo = to go up (something). subir a = to climb up, upload to.",
+  infinitivo: { es: "Vamos a subir al tercer piso.", en: "We're going to go up to the third floor." },
   conjugaciones: {
     presente: { yo: "subo", vos: "subís", tu: "subes", el: "sube", nosotros: "subimos", vosotros: "subís", ellos: "suben" },
     indefinido: { yo: "subí", vos: "subiste", tu: "subiste", el: "subió", nosotros: "subimos", vosotros: "subisteis", ellos: "subieron" },
@@ -53652,6 +53760,7 @@ const verbConjugationData = [
   {
   infinitive: "tardar",
   freq:        3, meaning: "to take (time) / to be slow / to delay", regularity: "regular -ar", gerundio: "tardando", participio: "tardado", notes: "tardar en + inf = to take time to (do). tardar + time expression = how long something takes.",
+  infinitivo: { es: "Voy a tardar una hora en llegar.", en: "It'll take me an hour to get there." },
   conjugaciones: {
     presente: { yo: "tardo", vos: "tardás", tu: "tardas", el: "tarda", nosotros: "tardamos", vosotros: "tardáis", ellos: "tardan" },
     indefinido: { yo: "tardé", vos: "tardaste", tu: "tardaste", el: "tardó", nosotros: "tardamos", vosotros: "tardasteis", ellos: "tardaron" },
@@ -53678,6 +53787,7 @@ const verbConjugationData = [
   {
   infinitive: "tener",
   freq:        1, meaning: "to have / to hold / to possess", regularity: "stem-changing e→ie, irregular", gerundio: "teniendo", participio: "tenido", notes: "tener que + inf = must/have to. Preterit: tuve, tuviste... Irregular throughout.",
+  infinitivo: { es: "Voy a tener tiempo mañana.", en: "I'm going to have time tomorrow." },
   conjugaciones: {
     presente: { yo: "tengo", vos: "tenés", tu: "tienes", el: "tiene", nosotros: "tenemos", vosotros: "tenéis", ellos: "tienen" },
     indefinido: { yo: "tuve", vos: "tuviste", tu: "tuviste", el: "tuvo", nosotros: "tuvimos", vosotros: "tuvisteis", ellos: "tuvieron" },
@@ -53704,6 +53814,7 @@ const verbConjugationData = [
   {
   infinitive: "terminar",
   freq:        2, meaning: "to finish / to end / to complete", regularity: "regular -ar", gerundio: "terminando", participio: "terminado", notes: "terminar de + inf = to finish (doing). Very common in everyday Spanish.",
+  infinitivo: { es: "Voy a terminar esto antes del lunes.", en: "I'm going to finish this before Monday." },
   conjugaciones: {
     presente: { yo: "termino", vos: "terminás", tu: "terminas", el: "termina", nosotros: "terminamos", vosotros: "terminéis", ellos: "terminan" },
     indefinido: { yo: "terminé", vos: "terminaste", tu: "terminaste", el: "terminó", nosotros: "terminamos", vosotros: "terminasteis", ellos: "terminaron" },
@@ -53730,6 +53841,7 @@ const verbConjugationData = [
   {
   infinitive: "tocar",
   freq:        2, meaning: "to touch / to play (music) / to knock", regularity: "regular -ar", gerundio: "tocando", participio: "tocado", notes: "tocar un instrumento = to play an instrument. tocar a alguien = to touch someone.",
+  infinitivo: { es: "Me gustaría tocar la guitarra mejor.", en: "I'd like to play the guitar better." },
   conjugaciones: {
     presente: { yo: "toco", vos: "tocás", tu: "tocas", el: "toca", nosotros: "tocamos", vosotros: "tocáis", ellos: "tocan" },
     indefinido: { yo: "toqué", vos: "tocaste", tu: "tocaste", el: "tocó", nosotros: "tocamos", vosotros: "tocasteis", ellos: "tocaron" },
@@ -53756,6 +53868,7 @@ const verbConjugationData = [
   {
   infinitive: "tomar",
   freq:        1, meaning: "to take / to drink / to have (beverage or food)", regularity: "regular -ar", gerundio: "tomando", participio: "tomado", notes: "Very common. tomar un café = to have/drink a coffee. tomar una decisión = to make a decision.",
+  infinitivo: { es: "Voy a tomar un café con leche.", en: "I'm going to have a coffee with milk." },
   conjugaciones: {
     presente: { yo: "tomo", vos: "tomás", tu: "tomas", el: "toma", nosotros: "tomamos", vosotros: "tomáis", ellos: "toman" },
     indefinido: { yo: "tomé", vos: "tomaste", tu: "tomaste", el: "tomó", nosotros: "tomamos", vosotros: "tomasteis", ellos: "tomaron" },
@@ -53782,6 +53895,7 @@ const verbConjugationData = [
   {
   infinitive: "traer",
   freq:        1, meaning: "to bring / to carry / to fetch", regularity: "irregular", gerundio: "trayendo", participio: "traído", notes: "Irregular yo form (traigo). Preterit: traje, trajiste... Accent on í in participle.",
+  infinitivo: { es: "Voy a traer el postre.", en: "I'm going to bring dessert." },
   conjugaciones: {
     presente: { yo: "traigo", vos: "traés", tu: "traes", el: "trae", nosotros: "traemos", vosotros: "traéis", ellos: "traen" },
     indefinido: { yo: "traje", vos: "trajiste", tu: "trajiste", el: "trajo", nosotros: "trajimos", vosotros: "trajisteis", ellos: "trajeron" },
@@ -53808,6 +53922,7 @@ const verbConjugationData = [
   {
   infinitive: "usar",
   freq:        2, meaning: "to use / to wear / to employ", regularity: "regular -ar", gerundio: "usando", participio: "usado", notes: "Very common. usar ropa = to wear clothes. usar un programa = to use a program.",
+  infinitivo: { es: "Hay que usar casco en moto.", en: "You have to wear a helmet on a motorbike." },
   conjugaciones: {
     presente: { yo: "uso", vos: "usás", tu: "usas", el: "usa", nosotros: "usamos", vosotros: "usáis", ellos: "usan" },
     indefinido: { yo: "usé", vos: "usaste", tu: "usaste", el: "usó", nosotros: "usamos", vosotros: "usasteis", ellos: "usaron" },
@@ -53834,6 +53949,7 @@ const verbConjugationData = [
   {
   infinitive: "valer",
   freq:        3, meaning: "to be worth / to cost / to be valid / to be useful", regularity: "irregular", gerundio: "valiendo", participio: "valido", notes: "Irregular yo form (valgo). valer la pena = to be worth it. ¿Cuánto vale? = How much does it cost?",
+  infinitivo: { es: "Seguro va a valer la pena.", en: "It's sure to be worth it." },
   conjugaciones: {
     presente: { yo: "valgo", vos: "valés", tu: "vales", el: "vale", nosotros: "valemos", vosotros: "valéis", ellos: "valen" },
     indefinido: { yo: "valí", vos: "valiste", tu: "valiste", el: "valió", nosotros: "valimos", vosotros: "valisteis", ellos: "valieron" },
@@ -53860,6 +53976,7 @@ const verbConjugationData = [
   {
   infinitive: "vender",
   freq:        2, meaning: "to sell / to offer for sale", regularity: "regular -er", gerundio: "vendiendo", participio: "vendido", notes: "Regular second conjugation verb.",
+  infinitivo: { es: "Quiero vender mi auto viejo.", en: "I want to sell my old car." },
   conjugaciones: {
     presente: { yo: "vendo", vos: "vendés", tu: "vendes", el: "vende", nosotros: "vendemos", vosotros: "vendéis", ellos: "venden" },
     indefinido: { yo: "vendí", vos: "vendiste", tu: "vendiste", el: "vendió", nosotros: "vendimos", vosotros: "vendisteis", ellos: "vendieron" },
@@ -53886,6 +54003,7 @@ const verbConjugationData = [
   {
   infinitive: "venir",
   freq:        1, meaning: "to come / to arrive", regularity: "stem-changing e→ie, irregular", gerundio: "viniendo", participio: "venido", notes: "Irregular throughout. Preterit: vine, viniste... Yo form: vengo.",
+  infinitivo: { es: "Vamos a venir a las ocho.", en: "We're going to come at eight." },
   conjugaciones: {
     presente: { yo: "vengo", vos: "venís", tu: "vienes", el: "viene", nosotros: "venimos", vosotros: "venís", ellos: "vienen" },
     indefinido: { yo: "vine", vos: "viniste", tu: "viniste", el: "vino", nosotros: "vinimos", vosotros: "vinisteis", ellos: "vinieron" },
@@ -53912,6 +54030,7 @@ const verbConjugationData = [
   {
   infinitive: "ver",
   freq:        1, meaning: "to see / to watch / to look", regularity: "highly irregular", gerundio: "viendo", participio: "visto", notes: "Irregular throughout. Preterit: vi, viste... Irregular participle: visto (not vedo).",
+  infinitivo: { es: "Quiero ver esa película nueva.", en: "I want to see that new movie." },
   conjugaciones: {
     presente: { yo: "veo", vos: "ves", tu: "ves", el: "ve", nosotros: "vemos", vosotros: "veis", ellos: "ven" },
     indefinido: { yo: "vi", vos: "viste", tu: "viste", el: "vio", nosotros: "vimos", vosotros: "visteis", ellos: "vieron" },
@@ -53938,6 +54057,7 @@ const verbConjugationData = [
   {
   infinitive: "vestirse",
   freq:        3, meaning: "to get dressed / to wear / to dress oneself", regularity: "reflexive stem-changing e→i", gerundio: "vistiéndose", participio: "vestido", notes: "Always reflexive. Preterit: me vestí, te vestiste... e→i in preterit.",
+  infinitivo: { es: "Voy a vestirme para la fiesta.", en: "I'm going to get dressed for the party." },
   conjugaciones: {
     presente: { yo: "me visto", vos: "te vestís", tu: "te vistes", el: "se viste", nosotros: "nos vestimos", vosotros: "os vestís", ellos: "se visten" },
     indefinido: { yo: "me vestí", vos: "te vestiste", tu: "te vestiste", el: "se vistió", nosotros: "nos vestimos", vosotros: "os vestisteis", ellos: "se vistieron" },
@@ -53964,6 +54084,7 @@ const verbConjugationData = [
   {
   infinitive: "visitar",
   freq:        2, meaning: "to visit / to call on", regularity: "regular -ar", gerundio: "visitando", participio: "visitado", notes: "visitar a alguien = to visit someone. Common in travel and social contexts.",
+  infinitivo: { es: "Queremos visitar a mis abuelos.", en: "We want to visit my grandparents." },
   conjugaciones: {
     presente: { yo: "visito", vos: "visitás", tu: "visitas", el: "visita", nosotros: "visitamos", vosotros: "visitáis", ellos: "visitan" },
     indefinido: { yo: "visité", vos: "visitaste", tu: "visitaste", el: "visitó", nosotros: "visitamos", vosotros: "visitasteis", ellos: "visitaron" },
@@ -53990,6 +54111,7 @@ const verbConjugationData = [
   {
   infinitive: "vivir",
   freq:        1, meaning: "to live / to dwell / to exist", regularity: "regular -ir", gerundio: "viviendo", participio: "vivido", notes: "Very common. vivir en = to live in (a place). vivir de = to live on (income).",
+  infinitivo: { es: "Quiero vivir cerca del mar.", en: "I want to live near the sea." },
   conjugaciones: {
     presente: { yo: "vivo", vos: "vivís", tu: "vives", el: "vive", nosotros: "vivimos", vosotros: "vivís", ellos: "viven" },
     indefinido: { yo: "viví", vos: "viviste", tu: "viviste", el: "vivió", nosotros: "vivimos", vosotros: "vivisteis", ellos: "vivieron" },
@@ -54016,6 +54138,7 @@ const verbConjugationData = [
   {
   infinitive: "volver",
   freq:        1, meaning: "to return / to go back / to come back", regularity: "stem-changing o→ue, irregular participle", gerundio: "volviendo", participio: "vuelto", notes: "Irregular participle: vuelto (not volvido). volver a + inf = to do again.",
+  infinitivo: { es: "Voy a volver a casa temprano.", en: "I'm going to come back home early." },
   conjugaciones: {
     presente: { yo: "vuelvo", vos: "volvés", tu: "vuelves", el: "vuelve", nosotros: "volvemos", vosotros: "volvéis", ellos: "vuelven" },
     indefinido: { yo: "volví", vos: "volviste", tu: "volviste", el: "volvió", nosotros: "volvimos", vosotros: "volvisteis", ellos: "volvieron" },
@@ -54042,6 +54165,7 @@ const verbConjugationData = [
   {
   infinitive: "volverse",
   freq:        3, meaning: "to become / to turn into / to grow (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "volviéndose", participio: "vuelto", notes: "Always reflexive. volverse + adj = to become (adjective). Similar to ponerse but more permanent.",
+  infinitivo: { es: "No quiero volverme loco con esto.", en: "I don't want to go crazy over this." },
   conjugaciones: {
     presente: { yo: "me vuelvo", vos: "te volvés", tu: "te vuelves", el: "se vuelve", nosotros: "nos volvemos", vosotros: "os volvéis", ellos: "se vuelven" },
     indefinido: { yo: "me volví", vos: "te volviste", tu: "te volviste", el: "se volvió", nosotros: "nos volvimos", vosotros: "os volvisteis", ellos: "se volvieron" },
@@ -56774,6 +56898,8 @@ const VB_MAX_INTERVAL_DAYS = 180;
 // Tense cards use that tense and person; infinitive cards use a presente sentence.
 function vbSentence(card, lang) {
   const v = card.verb;
+  // Infinitive cards use the verb's own `infinitivo` example (a sentence containing the infinitive)
+  if (card.kind === 'inf' && v.infinitivo && v.infinitivo[lang]) return v.infinitivo[lang];
   const tense   = card.kind === 'inf' ? 'presente' : card.tense;
   const bank = v.oraciones && v.oraciones[tense];
   let persons = card.kind === 'inf' ? ['yo', 'el', 'nosotros', 'ellos', appSecondPerson()] : card.persons;
