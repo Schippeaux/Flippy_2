@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.3</title>
+<title>Learning Spanish — v23.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -593,7 +593,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.3</div>
+    <div class="splash-sub">Buenos Aires · v23.4</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -56844,7 +56844,11 @@ function vbStartSession(kind) {
     queue = saved.queue.filter(id => cardMap[id]);
     idx   = saved.queue.slice(0, saved.currentIdx).filter(id => cardMap[id]).length;
   } else {
-    queue = getCardsForToday(deck, today).slice(0, SR_DAILY_LIMIT).map(c => c.id);
+    // New cards are introduced Essential → High → Useful, in random order within each tier
+    // (not alphabetical). Due cards still come first, oldest due date first.
+    const tier = c => (cardMap[c.id].verb.freq || 2) + Math.random() * 0.99;
+    const mixed = deck.map(c => ({ c, k: tier(c) })).sort((a, b) => a.k - b.k).map(x => x.c);
+    queue = getCardsForToday(mixed, today).slice(0, SR_DAILY_LIMIT).map(c => c.id);
     srSaveSession(mode, cid, undefined, queue, 0);
   }
 
