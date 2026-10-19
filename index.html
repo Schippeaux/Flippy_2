@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.6</title>
+<title>Learning Spanish — v23.7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -573,6 +573,14 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-rate-btn.again { background:rgba(196,98,45,0.12); color:var(--terracotta); border-color:transparent; }
 .vc-rate-btn.got, .vc-rate-btn.primary { background:var(--text-dark); color:var(--card-bg); border-color:transparent; }
 
+/* Verbs: deck landing sheet */
+.vc-landing-stats { display:flex; flex-wrap:wrap; gap:0.4rem 1.1rem; margin-bottom:1.1rem; font-family:'Inconsolata',monospace; font-size:0.74rem; color:var(--text-mid); }
+.vc-landing-stats strong { color:var(--text-dark); font-weight:600; }
+.vc-landing-btn { display:block; width:100%; margin-top:0.55rem; padding:0.85rem; border-radius:12px; border:1px solid var(--border); background:var(--bg); color:var(--text-dark); font-family:'Inconsolata',monospace; font-size:0.74rem; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; }
+.vc-landing-btn.primary { background:var(--text-dark); color:var(--card-bg); border-color:transparent; }
+.vc-landing-btn:active { transform:scale(0.98); }
+.vc-landing-note { margin-top:0.9rem; font-family:'Inconsolata',monospace; font-size:0.62rem; color:var(--text-light); line-height:1.5; }
+
 /* Empty state */
 .vc-empty { padding:3rem 1.25rem; text-align:center; font-family:'Inconsolata',monospace; font-size:0.78rem; color:var(--text-light); }
 
@@ -597,7 +605,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.6</div>
+    <div class="splash-sub">Buenos Aires · v23.7</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -782,11 +790,14 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="vc-study-head">
       <div class="vc-settings-section-label" style="margin-top:0">Verb sets</div>
       <div class="vc-sets" id="vcSetPills"></div>
-      <div class="vc-settings-section-label">Study style</div>
-      <div class="vc-sets" id="vcStylePills"></div>
       <div class="vc-study-hint" id="vcStudyHint"></div>
     </div>
     <div class="vc-verb-list" id="vcStudyList"></div>
+  </div>
+
+  <!-- Deck landing: Continue / New session / Browse -->
+  <div class="vc-settings-panel hidden" id="vcLandingPanel" onclick="if(event.target===this)vbCloseLanding()">
+    <div class="vc-settings-inner" id="vcLandingInner"></div>
   </div>
 
   <!-- Settings panel -->
@@ -56457,7 +56468,6 @@ const VC_SET_DEFS = [
 ];
 const VC_SETS_KEY         = STORE_PREFIX + 'vc_sets';
 const VC_EXPLORE_FLIP_KEY = STORE_PREFIX + 'vc_explore_flip';
-const VC_STUDY_BROWSE_KEY = STORE_PREFIX + 'vc_study_browse';
 
 function vcLoadSettings() {
   const dialect = appGetDialect();
@@ -56638,7 +56648,6 @@ let vcTab = 'explore';              // 'explore' | 'understanding' | 'speaking'
 let vcStudyActive = false;          // true while a Understand/Speak study deck is open
 let vcSets = [1];                   // selected verb sets (freq tiers)
 let vbSr = null;                    // active spaced-repetition session (see VERB SR)
-let vcStudyBrowse = false;          // false: spaced repetition (tracked) · true: shuffled browse
 let vcExploreFlip = false;          // false: Spanish first · true: English first
 
 function vcLoadPrefs() {
@@ -56647,7 +56656,8 @@ function vcLoadPrefs() {
     if (Array.isArray(sets) && sets.length) vcSets = sets.filter(n => VC_SET_DEFS.some(d => d.key === n));
     if (!vcSets.length) vcSets = [1];
     vcExploreFlip = localStorage.getItem(VC_EXPLORE_FLIP_KEY) === '1';
-    vcStudyBrowse = localStorage.getItem(VC_STUDY_BROWSE_KEY) === '1';
+    // Sessions saved by earlier builds (20-card, expiring daily) use a different key; drop them
+    Object.keys(localStorage).filter(k => /sr_(comp|recall)_session_VB_/.test(k)).forEach(k => localStorage.removeItem(k));
   } catch {}
 }
 
@@ -56680,7 +56690,7 @@ function vcSetTab(tab) {
 
 function vcRefreshVerbScreens() {
   if (vcTab === 'explore') vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
-  else { vcRenderSetPills(); vcRenderStylePills(); vcRenderStudyList(); }
+  else { vcRenderSetPills(); vcRenderStudyList(); }
 }
 
 function vcToggleExploreFlip() {
@@ -56766,34 +56776,14 @@ function vcPersonsShort(persons) {
   return persons.map(p => (VC_PERSON_LABELS[p] || p).replace(/ \/ /g, '/')).join(' · ');
 }
 
-function vcRenderStylePills() {
-  const el = document.getElementById('vcStylePills');
-  if (!el) return;
-  el.innerHTML = '';
-  [[false, 'Spaced repetition'], [true, 'Browse (untracked)']].forEach(([browse, label]) => {
-    const pill = document.createElement('span');
-    pill.className = 'vc-check-pill' + (vcStudyBrowse === browse ? ' active' : '');
-    pill.textContent = label;
-    pill.onclick = () => {
-      vcStudyBrowse = browse;
-      try { localStorage.setItem(VC_STUDY_BROWSE_KEY, browse ? '1' : '0'); } catch {}
-      vcRenderStylePills();
-      vcRenderStudyList();
-    };
-    el.appendChild(pill);
-  });
-}
-
 function vcRenderStudyList() {
   const list = document.getElementById('vcStudyList');
   if (!list) return;
   list.innerHTML = '';
   const mode = vcPracticeDirection;
-  const sr   = !vcStudyBrowse;
   document.getElementById('vcStudyHint').textContent =
     (mode === 'understanding' ? 'Spanish → recognise it. ' : 'English → say it. ') +
-    (sr ? 'Flip the card, then rate it: Got it or Again. Sessions are 20 cards, due ones first. '
-        : 'Shuffled and untracked — swipe for next. ') +
+    'Tap a deck to continue or start a session. Flip the card, then rate it: Got it or Again. ' +
     'Persons: ' + vcPersonsShort(vcSettings.persons) + ' (⚙ to change).';
 
   const rows = [{
@@ -56807,18 +56797,11 @@ function vcRenderStudyList() {
   })));
 
   rows.forEach(r => {
-    let badge, sub = r.sub, count;
-    if (sr) {
-      const st = vbDeckStats(r.kind);
-      count = st.total;
-      badge = !st.total ? '0 cards'
-            : st.left   ? `resume · ${st.left} left`
-            : `${st.due} due · ${st.fresh} new`;
-      if (st.conf !== null) sub += ` · ${st.conf}% known`;
-    } else {
-      count = vcBuildStudyDeck(r.kind, mode, false).length;
-      badge = `${count} cards`;
-    }
+    const st = vbDeckStats(r.kind);
+    const badge = !st.total ? '0 cards'
+                : st.left   ? `resume · ${st.left} left`
+                : `${st.due + st.missed} due · ${st.fresh} new`;
+    const sub = r.sub + (st.conf !== null ? ` · ${st.conf}% known` : '');
     const row = document.createElement('div');
     row.className = 'vc-verb-row';
     row.innerHTML = `
@@ -56828,7 +56811,7 @@ function vcRenderStudyList() {
       </div>
       <span class="vc-regularity-badge">${badge}</span>
       <span class="vc-verb-arrow">›</span>`;
-    row.onclick = () => { if (count) vcOpenStudyDeck(r.kind); };
+    row.onclick = () => { if (st.total) vbOpenLanding(r.kind); };
     list.appendChild(row);
   });
 }
@@ -56954,26 +56937,103 @@ function vbSaveDeck(mode, kind, deck) {
   catch (e) { /* storage full or blocked: keep studying, progress just won't persist */ }
 }
 
-// Counts shown on the Understand / Speak deck list
+// ── sessions: whole deck, no daily cap, kept until finished or replaced ──
+// (own key so it never expires overnight; leftovers from older builds are removed in vcLoadPrefs)
+function _vbSessKey(mode, cid) { return `${STORE_PREFIX}sr_vbsess_${mode}_${cid}`; }
+function vbSaveSession(mode, cid, queue, idx) {
+  try { localStorage.setItem(_vbSessKey(mode, cid), JSON.stringify({ queue, currentIdx: idx })); } catch (e) {}
+}
+function vbClearSession(mode, cid) { localStorage.removeItem(_vbSessKey(mode, cid)); }
+// Saved session restricted to cards still in the pool (verb sets / persons / dialect may have changed)
+function vbLoadSession(mode, cid, cardMap) {
+  try {
+    const sv = JSON.parse(localStorage.getItem(_vbSessKey(mode, cid)) || 'null');
+    if (!sv || !Array.isArray(sv.queue)) return null;
+    const queue = sv.queue.filter(id => cardMap[id]);
+    const idx   = sv.queue.slice(0, sv.currentIdx).filter(id => cardMap[id]).length;
+    return idx < queue.length ? { queue, idx } : null;
+  } catch (e) { return null; }
+}
+
+const vbLastRating = c => c.reviews.length ? c.reviews[c.reviews.length - 1].rating : 0;
+
+// Order for a new session:
+//   1. due today, oldest first
+//   2. missed (last answer was Again) even if not due yet — so what you got wrong comes back first
+//   3. new cards you were queued for but never reached in the previous session, in that order
+//   4. the remaining new cards, Essential → High → Useful, random within each tier
+//   5. everything else, soonest due first
+function vbBuildQueue(deck, cardMap, prev, today) {
+  const reviewed = deck.filter(c => c.reviews.length > 0);
+  const fresh    = deck.filter(c => c.reviews.length === 0);
+  const due      = reviewed.filter(c => c.dueDate <= today).sort((a, b) => a.dueDate - b.dueDate);
+  const dueIds   = new Set(due.map(c => c.id));
+  const missed   = reviewed.filter(c => !dueIds.has(c.id) && vbLastRating(c) <= 2)
+                           .sort((a, b) => a.lastReviewDay - b.lastReviewDay);
+  const usedIds  = new Set([...dueIds, ...missed.map(c => c.id)]);
+  const freshMap = new Map(fresh.map(c => [c.id, c]));
+  const carry    = (prev ? prev.queue.slice(prev.idx) : []).map(id => freshMap.get(id)).filter(Boolean);
+  const carryIds = new Set(carry.map(c => c.id));
+  const tier     = c => (cardMap[c.id].verb.freq || 2) + Math.random() * 0.99;
+  const rest     = fresh.filter(c => !carryIds.has(c.id)).map(c => ({ c, k: tier(c) }))
+                        .sort((a, b) => a.k - b.k).map(x => x.c);
+  const ahead    = reviewed.filter(c => !usedIds.has(c.id))
+                           .sort((a, b) => (a.dueDate - b.dueDate) || (a.ef - b.ef));
+  return [...due, ...missed, ...carry, ...rest, ...ahead].map(c => c.id);
+}
+
+// Counts shown on the deck list and landing sheet
 function vbDeckStats(kind) {
   const mode  = vbSrMode();
   const pool  = vcBuildStudyDeck(kind, vcPracticeDirection, false);
   const deck  = vbLoadDeck(mode, kind, pool);
+  const cardMap = {};
+  pool.forEach(c => { cardMap[c.id] = c; });
   const today = srToday();
   const reviewed = deck.filter(c => c.reviews.length > 0);
-  const sess = srLoadSession(mode, vbChapterId(kind));
-  const inPool = new Set(pool.map(c => c.id));
-  const left = sess ? sess.queue.slice(sess.currentIdx).filter(id => inPool.has(id)).length : 0;
+  const due    = reviewed.filter(c => c.dueDate <= today);
+  const missed = reviewed.filter(c => c.dueDate > today && vbLastRating(c) <= 2);
+  const sess   = vbLoadSession(mode, vbChapterId(kind), cardMap);
   return {
-    total: pool.length,
-    due:   reviewed.filter(c => c.dueDate <= today).length,
-    fresh: deck.length - reviewed.length,
-    conf:  reviewed.length ? Math.round(getChapterConfidence(deck)) : null,
-    left,
+    total:  pool.length,
+    due:    due.length,
+    missed: missed.length,
+    fresh:  deck.length - reviewed.length,
+    conf:   reviewed.length ? Math.round(getChapterConfidence(deck)) : null,
+    left:   sess ? sess.queue.length - sess.idx : 0,
+    pos:    sess ? sess.idx + 1 : 0,
+    queueLen: sess ? sess.queue.length : 0,
   };
 }
 
-function vbStartSession(kind) {
+// Landing sheet: Continue / New session / Browse
+function vbOpenLanding(kind) {
+  const st = vbDeckStats(kind);
+  const title = (vcPracticeDirection === 'understanding' ? 'Understand' : 'Speak') + ' · ' +
+                (kind === 'infinitive' ? 'Infinitives' : (VC_TENSE_LABELS[kind] || kind));
+  const resume = st.left > 0;
+  document.getElementById('vcLandingInner').innerHTML = `
+    <div class="vc-settings-title">${title}</div>
+    <div class="vc-landing-stats">
+      <span><strong>${st.due}</strong> due</span>
+      <span><strong>${st.missed}</strong> missed</span>
+      <span><strong>${st.fresh}</strong> new</span>
+      ${st.conf !== null ? `<span><strong>${st.conf}%</strong> known</span>` : ''}
+    </div>
+    ${resume ? `<button class="vc-landing-btn primary" onclick="vbLaunch('${kind}','continue')">Continue · card ${st.pos} of ${st.queueLen}</button>` : ''}
+    <button class="vc-landing-btn${resume ? '' : ' primary'}" onclick="vbLaunch('${kind}','new')">New session</button>
+    <button class="vc-landing-btn" onclick="vbLaunch('${kind}','browse')">Browse (untracked)</button>
+    <div class="vc-landing-note">A new session starts with cards that are due or that you missed, then cards you hadn't reached yet, then new ones. Nothing is lost if you leave part-way.</div>`;
+  document.getElementById('vcLandingPanel').classList.remove('hidden');
+}
+function vbCloseLanding() { document.getElementById('vcLandingPanel').classList.add('hidden'); }
+function vbLaunch(kind, how) {
+  vbCloseLanding();
+  if (how === 'browse') vcOpenBrowseDeck(kind);
+  else vbStartSession(kind, how);
+}
+
+function vbStartSession(kind, how) {
   const mode = vbSrMode();
   const pool = vcBuildStudyDeck(kind, vcPracticeDirection, false);
   if (!pool.length) return;
@@ -56983,19 +57043,13 @@ function vbStartSession(kind) {
   const cid   = vbChapterId(kind);
   const today = srToday();
 
+  const saved = vbLoadSession(mode, cid, cardMap);
   let queue, idx = 0;
-  const saved = srLoadSession(mode, cid);
-  const resumable = saved && saved.queue.slice(saved.currentIdx).some(id => cardMap[id]);
-  if (resumable) {
-    queue = saved.queue.filter(id => cardMap[id]);
-    idx   = saved.queue.slice(0, saved.currentIdx).filter(id => cardMap[id]).length;
+  if (how === 'continue' && saved) {
+    queue = saved.queue; idx = saved.idx;
   } else {
-    // New cards are introduced Essential → High → Useful, in random order within each tier
-    // (not alphabetical). Due cards still come first, oldest due date first.
-    const tier = c => (cardMap[c.id].verb.freq || 2) + Math.random() * 0.99;
-    const mixed = deck.map(c => ({ c, k: tier(c) })).sort((a, b) => a.k - b.k).map(x => x.c);
-    queue = getCardsForToday(mixed, today).slice(0, SR_DAILY_LIMIT).map(c => c.id);
-    srSaveSession(mode, cid, undefined, queue, 0);
+    queue = vbBuildQueue(deck, cardMap, saved, today);       // "new session"
+    vbSaveSession(mode, cid, queue, 0);
   }
 
   vbSr = { kind, mode, cid, deck, cardMap, queue, idx,
@@ -57027,21 +57081,21 @@ function vbRate(rating) {
   }
   s.idx++;
   vcCardIndex = s.idx;
-  srSaveSession(s.mode, s.cid, undefined, s.queue, s.idx);
+  vbSaveSession(s.mode, s.cid, s.queue, s.idx);
   if (s.idx >= s.queue.length) vbSessionComplete();
   else vcShowCard();
 }
 
 function vbSessionComplete() {
   const s = vbSr;
-  srClearSession(s.mode, s.cid);
+  vbClearSession(s.mode, s.cid);
   s.complete     = true;
   vcBrowseActive = false;
   vcRevealed     = false;
   const today = srToday();
   const post  = Math.round(getChapterConfidence(s.deck));
   const d     = post - s.preConf;
-  const dueTomorrow = s.deck.filter(c => c.reviews.length && c.dueDate === today + 1).length;
+  const missedNow = s.deck.filter(c => c.reviews.length && vbLastRating(c) <= 2).length;
 
   document.getElementById('vcCardFace').classList.remove('is-back');
   document.getElementById('vcCardScene').classList.remove('card-flipped');
@@ -57056,7 +57110,7 @@ function vbSessionComplete() {
   ctx.style.whiteSpace = 'pre-line';
   ctx.textContent = `Got it ${s.ratings[4]} · Again ${s.ratings[1]}\n` +
                     `Known: ${post}% (${d >= 0 ? '+' : ''}${d})\n` +
-                    `${dueTomorrow} due tomorrow`;
+                    `${missedNow} missed — they come first next session`;
   vbUpdateBar();
 }
 
@@ -57075,7 +57129,7 @@ function vbUpdateBar() {
   bar.style.display = 'flex';
   if (vbSr.complete) {
     bar.innerHTML = `<button class="vc-rate-btn" onclick="closeVerbDeck()">Done</button>` +
-                    `<button class="vc-rate-btn primary" onclick="vbStartSession(vbSr.kind)">Another ${SR_DAILY_LIMIT}</button>`;
+                    `<button class="vc-rate-btn primary" onclick="vbStartSession(vbSr.kind, 'new')">New session</button>`;
   } else if (vcRevealed) {
     bar.innerHTML = `<button class="vc-rate-btn again" onclick="vbRate(1)">Again</button>` +
                     `<button class="vc-rate-btn got" onclick="vbRate(4)">Got it</button>`;
@@ -57084,8 +57138,7 @@ function vbUpdateBar() {
   }
 }
 
-function vcOpenStudyDeck(kind) {
-  if (!vcStudyBrowse) { vbStartSession(kind); return; }      // tracked (default)
+function vcOpenBrowseDeck(kind) {
   const deck = vcBuildStudyDeck(kind, vcPracticeDirection, true);
   if (!deck.length) return;
   vbSr           = null;
