@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.4</title>
+<title>Learning Spanish — v23.5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -154,6 +154,10 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .card-face.is-back .card-alt      { color:rgba(240,236,228,0.55); }
 .card-face.is-back .card-alt-or   { color:rgba(240,236,228,0.3); }
 .card-face.is-back .card-hint-text{ color:rgba(240,236,228,0.35); }
+/* Verbs: example sentence — same weight and colour as the word, smaller; sits below the subtitle */
+.card-sentence { font-family:'Lora',serif; font-weight:400; font-size:clamp(1.05rem,3.8vw,1.3rem); line-height:1.4; color:var(--text-dark); margin-top:1.1rem; pointer-events:none; }
+.card-sentence:empty { display:none; }
+.card-face.is-back .card-sentence { color:#f0ece4; }
 
 /* Hint overlay — slides up from bottom of card */
 .hint-overlay {
@@ -593,7 +597,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.4</div>
+    <div class="splash-sub">Buenos Aires · v23.5</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -866,6 +870,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
         <div class="card-tag en" id="vcCardTag">ENGLISH</div>
         <div class="card-target"  id="vcCardTarget">—</div>
         <div class="card-context" id="vcCardContext"></div>
+        <div class="card-sentence" id="vcCardSentence"></div>
         <!-- card counter watermark -->
         <div class="card-counter-watermark" id="vcCardCounter"></div>
         <!-- swipe indicators -->
@@ -56765,6 +56770,21 @@ class VerbCard extends Card {
 }
 const VB_MAX_INTERVAL_DAYS = 180;
 
+// Example sentence for a study card, from the verb's own sentence data (oraciones).
+// Tense cards use that tense and person; infinitive cards use a presente sentence.
+function vbSentence(card, lang) {
+  const v = card.verb;
+  const tense   = card.kind === 'inf' ? 'presente' : card.tense;
+  const bank = v.oraciones && v.oraciones[tense];
+  let persons = card.kind === 'inf' ? ['yo', 'el', 'nosotros', 'ellos', appSecondPerson()] : card.persons;
+  // For infinitive cards take the fullest sentence available (some are as short as "Él tiene.")
+  if (card.kind === 'inf' && bank) {
+    persons = persons.filter(x => bank[x] && bank[x].es).sort((a, b) => bank[b].es.length - bank[a].es.length);
+  }
+  const p = bank && persons.find(x => bank[x] && bank[x][lang]);
+  return p ? bank[p][lang] : '';
+}
+
 function vbChapterId(kind) { return 'VB_' + kind; }
 function vbSrMode()        { return vcPracticeDirection === 'understanding' ? 'comp' : 'recall'; }
 
@@ -56905,6 +56925,7 @@ function vbSessionComplete() {
   const tag = document.getElementById('vcCardTag');
   tag.className = 'card-tag en'; tag.textContent = 'DONE';
   document.getElementById('vcCardTarget').textContent = 'Session complete';
+  document.getElementById('vcCardSentence').textContent = '';
   const ctx = document.getElementById('vcCardContext');
   ctx.style.whiteSpace = 'pre-line';
   ctx.textContent = `Got it ${s.ratings[4]} · Again ${s.ratings[1]}\n` +
@@ -56992,6 +57013,7 @@ function vcShowStudyCard(card) {
       tgt.textContent = card.verb.meaning;
     }
   }
+  document.getElementById('vcCardSentence').textContent = vbSentence(card, mode === 'understanding' ? 'es' : 'en');
   _vcUpdateSwipeHints(false);
   vbUpdateBar();
 }
@@ -57021,6 +57043,7 @@ function vcRevealStudy(card) {
     tgt.textContent = card.form;
     ctx.textContent = card.verb.infinitive;
   }
+  document.getElementById('vcCardSentence').textContent = vbSentence(card, mode === 'understanding' ? 'en' : 'es');
   _vcUpdateSwipeHints(true);
   vbUpdateBar();
 }
@@ -57135,6 +57158,7 @@ function closeVerbDeck() {
 
 // Render the current card (front face — English side)
 function vcShowCard() {
+  document.getElementById('vcCardSentence').textContent = '';   // study cards fill this in; legacy cards have none
   if (!vcDeck.length) {
     document.getElementById('vcTenseLabel').textContent  = '';
     document.getElementById('vcPersonLabel').textContent = '';
@@ -57190,6 +57214,7 @@ function vcReveal() {
     if (vcRevealed) vcShowCard(); else vcRevealStudy(card);
     return;
   }
+  document.getElementById('vcCardSentence').textContent = '';
 
   if (!vcRevealed) {
     vcRevealed = true;
