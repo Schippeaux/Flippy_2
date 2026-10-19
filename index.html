@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v23.1</title>
+<title>Learning Spanish — v23.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -548,6 +548,20 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-practice-understanding { background:rgba(116,172,223,0.14); color:var(--accent); }
 .vc-practice-speaking { background:var(--text-dark); color:var(--card-bg); }
 
+/* Verbs: Explore / Understand / Speak tabs */
+.vc-tabs { display:flex; flex-shrink:0; background:var(--card-bg); border-bottom:1px solid var(--border); }
+.vc-tab { flex:1; padding:0.7rem 0.4rem; border:none; border-bottom:2px solid transparent; background:transparent; font-family:'Inconsolata',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); cursor:pointer; }
+.vc-tab.active { color:var(--text-dark); border-bottom-color:var(--accent); }
+.vc-pane { flex:1; min-height:0; display:flex; flex-direction:column; }
+.vc-pane.hidden { display:none; }
+.vc-pane .vc-verb-list { min-height:0; }
+.vc-search-row { display:flex; gap:0.5rem; align-items:center; }
+.vc-flip-btn { flex-shrink:0; background:none; border:1px solid var(--border); border-radius:10px; height:36px; padding:0 0.7rem; font-family:'Inconsolata',monospace; font-size:0.68rem; letter-spacing:0.05em; color:var(--text-mid); cursor:pointer; white-space:nowrap; }
+.vc-flip-btn:active { background:var(--bg); }
+.vc-study-head { padding:0.8rem 1.25rem 0.75rem; background:var(--card-bg); border-bottom:1px solid var(--border); flex-shrink:0; }
+.vc-study-hint { font-family:'Inconsolata',monospace; font-size:0.62rem; color:var(--text-light); margin-top:0.6rem; line-height:1.5; }
+.vc-sets { display:flex; flex-wrap:wrap; gap:0.4rem; }
+
 /* Empty state */
 .vc-empty { padding:3rem 1.25rem; text-align:center; font-family:'Inconsolata',monospace; font-size:0.78rem; color:var(--text-light); }
 
@@ -572,7 +586,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v23.1</div>
+    <div class="splash-sub">Buenos Aires · v23.2</div>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="splash-grid" id="splashGrid"></div>
@@ -732,15 +746,35 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen hidden" id="vcListScreen">
   <div class="topbar">
     <div class="topbar-back" onclick="closeVerbConjugator()">←</div>
-    <div class="topbar-title">Verb Conjugations</div>
+    <div class="topbar-title">Verbs</div>
     <div style="margin-left:auto"></div>
     <button class="vc-gear-btn" onclick="vcToggleSettings()" title="Settings">⚙</button>
   </div>
-  <div class="vc-search-wrap">
-    <input class="vc-search" id="vcSearchInput" type="text"
-           placeholder="Search verbs…" autocomplete="off" oninput="vcFilterList()">
+  <div class="vc-tabs">
+    <button class="vc-tab active" id="vcTabExplore"    onclick="vcSetTab('explore')">Explore</button>
+    <button class="vc-tab"        id="vcTabUnderstand" onclick="vcSetTab('understanding')">Understand</button>
+    <button class="vc-tab"        id="vcTabSpeak"      onclick="vcSetTab('speaking')">Speak</button>
   </div>
-  <div class="vc-verb-list" id="vcVerbList"></div>
+
+  <!-- EXPLORE pane -->
+  <div class="vc-pane" id="vcPaneExplore">
+    <div class="vc-search-wrap vc-search-row">
+      <input class="vc-search" id="vcSearchInput" type="text"
+             placeholder="Search verbs…" autocomplete="off" oninput="vcFilterList()">
+      <button class="vc-flip-btn" id="vcFlipBtn" onclick="vcToggleExploreFlip()" title="Flip list direction">ES → EN</button>
+    </div>
+    <div class="vc-verb-list" id="vcVerbList"></div>
+  </div>
+
+  <!-- UNDERSTAND / SPEAK pane (shared; mode follows the active tab) -->
+  <div class="vc-pane hidden" id="vcPaneStudy">
+    <div class="vc-study-head">
+      <div class="vc-settings-section-label" style="margin-top:0">Verb sets</div>
+      <div class="vc-sets" id="vcSetPills"></div>
+      <div class="vc-study-hint" id="vcStudyHint"></div>
+    </div>
+    <div class="vc-verb-list" id="vcStudyList"></div>
+  </div>
 
   <!-- Settings panel -->
   <div class="vc-settings-panel hidden" id="vcSettingsPanel">
@@ -41086,6 +41120,7 @@ const searchIndex = {
 const verbConjugationData = [
   {
   infinitive:  "abrir",
+  freq:        2,
   meaning:     "to open",
   regularity:  "regular -ir",
   gerundio:    "abriendo",
@@ -41262,6 +41297,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "acabar",
+  freq:        2,
   meaning:     "to finish / to have just (done)",
   regularity:  "regular -ar",
   gerundio:    "acabando",
@@ -41438,6 +41474,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "acostarse",
+  freq:        3,
   meaning:     "to go to bed",
   regularity:  "stem-changing o→ue",
   gerundio:    "acostándose",
@@ -41614,6 +41651,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "agarrar",
+  freq:        2,
   meaning:     "to grab / to catch / to get",
   regularity:  "regular -ar",
   gerundio:    "agarrando",
@@ -41790,6 +41828,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "agregar",
+  freq:        3,
   meaning:     "to add",
   regularity:  "regular -ar",
   gerundio:    "agregando",
@@ -41966,6 +42005,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "aguantar",
+  freq:        3,
   meaning:     "to put up with / to endure",
   regularity:  "regular -ar",
   gerundio:    "aguantando",
@@ -42142,6 +42182,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "alegrarse",
+  freq:        3,
   meaning:     "to be glad / to cheer up",
   regularity:  "regular -ar",
   gerundio:    "alegrándose",
@@ -42318,6 +42359,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "amar",
+  freq:        2,
   meaning:     "to love",
   regularity:  "regular -ar",
   gerundio:    "amando",
@@ -42494,6 +42536,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "aparecer",
+  freq:        2,
   meaning:     "to appear / to show up",
   regularity:  "irregular",
   gerundio:    "apareciendo",
@@ -42670,6 +42713,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "aprender",
+  freq:        2,
   meaning:     "to learn",
   regularity:  "regular -er",
   gerundio:    "aprendiendo",
@@ -42846,6 +42890,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "ayudar",
+  freq:        2,
   meaning:     "to help",
   regularity:  "regular -ar",
   gerundio:    "ayudando",
@@ -43022,6 +43067,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "bailar",
+  freq:        2,
   meaning:     "to dance",
   regularity:  "regular -ar",
   gerundio:    "bailando",
@@ -43198,6 +43244,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "bajar",
+  freq:        2,
   meaning:     "to go down / to get off / to download",
   regularity:  "regular -ar",
   gerundio:    "bajando",
@@ -43374,6 +43421,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "bañarse",
+  freq:        3,
   meaning:     "to shower / to bathe",
   regularity:  "regular -ar",
   gerundio:    "bañándose",
@@ -43550,6 +43598,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "beber",
+  freq:        2,
   meaning:     "to drink",
   regularity:  "regular -er",
   gerundio:    "bebiendo",
@@ -43726,6 +43775,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "buscar",
+  freq:        1,
   meaning:     "to look for / to search",
   regularity:  "regular -ar",
   gerundio:    "buscando",
@@ -43902,6 +43952,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "caer",
+  freq:        2,
   meaning:     "to fall",
   regularity:  "irregular",
   gerundio:    "cayendo",
@@ -44078,6 +44129,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "caminar",
+  freq:        2,
   meaning:     "to walk",
   regularity:  "regular -ar",
   gerundio:    "caminando",
@@ -44254,6 +44306,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "cantar",
+  freq:        2,
   meaning:     "to sing",
   regularity:  "regular -ar",
   gerundio:    "cantando",
@@ -44430,6 +44483,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "casarse",
+  freq:        3,
   meaning:     "to get married",
   regularity:  "regular -ar",
   gerundio:    "casándose",
@@ -44606,6 +44660,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "cerrar",
+  freq:        2,
   meaning:     "to close",
   regularity:  "stem-changing e→ie",
   gerundio:    "cerrando",
@@ -44782,6 +44837,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "cocinar",
+  freq:        2,
   meaning:     "to cook",
   regularity:  "regular -ar",
   gerundio:    "cocinando",
@@ -44958,6 +45014,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "comenzar",
+  freq:        2,
   meaning:     "to begin / to start",
   regularity:  "stem-changing e→ie",
   gerundio:    "comenzando",
@@ -45134,6 +45191,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "comer",
+  freq:        1,
   meaning:     "to eat",
   regularity:  "regular -er",
   gerundio:    "comiendo",
@@ -45310,6 +45368,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "comprar",
+  freq:        1,
   meaning:     "to buy",
   regularity:  "regular -ar",
   gerundio:    "comprando",
@@ -45486,6 +45545,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "conocer",
+  freq:        1,
   meaning:     "to know (people/places) / to meet",
   regularity:  "irregular",
   gerundio:    "conociendo",
@@ -45662,6 +45722,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "conseguir",
+  freq:        1,
   meaning:     "to get / to obtain / to manage",
   regularity:  "stem-changing e→i",
   gerundio:    "consiguiendo",
@@ -45838,6 +45899,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "contar",
+  freq:        2,
   meaning:     "to tell / to count",
   regularity:  "stem-changing o→ue",
   gerundio:    "contando",
@@ -46014,6 +46076,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "contestar",
+  freq:        2,
   meaning:     "to answer / to reply",
   regularity:  "regular -ar",
   gerundio:    "contestando",
@@ -46190,6 +46253,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "convertirse",
+  freq:        3,
   meaning:     "to become / to convert",
   regularity:  "stem-changing e→ie, reflexive",
   gerundio:    "convirtiéndose",
@@ -46366,6 +46430,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "correr",
+  freq:        2,
   meaning:     "to run",
   regularity:  "regular -er",
   gerundio:    "corriendo",
@@ -46542,6 +46607,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "cortar",
+  freq:        2,
   meaning:     "to cut",
   regularity:  "regular -ar",
   gerundio:    "cortando",
@@ -46718,6 +46784,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "crecer",
+  freq:        3,
   meaning:     "to grow / to grow up",
   regularity:  "irregular",
   gerundio:    "creciendo",
@@ -46894,6 +46961,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "creer",
+  freq:        1,
   meaning:     "to believe",
   regularity:  "regular -er",
   gerundio:    "creyendo",
@@ -47070,6 +47138,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "dar",
+  freq:        1,
   meaning:     "to give",
   regularity:  "irregular",
   gerundio:    "dando",
@@ -47246,6 +47315,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "deber",
+  freq:        1,
   meaning:     "must / to have to / should",
   regularity:  "regular -er",
   gerundio:    "debiendo",
@@ -47422,6 +47492,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "decidir",
+  freq:        1,
   meaning:     "to decide",
   regularity:  "regular -ir",
   gerundio:    "decidiendo",
@@ -47598,6 +47669,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "decir",
+  freq:        1,
   meaning:     "to say / to tell",
   regularity:  "irregular",
   gerundio:    "diciendo",
@@ -47774,6 +47846,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "dejar",
+  freq:        1,
   meaning:     "to leave / to let / to allow",
   regularity:  "regular -ar",
   gerundio:    "dejando",
@@ -47950,6 +48023,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "depender",
+  freq:        3,
   meaning:     "to depend",
   regularity:  "regular -er",
   gerundio:    "dependiendo",
@@ -48126,6 +48200,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "desaparecer",
+  freq:        3,
   meaning:     "to disappear",
   regularity:  "irregular, -zc- insertion in yo",
   gerundio:    "desapareciendo",
@@ -48302,6 +48377,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "descansar",
+  freq:        2,
   meaning:     "to rest",
   regularity:  "regular -ar",
   gerundio:    "descansando",
@@ -48478,6 +48554,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "despertarse",
+  freq:        3,
   meaning:     "to wake up",
   regularity:  "stem-changing e→ie",
   gerundio:    "despertándose",
@@ -48654,6 +48731,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "disfrutar",
+  freq:        2,
   meaning:     "to enjoy",
   regularity:  "regular -ar",
   gerundio:    "disfrutando",
@@ -48830,6 +48908,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "dormir",
+  freq:        1,
   meaning:     "to sleep",
   regularity:  "stem-changing o→ue",
   gerundio:    "durmiendo",
@@ -49006,6 +49085,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "elegir",
+  freq:        2,
   meaning:     "to choose / to elect",
   regularity:  "stem-changing e→i",
   gerundio:    "eligiendo",
@@ -49182,6 +49262,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "empezar",
+  freq:        1,
   meaning:     "to start / to begin",
   regularity:  "stem-changing e→ie",
   gerundio:    "empezando",
@@ -49358,6 +49439,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "encontrar",
+  freq:        1,
   meaning:     "to find / to meet",
   regularity:  "stem-changing o→ue",
   gerundio:    "encontrando",
@@ -49534,6 +49616,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "enojarse",
+  freq:        3,
   meaning:     "to get angry",
   regularity:  "regular -ar",
   gerundio:    "enojándose",
@@ -49710,6 +49793,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "enseñar",
+  freq:        2,
   meaning:     "to teach / to show",
   regularity:  "regular -ar",
   gerundio:    "enseñando",
@@ -49886,6 +49970,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "entender",
+  freq:        1,
   meaning:     "to understand",
   regularity:  "stem-changing e→ie",
   gerundio:    "entendiendo",
@@ -50062,6 +50147,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "entrar",
+  freq:        2,
   meaning:     "to enter / to come in",
   regularity:  "regular -ar",
   gerundio:    "entrando",
@@ -50238,6 +50324,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "enviar",
+  freq:        2,
   meaning:     "to send",
   regularity:  "regular -ar",
   gerundio:    "enviando",
@@ -50414,6 +50501,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "escribir",
+  freq:        2,
   meaning:     "to write",
   regularity:  "regular -ir",
   gerundio:    "escribiendo",
@@ -50590,6 +50678,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "escuchar",
+  freq:        1,
   meaning:     "to listen / to hear",
   regularity:  "regular -ar",
   gerundio:    "escuchando",
@@ -50766,6 +50855,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "esperar",
+  freq:        1,
   meaning:     "to wait / to hope / to expect",
   regularity:  "regular -ar",
   gerundio:    "esperando",
@@ -50942,6 +51032,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "estar",
+  freq:        1,
   meaning:     "to be (state / location)",
   regularity:  "irregular",
   gerundio:    "estando",
@@ -51118,6 +51209,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "existir",
+  freq:        3,
   meaning:     "to exist",
   regularity:  "regular -ir",
   gerundio:    "existiendo",
@@ -51222,6 +51314,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "explicar",
+  freq:        2,
   meaning:     "to explain",
   regularity:  "regular -ar",
   gerundio:    "explicando",
@@ -51253,7 +51346,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "fallar", meaning: "to fail / to miss / to let down", regularity: "regular -ar", gerundio: "fallando", participio: "fallado", notes: "",
+  infinitive: "fallar",
+  freq:        3, meaning: "to fail / to miss / to let down", regularity: "regular -ar", gerundio: "fallando", participio: "fallado", notes: "",
   conjugaciones: {
     presente: { yo: "fallo", vos: "fallás", tu: "fallas", el: "falla", nosotros: "fallamos", vosotros: "fallais", ellos: "fallan" },
     indefinido: { yo: "fallé", vos: "fallaste", tu: "fallaste", el: "falló", nosotros: "fallamos", vosotros: "fallasteis", ellos: "fallaron" },
@@ -51278,7 +51372,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "faltar", meaning: "to be missing / to lack", regularity: "regular -ar", gerundio: "faltando", participio: "faltado", notes: "Reverse construction like gustar: me falta tiempo.",
+  infinitive: "faltar",
+  freq:        2, meaning: "to be missing / to lack", regularity: "regular -ar", gerundio: "faltando", participio: "faltado", notes: "Reverse construction like gustar: me falta tiempo.",
   conjugaciones: {
     presente: { yo: "falto", vos: "faltás", tu: "faltas", el: "falta", nosotros: "faltamos", vosotros: "faltáis", ellos: "faltan" },
     indefinido: { yo: "falté", vos: "faltaste", tu: "faltaste", el: "faltó", nosotros: "faltamos", vosotros: "faltasteis", ellos: "faltaron" },
@@ -51303,7 +51398,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "fijarse", meaning: "to notice / to pay attention", regularity: "regular -ar", gerundio: "fijándose", participio: "fijado", notes: "Reflexive. Very common in Rioplatense: ¡Fijate! = Look!",
+  infinitive: "fijarse",
+  freq:        2, meaning: "to notice / to pay attention", regularity: "regular -ar", gerundio: "fijándose", participio: "fijado", notes: "Reflexive. Very common in Rioplatense: ¡Fijate! = Look!",
   conjugaciones: {
     presente: { yo: "me fijo", vos: "te fijás", tu: "te fijas", el: "se fija", nosotros: "nos fijamos", vosotros: "os fijáis", ellos: "se fijan" },
     indefinido: { yo: "me fijé", vos: "te fijaste", tu: "te fijaste", el: "se fijó", nosotros: "nos fijamos", vosotros: "os fijasteis", ellos: "se fijaron" },
@@ -51328,7 +51424,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "ganar", meaning: "to win / to earn", regularity: "regular -ar", gerundio: "ganando", participio: "ganado", notes: "",
+  infinitive: "ganar",
+  freq:        2, meaning: "to win / to earn", regularity: "regular -ar", gerundio: "ganando", participio: "ganado", notes: "",
   conjugaciones: {
     presente: { yo: "gano", vos: "ganás", tu: "ganas", el: "gana", nosotros: "ganamos", vosotros: "ganáis", ellos: "ganan" },
     indefinido: { yo: "gané", vos: "ganaste", tu: "ganaste", el: "ganó", nosotros: "ganamos", vosotros: "ganasteis", ellos: "ganaron" },
@@ -51353,7 +51450,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "gritar", meaning: "to shout / to scream", regularity: "regular -ar", gerundio: "gritando", participio: "gritado", notes: "",
+  infinitive: "gritar",
+  freq:        2, meaning: "to shout / to scream", regularity: "regular -ar", gerundio: "gritando", participio: "gritado", notes: "",
   conjugaciones: {
     presente: { yo: "grito", vos: "gritás", tu: "gritas", el: "grita", nosotros: "gritamos", vosotros: "gritáis", ellos: "gritan" },
     indefinido: { yo: "grité", vos: "gritaste", tu: "gritaste", el: "gritó", nosotros: "gritamos", vosotros: "gritasteis", ellos: "gritaron" },
@@ -51378,7 +51476,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "gustar", meaning: "to like (to be pleasing to)", regularity: "regular -ar", gerundio: "gustando", participio: "gustado", notes: "Reverse construction: me gusta(n). Subject is the thing liked.",
+  infinitive: "gustar",
+  freq:        1, meaning: "to like (to be pleasing to)", regularity: "regular -ar", gerundio: "gustando", participio: "gustado", notes: "Reverse construction: me gusta(n). Subject is the thing liked.",
   conjugaciones: {
     presente: { yo: "gusto", vos: "gustás", tu: "gustas", el: "gusta", nosotros: "gustamos", vosotros: "gustáis", ellos: "gustan" },
     indefinido: { yo: "gusté", vos: "gustaste", tu: "gustaste", el: "gustó", nosotros: "gustamos", vosotros: "gustasteis", ellos: "gustaron" },
@@ -51403,7 +51502,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "haber", meaning: "to have (auxiliary) / there to be", regularity: "irregular", gerundio: "habiendo", participio: "habido", notes: "he/has/ha/hemos/habéis/han (auxiliary). hay = there is/are.",
+  infinitive: "haber",
+  freq:        1, meaning: "to have (auxiliary) / there to be", regularity: "irregular", gerundio: "habiendo", participio: "habido", notes: "he/has/ha/hemos/habéis/han (auxiliary). hay = there is/are.",
   conjugaciones: {
     presente: { yo: "he", vos: "has", tu: "has", el: "ha", nosotros: "hemos", vosotros: "habéis", ellos: "han" },
     indefinido: { yo: "hube", vos: "hubiste", tu: "hubiste", el: "hubo", nosotros: "hubimos", vosotros: "hubisteis", ellos: "hubieron" },
@@ -51429,6 +51529,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "hablar",
+  freq:        1,
   meaning:     "to speak / to talk",
   regularity:  "regular -ar",
   gerundio:    "hablando",
@@ -51604,7 +51705,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "hacer", meaning: "to do / to make", regularity: "irregular", gerundio: "haciendo", participio: "hecho", notes: "Irregular throughout: hago, hice, haré...",
+  infinitive: "hacer",
+  freq:        1, meaning: "to do / to make", regularity: "irregular", gerundio: "haciendo", participio: "hecho", notes: "Irregular throughout: hago, hice, haré...",
   conjugaciones: {
     presente: { yo: "hago", vos: "hacés", tu: "haces", el: "hace", nosotros: "hacemos", vosotros: "hacéis", ellos: "hacen" },
     indefinido: { yo: "hice", vos: "hiciste", tu: "hiciste", el: "hizo", nosotros: "hicimos", vosotros: "hicisteis", ellos: "hicieron" },
@@ -51629,7 +51731,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "imaginar", meaning: "to imagine", regularity: "regular -ar", gerundio: "imaginando", participio: "imaginado", notes: "",
+  infinitive: "imaginar",
+  freq:        3, meaning: "to imagine", regularity: "regular -ar", gerundio: "imaginando", participio: "imaginado", notes: "",
   conjugaciones: {
     presente: { yo: "imagino", vos: "imaginás", tu: "imaginas", el: "imagina", nosotros: "imaginamos", vosotros: "imaginais", ellos: "imaginan" },
     indefinido: { yo: "imaginé", vos: "imaginaste", tu: "imaginaste", el: "imaginó", nosotros: "imaginamos", vosotros: "imaginasteis", ellos: "imaginaron" },
@@ -51654,7 +51757,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "importar", meaning: "to matter / to be important", regularity: "regular -ar", gerundio: "importando", participio: "importado", notes: "Reverse construction: no me importa = it doesn't matter to me.",
+  infinitive: "importar",
+  freq:        2, meaning: "to matter / to be important", regularity: "regular -ar", gerundio: "importando", participio: "importado", notes: "Reverse construction: no me importa = it doesn't matter to me.",
   conjugaciones: {
     presente: { yo: "importo", vos: "importás", tu: "importas", el: "importa", nosotros: "importamos", vosotros: "importáis", ellos: "importan" },
     indefinido: { yo: "importé", vos: "importaste", tu: "importaste", el: "importó", nosotros: "importamos", vosotros: "importasteis", ellos: "importaron" },
@@ -51679,7 +51783,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "intentar", meaning: "to try / to attempt", regularity: "regular -ar", gerundio: "intentando", participio: "intentado", notes: "",
+  infinitive: "intentar",
+  freq:        2, meaning: "to try / to attempt", regularity: "regular -ar", gerundio: "intentando", participio: "intentado", notes: "",
   conjugaciones: {
     presente: { yo: "intento", vos: "intentás", tu: "intentas", el: "intenta", nosotros: "intentamos", vosotros: "intentáis", ellos: "intentan" },
     indefinido: { yo: "intenté", vos: "intentaste", tu: "intentaste", el: "intentó", nosotros: "intentamos", vosotros: "intentasteis", ellos: "intentaron" },
@@ -51704,7 +51809,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "invitar", meaning: "to invite / to treat (pay for)", regularity: "regular -ar", gerundio: "invitando", participio: "invitado", notes: "Te invito = it's on me (Rioplatense usage).",
+  infinitive: "invitar",
+  freq:        2, meaning: "to invite / to treat (pay for)", regularity: "regular -ar", gerundio: "invitando", participio: "invitado", notes: "Te invito = it's on me (Rioplatense usage).",
   conjugaciones: {
     presente: { yo: "invito", vos: "invitás", tu: "invitas", el: "invita", nosotros: "invitamos", vosotros: "invitáis", ellos: "invitan" },
     indefinido: { yo: "invité", vos: "invitaste", tu: "invitaste", el: "invitó", nosotros: "invitamos", vosotros: "invitasteis", ellos: "invitaron" },
@@ -51729,7 +51835,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "ir", meaning: "to go", regularity: "irregular", gerundio: "yendo", participio: "ido", notes: "Completely irregular: voy, vas, va, vamos, van. Preterit: fui (same as ser).",
+  infinitive: "ir",
+  freq:        1, meaning: "to go", regularity: "irregular", gerundio: "yendo", participio: "ido", notes: "Completely irregular: voy, vas, va, vamos, van. Preterit: fui (same as ser).",
   conjugaciones: {
     presente: { yo: "voy", vos: "vas", tu: "vas", el: "va", nosotros: "vamos", vosotros: "vais", ellos: "van" },
     indefinido: { yo: "fui", vos: "fuiste", tu: "fuiste", el: "fue", nosotros: "fuimos", vosotros: "fuisteis", ellos: "fueron" },
@@ -51754,7 +51861,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "irse", meaning: "to leave / to go away", regularity: "irregular", gerundio: "yéndose", participio: "ido", notes: "Reflexive form of ir. me voy, te vas... ¡Me voy! = I'm leaving!",
+  infinitive: "irse",
+  freq:        2, meaning: "to leave / to go away", regularity: "irregular", gerundio: "yéndose", participio: "ido", notes: "Reflexive form of ir. me voy, te vas... ¡Me voy! = I'm leaving!",
   conjugaciones: {
     presente: { yo: "me voy", vos: "te vas", tu: "te vas", el: "se va", nosotros: "nos vamos", vosotros: "os vais", ellos: "se van" },
     indefinido: { yo: "me fui", vos: "te fuiste", tu: "te fuiste", el: "se fue", nosotros: "nos fuimos", vosotros: "os fuisteis", ellos: "se fueron" },
@@ -51779,7 +51887,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "jugar", meaning: "to play", regularity: "stem-changing u→ue", gerundio: "jugando", participio: "jugado", notes: "Spelling change g→gu before e (jugué). jugar a + sport/game.",
+  infinitive: "jugar",
+  freq:        2, meaning: "to play", regularity: "stem-changing u→ue", gerundio: "jugando", participio: "jugado", notes: "Spelling change g→gu before e (jugué). jugar a + sport/game.",
   conjugaciones: {
     presente: { yo: "juego", vos: "jugás", tu: "juegas", el: "juega", nosotros: "jugamos", vosotros: "jugáis", ellos: "juegan" },
     indefinido: { yo: "jugué", vos: "jugaste", tu: "jugaste", el: "jugó", nosotros: "jugamos", vosotros: "jugasteis", ellos: "jugaron" },
@@ -51804,7 +51913,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "lavar", meaning: "to wash", regularity: "regular -ar", gerundio: "lavando", participio: "lavado", notes: "Reflexive lavarse = to wash oneself.",
+  infinitive: "lavar",
+  freq:        3, meaning: "to wash", regularity: "regular -ar", gerundio: "lavando", participio: "lavado", notes: "Reflexive lavarse = to wash oneself.",
   conjugaciones: {
     presente: { yo: "lavo", vos: "lavás", tu: "lavas", el: "lava", nosotros: "lavamos", vosotros: "laváis", ellos: "lavan" },
     indefinido: { yo: "lavé", vos: "lavaste", tu: "lavaste", el: "lavó", nosotros: "lavamos", vosotros: "lavasteis", ellos: "lavaron" },
@@ -51829,7 +51939,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "leer", meaning: "to read", regularity: "regular -er", gerundio: "leyendo", participio: "leído", notes: "Spelling change in preterit: leyó, leyeron.",
+  infinitive: "leer",
+  freq:        2, meaning: "to read", regularity: "regular -er", gerundio: "leyendo", participio: "leído", notes: "Spelling change in preterit: leyó, leyeron.",
   conjugaciones: {
     presente: { yo: "leo", vos: "leés", tu: "lees", el: "lee", nosotros: "leemos", vosotros: "leéis", ellos: "leen" },
     indefinido: { yo: "leí", vos: "leíste", tu: "leíste", el: "leyó", nosotros: "leímos", vosotros: "leísteis", ellos: "leyeron" },
@@ -51854,7 +51965,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "levantarse", meaning: "to get up / to stand up", regularity: "regular -ar", gerundio: "levantándose", participio: "levantado", notes: "Reflexive.",
+  infinitive: "levantarse",
+  freq:        3, meaning: "to get up / to stand up", regularity: "regular -ar", gerundio: "levantándose", participio: "levantado", notes: "Reflexive.",
   conjugaciones: {
     presente: { yo: "me levanto", vos: "te levantás", tu: "te levantas", el: "se levanta", nosotros: "nos levantamos", vosotros: "os levantáis", ellos: "se levantan" },
     indefinido: { yo: "me levanté", vos: "te levantaste", tu: "te levantaste", el: "se levantó", nosotros: "nos levantamos", vosotros: "os levantasteis", ellos: "se levantaron" },
@@ -51879,7 +51991,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "limpiar", meaning: "to clean", regularity: "regular -ar", gerundio: "limpiando", participio: "limpiado", notes: "",
+  infinitive: "limpiar",
+  freq:        3, meaning: "to clean", regularity: "regular -ar", gerundio: "limpiando", participio: "limpiado", notes: "",
   conjugaciones: {
     presente: { yo: "limpio", vos: "limpiás", tu: "limpias", el: "limpia", nosotros: "limpiamos", vosotros: "limpiáis", ellos: "limpian" },
     indefinido: { yo: "limpié", vos: "limpiaste", tu: "limpiaste", el: "limpió", nosotros: "limpiamos", vosotros: "limpiasteis", ellos: "limpiaron" },
@@ -51905,6 +52018,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "llamar",
+  freq:        1,
   meaning:     "to call / to name",
   regularity:  "regular -ar",
   gerundio:    "llamando",
@@ -51937,6 +52051,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "llegar",
+  freq:        1,
   meaning:     "to arrive / to reach",
   regularity:  "regular -ar",
   gerundio:    "llegando",
@@ -51969,6 +52084,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "llevar",
+  freq:        1,
   meaning:     "to carry / to take / to wear",
   regularity:  "regular -ar",
   gerundio:    "llevando",
@@ -52001,6 +52117,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "llorar",
+  freq:        2,
   meaning:     "to cry / to weep",
   regularity:  "regular -ar",
   gerundio:    "llorando",
@@ -52033,6 +52150,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "lograr",
+  freq:        2,
   meaning:     "to achieve / to manage to / to succeed",
   regularity:  "regular -ar",
   gerundio:    "logrando",
@@ -52065,6 +52183,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "mandar",
+  freq:        2,
   meaning:     "to send / to order / to command",
   regularity:  "regular -ar",
   gerundio:    "mandando",
@@ -52097,6 +52216,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "manejar",
+  freq:        2,
   meaning:     "to drive / to manage / to handle",
   regularity:  "regular -ar",
   gerundio:    "manejando",
@@ -52129,6 +52249,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "meter",
+  freq:        2,
   meaning:     "to put / to insert / to place",
   regularity:  "regular -er",
   gerundio:    "metiendo",
@@ -52161,6 +52282,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "mirar",
+  freq:        1,
   meaning:     "to look / to watch / to see",
   regularity:  "regular -ar",
   gerundio:    "mirando",
@@ -52193,6 +52315,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "molestar",
+  freq:        2,
   meaning:     "to bother / to annoy / to be bothersome",
   regularity:  "regular -ar",
   gerundio:    "molestando",
@@ -52225,6 +52348,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "morir",
+  freq:        2,
   meaning:     "to die",
   regularity:  "stem-changing o→ue; irregular participle muerto",
   gerundio:    "muriendo",
@@ -52256,6 +52380,7 @@ const verbConjugationData = [
   },
   {
   infinitive:  "mostrar",
+  freq:        2,
   meaning:     "to show / to display",
   regularity:  "stem-changing o→ue",
   gerundio:    "mostrando",
@@ -52288,6 +52413,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "nacer",
+  freq:        3,
   meaning:     "to be born",
   regularity:  "regular -er; irregular yo: nazco",
   gerundio:    "naciendo",
@@ -52320,6 +52446,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "necesitar",
+  freq:        1,
   meaning:     "to need",
   regularity:  "regular -ar",
   gerundio:    "necesitando",
@@ -52352,6 +52479,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "notar",
+  freq:        2,
   meaning:     "to notice / to note / to observe",
   regularity:  "regular -ar",
   gerundio:    "notando",
@@ -52384,6 +52512,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "ocurrir",
+  freq:        3,
   meaning:     "to happen / to occur",
   regularity:  "regular -ir",
   gerundio:    "ocurriendo",
@@ -52416,6 +52545,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "odiar",
+  freq:        2,
   meaning:     "to hate / to dislike",
   regularity:  "regular -ar",
   gerundio:    "odiando",
@@ -52448,6 +52578,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "oír",
+  freq:        2,
   meaning:     "to hear / to listen",
   regularity:  "highly irregular",
   gerundio:    "oyendo",
@@ -52480,6 +52611,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "olvidar",
+  freq:        2,
   meaning:     "to forget",
   regularity:  "regular -ar",
   gerundio:    "olvidando",
@@ -52512,6 +52644,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "pagar",
+  freq:        2,
   meaning:     "to pay",
   regularity:  "regular -ar; spelling change g→gu before e",
   gerundio:    "pagando",
@@ -52544,6 +52677,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "parecer",
+  freq:        1,
   meaning:     "to seem / to appear / to look like",
   regularity:  "regular -er; irregular yo: parezco",
   gerundio:    "pareciendo",
@@ -52576,6 +52710,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "pasar",
+  freq:        1,
   meaning:     "to pass / to happen / to spend (time)",
   regularity:  "regular -ar",
   gerundio:    "pasando",
@@ -52607,7 +52742,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "pedir", meaning: "to ask for / to order", regularity: "stem-changing e→i", gerundio: "pidiendo", participio: "pedido", notes: "Used for ordering food/drinks. Distinct from preguntar (to ask a question).",
+  infinitive: "pedir",
+  freq:        1, meaning: "to ask for / to order", regularity: "stem-changing e→i", gerundio: "pidiendo", participio: "pedido", notes: "Used for ordering food/drinks. Distinct from preguntar (to ask a question).",
   conjugaciones: {
     presente: { yo: "pido", vos: "pedís", tu: "pides", el: "pide", nosotros: "pedimos", vosotros: "pedís", ellos: "piden" },
     indefinido: { yo: "pedí", vos: "pediste", tu: "pediste", el: "pidió", nosotros: "pedimos", vosotros: "pedisteis", ellos: "pidieron" },
@@ -52632,7 +52768,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "pensar", meaning: "to think", regularity: "stem-changing e→ie", gerundio: "pensando", participio: "pensado", notes: "pensar en = to think about. pensar + inf = to plan to.",
+  infinitive: "pensar",
+  freq:        1, meaning: "to think", regularity: "stem-changing e→ie", gerundio: "pensando", participio: "pensado", notes: "pensar en = to think about. pensar + inf = to plan to.",
   conjugaciones: {
     presente: { yo: "pienso", vos: "pensás", tu: "piensas", el: "piensa", nosotros: "pensamos", vosotros: "pensáis", ellos: "piensan" },
     indefinido: { yo: "pensé", vos: "pensaste", tu: "pensaste", el: "pensó", nosotros: "pensamos", vosotros: "pensasteis", ellos: "pensaron" },
@@ -52657,7 +52794,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "perder", meaning: "to lose / to miss / to waste", regularity: "stem-changing e→ie", gerundio: "perdiendo", participio: "perdido", notes: "perder tiempo = to waste time. perder el tren = to miss the train.",
+  infinitive: "perder",
+  freq:        2, meaning: "to lose / to miss / to waste", regularity: "stem-changing e→ie", gerundio: "perdiendo", participio: "perdido", notes: "perder tiempo = to waste time. perder el tren = to miss the train.",
   conjugaciones: {
     presente: { yo: "pierdo", vos: "perdés", tu: "pierdes", el: "pierde", nosotros: "perdemos", vosotros: "perdéis", ellos: "pierden" },
     indefinido: { yo: "perdí", vos: "perdiste", tu: "perdiste", el: "perdió", nosotros: "perdimos", vosotros: "perdisteis", ellos: "perdieron" },
@@ -52682,7 +52820,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "permitir", meaning: "to allow / to permit / to let", regularity: "regular -ir", gerundio: "permitiendo", participio: "permitido", notes: "permitir + inf = to allow (someone) to (do something). permitir que = to allow that.",
+  infinitive: "permitir",
+  freq:        2, meaning: "to allow / to permit / to let", regularity: "regular -ir", gerundio: "permitiendo", participio: "permitido", notes: "permitir + inf = to allow (someone) to (do something). permitir que = to allow that.",
   conjugaciones: {
     presente: { yo: "permito", vos: "permitís", tu: "permites", el: "permite", nosotros: "permitimos", vosotros: "permitís", ellos: "permiten" },
     indefinido: { yo: "permití", vos: "permitiste", tu: "permitiste", el: "permitió", nosotros: "permitimos", vosotros: "permitisteis", ellos: "permitieron" },
@@ -52707,7 +52846,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "poder", meaning: "to be able to / can", regularity: "stem-changing o→ue", gerundio: "pudiendo", participio: "podido", notes: "Also irregular preterit: pude, pudiste...",
+  infinitive: "poder",
+  freq:        1, meaning: "to be able to / can", regularity: "stem-changing o→ue", gerundio: "pudiendo", participio: "podido", notes: "Also irregular preterit: pude, pudiste...",
   conjugaciones: {
     presente: { yo: "puedo", vos: "podés", tu: "puedes", el: "puede", nosotros: "podemos", vosotros: "podéis", ellos: "pueden" },
     indefinido: { yo: "pude", vos: "pudiste", tu: "pudiste", el: "pudo", nosotros: "pudimos", vosotros: "pudisteis", ellos: "pudieron" },
@@ -52732,7 +52872,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "poner", meaning: "to put / to place / to set", regularity: "irregular", gerundio: "poniendo", participio: "puesto", notes: "pongo, puse, pondré... Irregular participle: puesto.",
+  infinitive: "poner",
+  freq:        1, meaning: "to put / to place / to set", regularity: "irregular", gerundio: "poniendo", participio: "puesto", notes: "pongo, puse, pondré... Irregular participle: puesto.",
   conjugaciones: {
     presente: { yo: "pongo", vos: "ponés", tu: "pones", el: "pone", nosotros: "ponemos", vosotros: "ponéis", ellos: "ponen" },
     indefinido: { yo: "puse", vos: "pusiste", tu: "pusiste", el: "puso", nosotros: "pusimos", vosotros: "pusisteis", ellos: "pusieron" },
@@ -52757,7 +52898,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "ponerse", meaning: "to put on / to become / to get (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "poniéndose", participio: "puesto", notes: "ponerse + adj = to become (happy, sad, etc). ponerse ropa = to put on clothes. Irregular participle: puesto.",
+  infinitive: "ponerse",
+  freq:        2, meaning: "to put on / to become / to get (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "poniéndose", participio: "puesto", notes: "ponerse + adj = to become (happy, sad, etc). ponerse ropa = to put on clothes. Irregular participle: puesto.",
   conjugaciones: {
     presente: { yo: "me pongo", vos: "te ponés", tu: "te pones", el: "se pone", nosotros: "nos ponemos", vosotros: "os ponéis", ellos: "se ponen" },
     indefinido: { yo: "me puse", vos: "te pusiste", tu: "te pusiste", el: "se puso", nosotros: "nos pusimos", vosotros: "os pusisteis", ellos: "se pusieron" },
@@ -52782,7 +52924,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "practicar", meaning: "to practice / to play (a sport)", regularity: "regular -ar", gerundio: "practicando", participio: "practicado", notes: "Common in sports context: practicar fútbol = to play football.",
+  infinitive: "practicar",
+  freq:        2, meaning: "to practice / to play (a sport)", regularity: "regular -ar", gerundio: "practicando", participio: "practicado", notes: "Common in sports context: practicar fútbol = to play football.",
   conjugaciones: {
     presente: { yo: "practico", vos: "practicás", tu: "practicas", el: "practica", nosotros: "practicamos", vosotros: "practicáis", ellos: "practican" },
     indefinido: { yo: "practiqué", vos: "practicaste", tu: "practicaste", el: "practicó", nosotros: "practicamos", vosotros: "practicasteis", ellos: "practicaron" },
@@ -52807,7 +52950,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "preferir", meaning: "to prefer / to like better", regularity: "stem-changing e→ie, e→i", gerundio: "prefiriendo", participio: "preferido", notes: "preferir + inf = to prefer to (do something). Preterit uses e→i: preferí, preferiste.",
+  infinitive: "preferir",
+  freq:        2, meaning: "to prefer / to like better", regularity: "stem-changing e→ie, e→i", gerundio: "prefiriendo", participio: "preferido", notes: "preferir + inf = to prefer to (do something). Preterit uses e→i: preferí, preferiste.",
   conjugaciones: {
     presente: { yo: "prefiero", vos: "preferís", tu: "prefieres", el: "prefiere", nosotros: "preferimos", vosotros: "preferís", ellos: "prefieren" },
     indefinido: { yo: "preferí", vos: "preferiste", tu: "preferiste", el: "prefirió", nosotros: "preferimos", vosotros: "preferisteis", ellos: "prefirieron" },
@@ -52832,7 +52976,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "preguntar", meaning: "to ask (a question) / to inquire", regularity: "regular -ar", gerundio: "preguntando", participio: "preguntado", notes: "Distinct from pedir (to ask for). preguntar por = to ask about / to inquire after.",
+  infinitive: "preguntar",
+  freq:        2, meaning: "to ask (a question) / to inquire", regularity: "regular -ar", gerundio: "preguntando", participio: "preguntado", notes: "Distinct from pedir (to ask for). preguntar por = to ask about / to inquire after.",
   conjugaciones: {
     presente: { yo: "pregunto", vos: "preguntás", tu: "preguntas", el: "pregunta", nosotros: "preguntamos", vosotros: "preguntáis", ellos: "preguntan" },
     indefinido: { yo: "pregunté", vos: "preguntaste", tu: "preguntaste", el: "preguntó", nosotros: "preguntamos", vosotros: "preguntasteis", ellos: "preguntaron" },
@@ -52857,7 +53002,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "preocuparse", meaning: "to worry / to be concerned", regularity: "reflexive regular -ar", gerundio: "preocupándose", participio: "preocupado", notes: "preocuparse por = to worry about. Always reflexive.",
+  infinitive: "preocuparse",
+  freq:        2, meaning: "to worry / to be concerned", regularity: "reflexive regular -ar", gerundio: "preocupándose", participio: "preocupado", notes: "preocuparse por = to worry about. Always reflexive.",
   conjugaciones: {
     presente: { yo: "me preocupo", vos: "te preocupás", tu: "te preocupas", el: "se preocupa", nosotros: "nos preocupamos", vosotros: "os preocupáis", ellos: "se preocupan" },
     indefinido: { yo: "me preocupé", vos: "te preocupaste", tu: "te preocupaste", el: "se preocupó", nosotros: "nos preocupamos", vosotros: "os preocupasteis", ellos: "se preocuparon" },
@@ -52882,7 +53028,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "preparar", meaning: "to prepare / to get ready / to make", regularity: "regular -ar", gerundio: "preparando", participio: "preparado", notes: "Common in cooking and planning contexts.",
+  infinitive: "preparar",
+  freq:        2, meaning: "to prepare / to get ready / to make", regularity: "regular -ar", gerundio: "preparando", participio: "preparado", notes: "Common in cooking and planning contexts.",
   conjugaciones: {
     presente: { yo: "preparo", vos: "preparás", tu: "preparas", el: "prepara", nosotros: "preparamos", vosotros: "preparáis", ellos: "preparan" },
     indefinido: { yo: "preparé", vos: "preparaste", tu: "preparaste", el: "preparó", nosotros: "preparamos", vosotros: "preparasteis", ellos: "prepararon" },
@@ -52907,7 +53054,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "quedar", meaning: "to remain / to stay / to fit / to be left", regularity: "regular -ar", gerundio: "quedando", participio: "quedado", notes: "quedar + adj = to stay/be in a state. quedar en = to agree on. quedar bien/mal = to fit well/poorly.",
+  infinitive: "quedar",
+  freq:        2, meaning: "to remain / to stay / to fit / to be left", regularity: "regular -ar", gerundio: "quedando", participio: "quedado", notes: "quedar + adj = to stay/be in a state. quedar en = to agree on. quedar bien/mal = to fit well/poorly.",
   conjugaciones: {
     presente: { yo: "quedo", vos: "quedás", tu: "quedas", el: "queda", nosotros: "quedamos", vosotros: "quedáis", ellos: "quedan" },
     indefinido: { yo: "quedé", vos: "quedaste", tu: "quedaste", el: "quedó", nosotros: "quedamos", vosotros: "quedasteis", ellos: "quedaron" },
@@ -52932,7 +53080,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "quedarse", meaning: "to stay / to remain / to keep", regularity: "reflexive regular -ar", gerundio: "quedándose", participio: "quedado", notes: "quedarse con = to keep / to stay with. Always reflexive. Similar to quedar but emphasizes remaining/staying in a place.",
+  infinitive: "quedarse",
+  freq:        2, meaning: "to stay / to remain / to keep", regularity: "reflexive regular -ar", gerundio: "quedándose", participio: "quedado", notes: "quedarse con = to keep / to stay with. Always reflexive. Similar to quedar but emphasizes remaining/staying in a place.",
   conjugaciones: {
     presente: { yo: "me quedo", vos: "te quedás", tu: "te quedas", el: "se queda", nosotros: "nos quedamos", vosotros: "os quedáis", ellos: "se quedan" },
     indefinido: { yo: "me quedé", vos: "te quedaste", tu: "te quedaste", el: "se quedó", nosotros: "nos quedamos", vosotros: "os quedasteis", ellos: "se quedaron" },
@@ -52957,7 +53106,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "querer", meaning: "to want / to wish / to love", regularity: "stem-changing e→ie", gerundio: "queriendo", participio: "querido", notes: "querer a = to love (a person). querer + inf = to want to (do something)",
+  infinitive: "querer",
+  freq:        1, meaning: "to want / to wish / to love", regularity: "stem-changing e→ie", gerundio: "queriendo", participio: "querido", notes: "querer a = to love (a person). querer + inf = to want to (do something)",
   conjugaciones: {
     presente: { yo: "quiero", vos: "querés", tu: "quieres", el: "quiere", nosotros: "queremos", vosotros: "queréis", ellos: "quieren" },
     indefinido: { yo: "quise", vos: "quisiste", tu: "quisiste", el: "quiso", nosotros: "quisimos", vosotros: "quisisteis", ellos: "quisieron" },
@@ -52982,7 +53132,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "recibir", meaning: "to receive / to get / to accept", regularity: "regular -ir", gerundio: "recibiendo", participio: "recibido", notes: "Common in formal and everyday contexts.",
+  infinitive: "recibir",
+  freq:        2, meaning: "to receive / to get / to accept", regularity: "regular -ir", gerundio: "recibiendo", participio: "recibido", notes: "Common in formal and everyday contexts.",
   conjugaciones: {
     presente: { yo: "recibo", vos: "recibís", tu: "recibes", el: "recibe", nosotros: "recibimos", vosotros: "recibís", ellos: "reciben" },
     indefinido: { yo: "recibí", vos: "recibiste", tu: "recibiste", el: "recibió", nosotros: "recibimos", vosotros: "recibisteis", ellos: "recibieron" },
@@ -53007,7 +53158,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "recordar", meaning: "to remember / to recall / to remind", regularity: "stem-changing o→ue", gerundio: "recordando", participio: "recordado", notes: "recordar a alguien = to remind someone. recordar que = to remember that.",
+  infinitive: "recordar",
+  freq:        2, meaning: "to remember / to recall / to remind", regularity: "stem-changing o→ue", gerundio: "recordando", participio: "recordado", notes: "recordar a alguien = to remind someone. recordar que = to remember that.",
   conjugaciones: {
     presente: { yo: "recuerdo", vos: "recordás", tu: "recuerdas", el: "recuerda", nosotros: "recordamos", vosotros: "recordáis", ellos: "recuerdan" },
     indefinido: { yo: "recordé", vos: "recordaste", tu: "recordaste", el: "recordó", nosotros: "recordamos", vosotros: "recordasteis", ellos: "recordaron" },
@@ -53032,7 +53184,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "regresar", meaning: "to return / to go back / to come back", regularity: "regular -ar", gerundio: "regresando", participio: "regresado", notes: "Common in Latin America. Similar to volver but more common in certain regions.",
+  infinitive: "regresar",
+  freq:        2, meaning: "to return / to go back / to come back", regularity: "regular -ar", gerundio: "regresando", participio: "regresado", notes: "Common in Latin America. Similar to volver but more common in certain regions.",
   conjugaciones: {
     presente: { yo: "regreso", vos: "regresás", tu: "regresas", el: "regresa", nosotros: "regresamos", vosotros: "regresáis", ellos: "regresan" },
     indefinido: { yo: "regresé", vos: "regresaste", tu: "regresaste", el: "regresó", nosotros: "regresamos", vosotros: "regresasteis", ellos: "regresaron" },
@@ -53057,7 +53210,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "reír", meaning: "to laugh / to smile", regularity: "irregular e→í accent", gerundio: "riendo", participio: "reído", notes: "Note accent on í. Related to sonreír (to smile). Preterit: reí, reíste...",
+  infinitive: "reír",
+  freq:        2, meaning: "to laugh / to smile", regularity: "irregular e→í accent", gerundio: "riendo", participio: "reído", notes: "Note accent on í. Related to sonreír (to smile). Preterit: reí, reíste...",
   conjugaciones: {
     presente: { yo: "río", vos: "reís", tu: "ríes", el: "ríe", nosotros: "reímos", vosotros: "reís", ellos: "ríen" },
     indefinido: { yo: "reí", vos: "reíste", tu: "reíste", el: "rió", nosotros: "reímos", vosotros: "reísteis", ellos: "rieron" },
@@ -53083,6 +53237,7 @@ const verbConjugationData = [
 },
   {
   infinitive:  "reír",
+  freq:        2,
   meaning:     "to laugh",
   regularity:  "stem-changing e→i; accent on reír",
   gerundio:    "riendo",
@@ -53114,7 +53269,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "resolver", meaning: "to solve / to resolve / to settle", regularity: "stem-changing o→ue, irregular participle", gerundio: "resolviendo", participio: "resuelto", notes: "Irregular participle: resuelto. resolver un problema = to solve a problem.",
+  infinitive: "resolver",
+  freq:        2, meaning: "to solve / to resolve / to settle", regularity: "stem-changing o→ue, irregular participle", gerundio: "resolviendo", participio: "resuelto", notes: "Irregular participle: resuelto. resolver un problema = to solve a problem.",
   conjugaciones: {
     presente: { yo: "resuelvo", vos: "resolvés", tu: "resuelves", el: "resuelve", nosotros: "resolvemos", vosotros: "resolvéis", ellos: "resuelven" },
     indefinido: { yo: "resolví", vos: "resolviste", tu: "resolviste", el: "resolvió", nosotros: "resolvimos", vosotros: "resolvisteis", ellos: "resolvieron" },
@@ -53139,7 +53295,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "responder", meaning: "to answer / to reply / to respond", regularity: "regular -er", gerundio: "respondiendo", participio: "respondido", notes: "responder a = to answer/reply to. responder por = to be responsible for.",
+  infinitive: "responder",
+  freq:        2, meaning: "to answer / to reply / to respond", regularity: "regular -er", gerundio: "respondiendo", participio: "respondido", notes: "responder a = to answer/reply to. responder por = to be responsible for.",
   conjugaciones: {
     presente: { yo: "respondo", vos: "respondés", tu: "respondes", el: "responde", nosotros: "respondemos", vosotros: "respondéis", ellos: "responden" },
     indefinido: { yo: "respondí", vos: "respondiste", tu: "respondiste", el: "respondió", nosotros: "respondimos", vosotros: "respondisteis", ellos: "respondieron" },
@@ -53164,7 +53321,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "reunirse", meaning: "to meet / to gather / to join", regularity: "reflexive regular -ir", gerundio: "reuniéndose", participio: "reunido", notes: "Always reflexive. reunirse con = to meet up with. reunirse en = to meet at.",
+  infinitive: "reunirse",
+  freq:        3, meaning: "to meet / to gather / to join", regularity: "reflexive regular -ir", gerundio: "reuniéndose", participio: "reunido", notes: "Always reflexive. reunirse con = to meet up with. reunirse en = to meet at.",
   conjugaciones: {
     presente: { yo: "me reúno", vos: "te reunís", tu: "te reúnes", el: "se reúne", nosotros: "nos reunimos", vosotros: "os reunís", ellos: "se reúnen" },
     indefinido: { yo: "me reuní", vos: "te reuniste", tu: "te reuniste", el: "se reunió", nosotros: "nos reunimos", vosotros: "os reunisteis", ellos: "se reunieron" },
@@ -53189,7 +53347,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "revisar", meaning: "to review / to check / to examine", regularity: "regular -ar", gerundio: "revisando", participio: "revisado", notes: "Common in academic and professional contexts. revisar un trabajo = to check/review work.",
+  infinitive: "revisar",
+  freq:        3, meaning: "to review / to check / to examine", regularity: "regular -ar", gerundio: "revisando", participio: "revisado", notes: "Common in academic and professional contexts. revisar un trabajo = to check/review work.",
   conjugaciones: {
     presente: { yo: "reviso", vos: "revisás", tu: "revisas", el: "revisa", nosotros: "revisamos", vosotros: "revisáis", ellos: "revisan" },
     indefinido: { yo: "revisé", vos: "revisaste", tu: "revisaste", el: "revisó", nosotros: "revisamos", vosotros: "revisasteis", ellos: "revisaron" },
@@ -53214,7 +53373,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "romper", meaning: "to break / to tear / to snap", regularity: "regular -er", gerundio: "rompiendo", participio: "roto", notes: "Irregular participle: roto (not rompido).",
+  infinitive: "romper",
+  freq:        2, meaning: "to break / to tear / to snap", regularity: "regular -er", gerundio: "rompiendo", participio: "roto", notes: "Irregular participle: roto (not rompido).",
   conjugaciones: {
     presente: { yo: "rompo", vos: "rompés", tu: "rompes", el: "rompe", nosotros: "rompemos", vosotros: "rompéis", ellos: "rompen" },
     indefinido: { yo: "rompí", vos: "rompiste", tu: "rompiste", el: "rompió", nosotros: "rompimos", vosotros: "rompisteis", ellos: "rompieron" },
@@ -53239,7 +53399,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "saber", meaning: "to know / to know how to", regularity: "highly irregular", gerundio: "sabiendo", participio: "sabido", notes: "sé (I know), supo (he knew), sabré (I will know). Irregular throughout. Preterit: supe, supiste...",
+  infinitive: "saber",
+  freq:        1, meaning: "to know / to know how to", regularity: "highly irregular", gerundio: "sabiendo", participio: "sabido", notes: "sé (I know), supo (he knew), sabré (I will know). Irregular throughout. Preterit: supe, supiste...",
   conjugaciones: {
     presente: { yo: "sé", vos: "sabés", tu: "sabes", el: "sabe", nosotros: "sabemos", vosotros: "sabéis", ellos: "saben" },
     indefinido: { yo: "supe", vos: "supiste", tu: "supiste", el: "supo", nosotros: "supimos", vosotros: "supisteis", ellos: "supieron" },
@@ -53264,7 +53425,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "sacar", meaning: "to take out / to remove / to take (photos/exams)", regularity: "regular -ar", gerundio: "sacando", participio: "sacado", notes: "sacar fotos = to take photos. sacar nota = to get a grade.",
+  infinitive: "sacar",
+  freq:        2, meaning: "to take out / to remove / to take (photos/exams)", regularity: "regular -ar", gerundio: "sacando", participio: "sacado", notes: "sacar fotos = to take photos. sacar nota = to get a grade.",
   conjugaciones: {
     presente: { yo: "saco", vos: "sacás", tu: "sacas", el: "saca", nosotros: "sacamos", vosotros: "sacáis", ellos: "sacan" },
     indefinido: { yo: "saqué", vos: "sacaste", tu: "sacaste", el: "sacó", nosotros: "sacamos", vosotros: "sacasteis", ellos: "sacaron" },
@@ -53289,7 +53451,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "salir", meaning: "to leave / to go out / to exit", regularity: "irregular", gerundio: "saliendo", participio: "salido", notes: "Irregular yo form (salgo). Regular otherwise except preterit is completely regular.",
+  infinitive: "salir",
+  freq:        1, meaning: "to leave / to go out / to exit", regularity: "irregular", gerundio: "saliendo", participio: "salido", notes: "Irregular yo form (salgo). Regular otherwise except preterit is completely regular.",
   conjugaciones: {
     presente: { yo: "salgo", vos: "salís", tu: "sales", el: "sale", nosotros: "salimos", vosotros: "salís", ellos: "salen" },
     indefinido: { yo: "salí", vos: "saliste", tu: "saliste", el: "salió", nosotros: "salimos", vosotros: "salisteíis", ellos: "salieron" },
@@ -53314,7 +53477,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "seguir", meaning: "to follow / to continue / to keep going", regularity: "stem-changing e→i, irregular yo", gerundio: "siguiendo", participio: "seguido", notes: "Irregular yo form (sigo). Stem change in preterit: seguí, siguiste...",
+  infinitive: "seguir",
+  freq:        1, meaning: "to follow / to continue / to keep going", regularity: "stem-changing e→i, irregular yo", gerundio: "siguiendo", participio: "seguido", notes: "Irregular yo form (sigo). Stem change in preterit: seguí, siguiste...",
   conjugaciones: {
     presente: { yo: "sigo", vos: "seguís", tu: "sigues", el: "sigue", nosotros: "seguimos", vosotros: "seguís", ellos: "siguen" },
     indefinido: { yo: "seguí", vos: "seguiste", tu: "seguiste", el: "siguió", nosotros: "seguimos", vosotros: "seguisteis", ellos: "siguieron" },
@@ -53339,7 +53503,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "sentir", meaning: "to feel / to sense / to hear", regularity: "stem-changing e→ie, e→i", gerundio: "sintiendo", participio: "sentido", notes: "sentir + sustantivo = to feel/sense something. sentir que = to feel that.",
+  infinitive: "sentir",
+  freq:        2, meaning: "to feel / to sense / to hear", regularity: "stem-changing e→ie, e→i", gerundio: "sintiendo", participio: "sentido", notes: "sentir + sustantivo = to feel/sense something. sentir que = to feel that.",
   conjugaciones: {
     presente: { yo: "siento", vos: "sentís", tu: "sientes", el: "siente", nosotros: "sentimos", vosotros: "sentís", ellos: "sienten" },
     indefinido: { yo: "sentí", vos: "sentiste", tu: "sentiste", el: "sintió", nosotros: "sentimos", vosotros: "sentisteis", ellos: "sintieron" },
@@ -53364,7 +53529,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "sentirse", meaning: "to feel / to feel oneself (emotional state)", regularity: "reflexive stem-changing e→ie, e→i", gerundio: "sintiéndose", participio: "sentido", notes: "Always reflexive. sentirse + adj = to feel (adjective). Similar to estar but more emotional.",
+  infinitive: "sentirse",
+  freq:        2, meaning: "to feel / to feel oneself (emotional state)", regularity: "reflexive stem-changing e→ie, e→i", gerundio: "sintiéndose", participio: "sentido", notes: "Always reflexive. sentirse + adj = to feel (adjective). Similar to estar but more emotional.",
   conjugaciones: {
     presente: { yo: "me siento", vos: "te sentís", tu: "te sientes", el: "se siente", nosotros: "nos sentimos", vosotros: "os sentís", ellos: "se sienten" },
     indefinido: { yo: "me sentí", vos: "te sentiste", tu: "te sentiste", el: "se sintió", nosotros: "nos sentimos", vosotros: "os sentisteis", ellos: "se sintieron" },
@@ -53389,7 +53555,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "ser", meaning: "to be (permanent, identity, profession)", regularity: "highly irregular", gerundio: "siendo", participio: "sido", notes: "Most irregular verb in Spanish. Completely unpredictable conjugation. Key difference from estar.",
+  infinitive: "ser",
+  freq:        1, meaning: "to be (permanent, identity, profession)", regularity: "highly irregular", gerundio: "siendo", participio: "sido", notes: "Most irregular verb in Spanish. Completely unpredictable conjugation. Key difference from estar.",
   conjugaciones: {
     presente: { yo: "soy", vos: "sos", tu: "eres", el: "es", nosotros: "somos", vosotros: "sois", ellos: "son" },
     indefinido: { yo: "fui", vos: "fuiste", tu: "fuiste", el: "fue", nosotros: "fuimos", vosotros: "fuisteis", ellos: "fueron" },
@@ -53414,7 +53581,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "soler", meaning: "to usually do / to be accustomed to / to be in the habit of", regularity: "stem-changing o→ue", gerundio: "soliendo", participio: "solido", notes: "Only used in present/imperfect. soler + inf = to usually (do). No preterit or future form used.",
+  infinitive: "soler",
+  freq:        3, meaning: "to usually do / to be accustomed to / to be in the habit of", regularity: "stem-changing o→ue", gerundio: "soliendo", participio: "solido", notes: "Only used in present/imperfect. soler + inf = to usually (do). No preterit or future form used.",
   conjugaciones: {
     presente: { yo: "suelo", vos: "solés", tu: "sueles", el: "suele", nosotros: "solemos", vosotros: "soléis", ellos: "suelen" },
     indefinido: { yo: "solí", vos: "soliste", tu: "soliste", el: "solió", nosotros: "solimos", vosotros: "solisteis", ellos: "solieron" },
@@ -53439,7 +53607,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "subir", meaning: "to go up / to climb / to upload / to raise", regularity: "regular -ir", gerundio: "subiendo", participio: "subido", notes: "subir + sustantivo = to go up (something). subir a = to climb up, upload to.",
+  infinitive: "subir",
+  freq:        2, meaning: "to go up / to climb / to upload / to raise", regularity: "regular -ir", gerundio: "subiendo", participio: "subido", notes: "subir + sustantivo = to go up (something). subir a = to climb up, upload to.",
   conjugaciones: {
     presente: { yo: "subo", vos: "subís", tu: "subes", el: "sube", nosotros: "subimos", vosotros: "subís", ellos: "suben" },
     indefinido: { yo: "subí", vos: "subiste", tu: "subiste", el: "subió", nosotros: "subimos", vosotros: "subisteis", ellos: "subieron" },
@@ -53464,7 +53633,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "tardar", meaning: "to take (time) / to be slow / to delay", regularity: "regular -ar", gerundio: "tardando", participio: "tardado", notes: "tardar en + inf = to take time to (do). tardar + time expression = how long something takes.",
+  infinitive: "tardar",
+  freq:        3, meaning: "to take (time) / to be slow / to delay", regularity: "regular -ar", gerundio: "tardando", participio: "tardado", notes: "tardar en + inf = to take time to (do). tardar + time expression = how long something takes.",
   conjugaciones: {
     presente: { yo: "tardo", vos: "tardás", tu: "tardas", el: "tarda", nosotros: "tardamos", vosotros: "tardáis", ellos: "tardan" },
     indefinido: { yo: "tardé", vos: "tardaste", tu: "tardaste", el: "tardó", nosotros: "tardamos", vosotros: "tardasteis", ellos: "tardaron" },
@@ -53489,7 +53659,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "tener", meaning: "to have / to hold / to possess", regularity: "stem-changing e→ie, irregular", gerundio: "teniendo", participio: "tenido", notes: "tener que + inf = must/have to. Preterit: tuve, tuviste... Irregular throughout.",
+  infinitive: "tener",
+  freq:        1, meaning: "to have / to hold / to possess", regularity: "stem-changing e→ie, irregular", gerundio: "teniendo", participio: "tenido", notes: "tener que + inf = must/have to. Preterit: tuve, tuviste... Irregular throughout.",
   conjugaciones: {
     presente: { yo: "tengo", vos: "tenés", tu: "tienes", el: "tiene", nosotros: "tenemos", vosotros: "tenéis", ellos: "tienen" },
     indefinido: { yo: "tuve", vos: "tuviste", tu: "tuviste", el: "tuvo", nosotros: "tuvimos", vosotros: "tuvisteis", ellos: "tuvieron" },
@@ -53514,7 +53685,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "terminar", meaning: "to finish / to end / to complete", regularity: "regular -ar", gerundio: "terminando", participio: "terminado", notes: "terminar de + inf = to finish (doing). Very common in everyday Spanish.",
+  infinitive: "terminar",
+  freq:        2, meaning: "to finish / to end / to complete", regularity: "regular -ar", gerundio: "terminando", participio: "terminado", notes: "terminar de + inf = to finish (doing). Very common in everyday Spanish.",
   conjugaciones: {
     presente: { yo: "termino", vos: "terminás", tu: "terminas", el: "termina", nosotros: "terminamos", vosotros: "terminéis", ellos: "terminan" },
     indefinido: { yo: "terminé", vos: "terminaste", tu: "terminaste", el: "terminó", nosotros: "terminamos", vosotros: "terminasteis", ellos: "terminaron" },
@@ -53539,7 +53711,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "tocar", meaning: "to touch / to play (music) / to knock", regularity: "regular -ar", gerundio: "tocando", participio: "tocado", notes: "tocar un instrumento = to play an instrument. tocar a alguien = to touch someone.",
+  infinitive: "tocar",
+  freq:        2, meaning: "to touch / to play (music) / to knock", regularity: "regular -ar", gerundio: "tocando", participio: "tocado", notes: "tocar un instrumento = to play an instrument. tocar a alguien = to touch someone.",
   conjugaciones: {
     presente: { yo: "toco", vos: "tocás", tu: "tocas", el: "toca", nosotros: "tocamos", vosotros: "tocáis", ellos: "tocan" },
     indefinido: { yo: "toqué", vos: "tocaste", tu: "tocaste", el: "tocó", nosotros: "tocamos", vosotros: "tocasteis", ellos: "tocaron" },
@@ -53564,7 +53737,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "tomar", meaning: "to take / to drink / to have (beverage or food)", regularity: "regular -ar", gerundio: "tomando", participio: "tomado", notes: "Very common. tomar un café = to have/drink a coffee. tomar una decisión = to make a decision.",
+  infinitive: "tomar",
+  freq:        1, meaning: "to take / to drink / to have (beverage or food)", regularity: "regular -ar", gerundio: "tomando", participio: "tomado", notes: "Very common. tomar un café = to have/drink a coffee. tomar una decisión = to make a decision.",
   conjugaciones: {
     presente: { yo: "tomo", vos: "tomás", tu: "tomas", el: "toma", nosotros: "tomamos", vosotros: "tomáis", ellos: "toman" },
     indefinido: { yo: "tomé", vos: "tomaste", tu: "tomaste", el: "tomó", nosotros: "tomamos", vosotros: "tomasteis", ellos: "tomaron" },
@@ -53589,7 +53763,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "traer", meaning: "to bring / to carry / to fetch", regularity: "irregular", gerundio: "trayendo", participio: "traído", notes: "Irregular yo form (traigo). Preterit: traje, trajiste... Accent on í in participle.",
+  infinitive: "traer",
+  freq:        1, meaning: "to bring / to carry / to fetch", regularity: "irregular", gerundio: "trayendo", participio: "traído", notes: "Irregular yo form (traigo). Preterit: traje, trajiste... Accent on í in participle.",
   conjugaciones: {
     presente: { yo: "traigo", vos: "traés", tu: "traes", el: "trae", nosotros: "traemos", vosotros: "traéis", ellos: "traen" },
     indefinido: { yo: "traje", vos: "trajiste", tu: "trajiste", el: "trajo", nosotros: "trajimos", vosotros: "trajisteis", ellos: "trajeron" },
@@ -53614,7 +53789,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "usar", meaning: "to use / to wear / to employ", regularity: "regular -ar", gerundio: "usando", participio: "usado", notes: "Very common. usar ropa = to wear clothes. usar un programa = to use a program.",
+  infinitive: "usar",
+  freq:        2, meaning: "to use / to wear / to employ", regularity: "regular -ar", gerundio: "usando", participio: "usado", notes: "Very common. usar ropa = to wear clothes. usar un programa = to use a program.",
   conjugaciones: {
     presente: { yo: "uso", vos: "usás", tu: "usas", el: "usa", nosotros: "usamos", vosotros: "usáis", ellos: "usan" },
     indefinido: { yo: "usé", vos: "usaste", tu: "usaste", el: "usó", nosotros: "usamos", vosotros: "usasteis", ellos: "usaron" },
@@ -53639,7 +53815,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "valer", meaning: "to be worth / to cost / to be valid / to be useful", regularity: "irregular", gerundio: "valiendo", participio: "valido", notes: "Irregular yo form (valgo). valer la pena = to be worth it. ¿Cuánto vale? = How much does it cost?",
+  infinitive: "valer",
+  freq:        3, meaning: "to be worth / to cost / to be valid / to be useful", regularity: "irregular", gerundio: "valiendo", participio: "valido", notes: "Irregular yo form (valgo). valer la pena = to be worth it. ¿Cuánto vale? = How much does it cost?",
   conjugaciones: {
     presente: { yo: "valgo", vos: "valés", tu: "vales", el: "vale", nosotros: "valemos", vosotros: "valéis", ellos: "valen" },
     indefinido: { yo: "valí", vos: "valiste", tu: "valiste", el: "valió", nosotros: "valimos", vosotros: "valisteis", ellos: "valieron" },
@@ -53664,7 +53841,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "vender", meaning: "to sell / to offer for sale", regularity: "regular -er", gerundio: "vendiendo", participio: "vendido", notes: "Regular second conjugation verb.",
+  infinitive: "vender",
+  freq:        2, meaning: "to sell / to offer for sale", regularity: "regular -er", gerundio: "vendiendo", participio: "vendido", notes: "Regular second conjugation verb.",
   conjugaciones: {
     presente: { yo: "vendo", vos: "vendés", tu: "vendes", el: "vende", nosotros: "vendemos", vosotros: "vendéis", ellos: "venden" },
     indefinido: { yo: "vendí", vos: "vendiste", tu: "vendiste", el: "vendió", nosotros: "vendimos", vosotros: "vendisteis", ellos: "vendieron" },
@@ -53689,7 +53867,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "venir", meaning: "to come / to arrive", regularity: "stem-changing e→ie, irregular", gerundio: "viniendo", participio: "venido", notes: "Irregular throughout. Preterit: vine, viniste... Yo form: vengo.",
+  infinitive: "venir",
+  freq:        1, meaning: "to come / to arrive", regularity: "stem-changing e→ie, irregular", gerundio: "viniendo", participio: "venido", notes: "Irregular throughout. Preterit: vine, viniste... Yo form: vengo.",
   conjugaciones: {
     presente: { yo: "vengo", vos: "venís", tu: "vienes", el: "viene", nosotros: "venimos", vosotros: "venís", ellos: "vienen" },
     indefinido: { yo: "vine", vos: "viniste", tu: "viniste", el: "vino", nosotros: "vinimos", vosotros: "vinisteis", ellos: "vinieron" },
@@ -53714,7 +53893,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "ver", meaning: "to see / to watch / to look", regularity: "highly irregular", gerundio: "viendo", participio: "visto", notes: "Irregular throughout. Preterit: vi, viste... Irregular participle: visto (not vedo).",
+  infinitive: "ver",
+  freq:        1, meaning: "to see / to watch / to look", regularity: "highly irregular", gerundio: "viendo", participio: "visto", notes: "Irregular throughout. Preterit: vi, viste... Irregular participle: visto (not vedo).",
   conjugaciones: {
     presente: { yo: "veo", vos: "ves", tu: "ves", el: "ve", nosotros: "vemos", vosotros: "veis", ellos: "ven" },
     indefinido: { yo: "vi", vos: "viste", tu: "viste", el: "vio", nosotros: "vimos", vosotros: "visteis", ellos: "vieron" },
@@ -53739,7 +53919,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "vestirse", meaning: "to get dressed / to wear / to dress oneself", regularity: "reflexive stem-changing e→i", gerundio: "vistiéndose", participio: "vestido", notes: "Always reflexive. Preterit: me vestí, te vestiste... e→i in preterit.",
+  infinitive: "vestirse",
+  freq:        3, meaning: "to get dressed / to wear / to dress oneself", regularity: "reflexive stem-changing e→i", gerundio: "vistiéndose", participio: "vestido", notes: "Always reflexive. Preterit: me vestí, te vestiste... e→i in preterit.",
   conjugaciones: {
     presente: { yo: "me visto", vos: "te vestís", tu: "te vistes", el: "se viste", nosotros: "nos vestimos", vosotros: "os vestís", ellos: "se visten" },
     indefinido: { yo: "me vestí", vos: "te vestiste", tu: "te vestiste", el: "se vistió", nosotros: "nos vestimos", vosotros: "os vestisteis", ellos: "se vistieron" },
@@ -53764,7 +53945,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "visitar", meaning: "to visit / to call on", regularity: "regular -ar", gerundio: "visitando", participio: "visitado", notes: "visitar a alguien = to visit someone. Common in travel and social contexts.",
+  infinitive: "visitar",
+  freq:        2, meaning: "to visit / to call on", regularity: "regular -ar", gerundio: "visitando", participio: "visitado", notes: "visitar a alguien = to visit someone. Common in travel and social contexts.",
   conjugaciones: {
     presente: { yo: "visito", vos: "visitás", tu: "visitas", el: "visita", nosotros: "visitamos", vosotros: "visitáis", ellos: "visitan" },
     indefinido: { yo: "visité", vos: "visitaste", tu: "visitaste", el: "visitó", nosotros: "visitamos", vosotros: "visitasteis", ellos: "visitaron" },
@@ -53789,7 +53971,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "vivir", meaning: "to live / to dwell / to exist", regularity: "regular -ir", gerundio: "viviendo", participio: "vivido", notes: "Very common. vivir en = to live in (a place). vivir de = to live on (income).",
+  infinitive: "vivir",
+  freq:        1, meaning: "to live / to dwell / to exist", regularity: "regular -ir", gerundio: "viviendo", participio: "vivido", notes: "Very common. vivir en = to live in (a place). vivir de = to live on (income).",
   conjugaciones: {
     presente: { yo: "vivo", vos: "vivís", tu: "vives", el: "vive", nosotros: "vivimos", vosotros: "vivís", ellos: "viven" },
     indefinido: { yo: "viví", vos: "viviste", tu: "viviste", el: "vivió", nosotros: "vivimos", vosotros: "vivisteis", ellos: "vivieron" },
@@ -53814,7 +53997,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "volver", meaning: "to return / to go back / to come back", regularity: "stem-changing o→ue, irregular participle", gerundio: "volviendo", participio: "vuelto", notes: "Irregular participle: vuelto (not volvido). volver a + inf = to do again.",
+  infinitive: "volver",
+  freq:        1, meaning: "to return / to go back / to come back", regularity: "stem-changing o→ue, irregular participle", gerundio: "volviendo", participio: "vuelto", notes: "Irregular participle: vuelto (not volvido). volver a + inf = to do again.",
   conjugaciones: {
     presente: { yo: "vuelvo", vos: "volvés", tu: "vuelves", el: "vuelve", nosotros: "volvemos", vosotros: "volvéis", ellos: "vuelven" },
     indefinido: { yo: "volví", vos: "volviste", tu: "volviste", el: "volvió", nosotros: "volvimos", vosotros: "volvisteis", ellos: "volvieron" },
@@ -53839,7 +54023,8 @@ const verbConjugationData = [
   }
 },
   {
-  infinitive: "volverse", meaning: "to become / to turn into / to grow (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "volviéndose", participio: "vuelto", notes: "Always reflexive. volverse + adj = to become (adjective). Similar to ponerse but more permanent.",
+  infinitive: "volverse",
+  freq:        3, meaning: "to become / to turn into / to grow (emotional state)", regularity: "reflexive stem-changing o→ue", gerundio: "volviéndose", participio: "vuelto", notes: "Always reflexive. volverse + adj = to become (adjective). Similar to ponerse but more permanent.",
   conjugaciones: {
     presente: { yo: "me vuelvo", vos: "te volvés", tu: "te vuelves", el: "se vuelve", nosotros: "nos volvemos", vosotros: "os volvéis", ellos: "se vuelven" },
     indefinido: { yo: "me volví", vos: "te volviste", tu: "te volviste", el: "se volvió", nosotros: "nos volvimos", vosotros: "os volvisteis", ellos: "se volvieron" },
@@ -56079,23 +56264,81 @@ const VC_PERSON_LABELS = {
   ellos:    'ellos / ellas',
 };
 
-// Rioplatense: vos is canonical; tú row exists in data but hidden by default
-const VC_RIOPLATENSE_PERSONS = ['yo', 'vos', 'el', 'nosotros', 'ellos'];
-const VC_ALL_TENSES          = Object.keys(VC_TENSE_LABELS);
+// ── APP DIALECT (single source of truth) ──────────────────────────────
+// Which second-person form the app uses (vos vs tú) is decided HERE and nowhere
+// else. To switch the whole app, call appSetDialect('latam') (e.g. from a global
+// settings screen). Anything that shows persons should read appPersons() /
+// appSecondPerson(), or listen for the 'app-dialect-change' window event.
+// Person keys match the data files: yo, vos, tu, el, nosotros, vosotros, ellos.
+const APP_DIALECT_KEY = STORE_PREFIX + 'app_dialect';
+const APP_DIALECTS = {
+  rio:   { label:'Rioplatense (vos)',     second:'vos', persons:['yo','vos','el','nosotros','ellos'] },
+  latam: { label:'Standard LatAm (tú)',   second:'tu',  persons:['yo','tu','el','nosotros','ellos'] },
+  spain: { label:'Spain (tú + vosotros)', second:'tu',  persons:['yo','tu','el','nosotros','vosotros','ellos'] },
+};
+function appGetDialect() {
+  try {
+    const d = localStorage.getItem(APP_DIALECT_KEY);
+    if (d && APP_DIALECTS[d]) return d;
+    const legacy = JSON.parse(localStorage.getItem('vc_settings') || '{}').dialect;  // pre-global setting
+    if (legacy && APP_DIALECTS[legacy]) return legacy;
+  } catch {}
+  return 'rio';
+}
+function appSetDialect(d) {
+  if (!APP_DIALECTS[d]) return;
+  try { localStorage.setItem(APP_DIALECT_KEY, d); } catch {}
+  window.dispatchEvent(new CustomEvent('app-dialect-change', { detail: d }));
+}
+function appPersons()      { return APP_DIALECTS[appGetDialect()].persons.slice(); }
+function appSecondPerson() { return APP_DIALECTS[appGetDialect()].second; }
+
+const VC_ALL_TENSES = Object.keys(VC_TENSE_LABELS);
+
+// Plain-English subtitles for the Understand / Speak tense list and cards
+const VC_STUDY_GLOSS = {
+  presente:       'do / does',
+  progresivo:     'is / are doing',
+  indefinido:     'did',
+  imperfecto:     'used to do / was doing',
+  perfecto:       'have / has done',
+  futuro:         'will do',
+  condicional:    'would do',
+  subjPresente:   'that I do — wishes, doubts, emotions',
+  subjImperfecto: 'if I did — hypotheticals, past wishes',
+};
+
+// Verb sets (freq field on each verb: 1 essential, 2 high, 3 useful)
+const VC_SET_DEFS = [
+  { key:1, label:'Essential' },
+  { key:2, label:'High' },
+  { key:3, label:'Useful' },
+];
+const VC_SETS_KEY         = STORE_PREFIX + 'vc_sets';
+const VC_EXPLORE_FLIP_KEY = STORE_PREFIX + 'vc_explore_flip';
 
 function vcLoadSettings() {
+  const dialect = appGetDialect();
+  const avail   = vcGetActivePersons(dialect);
   const defaults = {
     tenses:  ['presente', 'indefinido', 'imperfecto'],
-    persons: ['yo', 'vos', 'el', 'nosotros', 'ellos'],
-    dialect: 'rio',
+    persons: avail.slice(),
+    dialect,
   };
+  let s;
   try {
-    const saved = JSON.parse(localStorage.getItem(VC_SETTINGS_KEY) || '{}');
-    return Object.assign({}, defaults, saved);
-  } catch { return defaults; }
+    s = Object.assign({}, defaults, JSON.parse(localStorage.getItem(VC_SETTINGS_KEY) || '{}'));
+  } catch { s = Object.assign({}, defaults); }
+  s.dialect = dialect;                                   // the global dialect always wins
+  // Saved person choices only apply to the dialect they were made in
+  if (s.personsDialect !== dialect) s.persons = avail.slice();
+  s.persons = (s.persons || []).filter(p => avail.includes(p));
+  if (!s.persons.length) s.persons = avail.slice();
+  return s;
 }
 
 function vcSaveSettings(settings) {
+  settings.personsDialect = settings.dialect;
   localStorage.setItem(VC_SETTINGS_KEY, JSON.stringify(settings));
 }
 
@@ -56103,9 +56346,7 @@ function vcSaveSettings(settings) {
 let vcSettings = null;  // loaded lazily on first open
 
 function vcGetActivePersons(dialect) {
-  if (dialect === 'spain') return ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos'];
-  if (dialect === 'latam') return ['yo', 'tu', 'el', 'nosotros', 'ellos'];
-  return VC_RIOPLATENSE_PERSONS; // rio: vos
+  return (APP_DIALECTS[dialect] || APP_DIALECTS.rio).persons.slice();
 }
 
 function buildVerbDeck(verb, settings) {
@@ -56150,32 +56391,35 @@ function vcRenderSettingsPanelInto(tenseContainerId, personContainerId, dialectC
     tenseEl.appendChild(pill);
   });
 
-  // Persons
+  // Persons (re-rendered when the dialect pill changes)
   const personEl = document.getElementById(personContainerId);
-  personEl.innerHTML = '';
-  const availPersons = vcGetActivePersons(settings.dialect);
-  availPersons.forEach(p => {
-    const label = p === 'vosotros' ? 'vosotros (Spain)' : VC_PERSON_LABELS[p];
-    const pill = document.createElement('span');
-    pill.className = 'vc-check-pill' + (settings.persons.includes(p) ? ' active' : '');
-    pill.textContent = label;
-    pill.dataset.key = p;
-    pill.dataset.group = 'person';
-    pill.onclick = () => { pill.classList.toggle('active'); };
-    personEl.appendChild(pill);
-  });
+  const renderPersons = (dialect, selected) => {
+    personEl.innerHTML = '';
+    vcGetActivePersons(dialect).forEach(p => {
+      const label = p === 'vosotros' ? 'vosotros (Spain)' : VC_PERSON_LABELS[p];
+      const pill = document.createElement('span');
+      pill.className = 'vc-check-pill' + (selected.includes(p) ? ' active' : '');
+      pill.textContent = label;
+      pill.dataset.key = p;
+      pill.dataset.group = 'person';
+      pill.onclick = () => { pill.classList.toggle('active'); };
+      personEl.appendChild(pill);
+    });
+  };
+  renderPersons(settings.dialect, settings.persons);
 
   // Dialect
   const dialectEl = document.getElementById(dialectContainerId);
   dialectEl.innerHTML = '';
-  [['rio','Rioplatense (vos)'], ['latam','Standard LatAm (tú)'], ['spain','Spain (tú + vosotros)']].forEach(([val, label]) => {
+  Object.entries(APP_DIALECTS).forEach(([val, def]) => {
     const pill = document.createElement('span');
     pill.className = 'vc-check-pill' + (settings.dialect === val ? ' active' : '');
-    pill.textContent = label;
+    pill.textContent = def.label;
     pill.dataset.dialectVal = val;
     pill.onclick = () => {
       dialectEl.querySelectorAll('.vc-check-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
+      renderPersons(val, vcGetActivePersons(val));
     };
     dialectEl.appendChild(pill);
   });
@@ -56217,7 +56461,7 @@ function vcApplySettings() {
   const tenses  = [...document.getElementById(ids.tense).querySelectorAll('.vc-check-pill.active')].map(p => p.dataset.key);
   const persons = [...document.getElementById(ids.person).querySelectorAll('.vc-check-pill.active')].map(p => p.dataset.key);
   const dialectPill = document.getElementById(ids.dialect).querySelector('.vc-check-pill.active');
-  const dialect = dialectPill ? dialectPill.dataset.dialectVal : 'rio';
+  const dialect = dialectPill ? dialectPill.dataset.dialectVal : appGetDialect();
 
   if (!tenses.length || !persons.length) {
     alert('Select at least one tense and one person.');
@@ -56226,11 +56470,12 @@ function vcApplySettings() {
 
   vcSettings = { tenses, persons, dialect };
   vcSaveSettings(vcSettings);
+  if (dialect !== appGetDialect()) appSetDialect(dialect);   // global; listeners reload settings
 
   document.getElementById(ids.panel).classList.add('hidden');
   vcSettingsOpen = false;
 
-  if (kind === 'deck' && vcCurrentVerbIndex !== null) {
+  if (kind === 'deck' && vcCurrentVerbIndex !== null && !vcStudyActive) {
     // Rebuild the practice deck with the new tense/person selection
     const verb = verbConjugationData[vcCurrentVerbIndex];
     vcDeck      = buildVerbDeck(verb, vcSettings);
@@ -56242,34 +56487,72 @@ function vcApplySettings() {
     const verb = verbConjugationData[vcCurrentVerbIndex];
     vcRenderConjugationTable(verb, vcSettings);
   } else {
-    // Refresh verb list in case dialect changed
-    vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
+    vcRefreshVerbScreens();
   }
 }
 
-// ── VC VERB LIST SCREEN ──
+// ── VC VERB LIST SCREEN (tabs: Explore / Understand / Speak) ──
+let vcTab = 'explore';              // 'explore' | 'understanding' | 'speaking'
+let vcStudyActive = false;          // true while a Understand/Speak study deck is open
+let vcSets = [1];                   // selected verb sets (freq tiers)
+let vcExploreFlip = false;          // false: Spanish first · true: English first
+
+function vcLoadPrefs() {
+  try {
+    const sets = JSON.parse(localStorage.getItem(VC_SETS_KEY) || 'null');
+    if (Array.isArray(sets) && sets.length) vcSets = sets.filter(n => VC_SET_DEFS.some(d => d.key === n));
+    if (!vcSets.length) vcSets = [1];
+    vcExploreFlip = localStorage.getItem(VC_EXPLORE_FLIP_KEY) === '1';
+  } catch {}
+}
+
 function openVerbConjugator() {
   if (!vcSettings) vcSettings = vcLoadSettings();
-  vcRenderVerbList('');
+  vcLoadPrefs();
   document.getElementById('vcSearchInput').value = '';
+  vcSetTab(vcTab);
   showScreen('vcListScreen');
 }
 
 function closeVerbConjugator() {
   vcBrowseActive = false;
+  vcStudyActive  = false;
   document.getElementById('vcSettingsPanel').classList.add('hidden');
   goHome();
+}
+
+function vcSetTab(tab) {
+  vcTab = tab;
+  if (tab !== 'explore') vcPracticeDirection = tab;
+  document.getElementById('vcTabExplore').classList.toggle('active',    tab === 'explore');
+  document.getElementById('vcTabUnderstand').classList.toggle('active', tab === 'understanding');
+  document.getElementById('vcTabSpeak').classList.toggle('active',      tab === 'speaking');
+  document.getElementById('vcPaneExplore').classList.toggle('hidden', tab !== 'explore');
+  document.getElementById('vcPaneStudy').classList.toggle('hidden',   tab === 'explore');
+  vcRefreshVerbScreens();
+}
+
+function vcRefreshVerbScreens() {
+  if (vcTab === 'explore') vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
+  else { vcRenderSetPills(); vcRenderStudyList(); }
+}
+
+function vcToggleExploreFlip() {
+  vcExploreFlip = !vcExploreFlip;
+  try { localStorage.setItem(VC_EXPLORE_FLIP_KEY, vcExploreFlip ? '1' : '0'); } catch {}
+  vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
 }
 
 function vcRenderVerbList(query) {
   const list = document.getElementById('vcVerbList');
   list.innerHTML = '';
+  document.getElementById('vcFlipBtn').textContent = vcExploreFlip ? 'EN → ES' : 'ES → EN';
   if (typeof verbConjugationData === 'undefined' || !verbConjugationData.length) {
     list.innerHTML = '<div class="vc-empty">No verb data loaded.</div>';
     return;
   }
   const q = query.toLowerCase();
-  const filtered = verbConjugationData.filter((v, i) => {
+  const filtered = verbConjugationData.filter(v => {
     if (!q) return true;
     return v.infinitive.toLowerCase().includes(q) || v.meaning.toLowerCase().includes(q);
   });
@@ -56277,14 +56560,19 @@ function vcRenderVerbList(query) {
     list.innerHTML = '<div class="vc-empty">No verbs match "' + query + '"</div>';
     return;
   }
-  filtered.forEach(verb => {
+  // English-first lists are sorted by the English word (ignoring the leading "to ")
+  const engKey = v => v.meaning.toLowerCase().replace(/^to\s+/, '');
+  const ordered = vcExploreFlip
+    ? filtered.slice().sort((a, b) => engKey(a).localeCompare(engKey(b)))
+    : filtered;
+  ordered.forEach(verb => {
     const idx = verbConjugationData.indexOf(verb);
     const row = document.createElement('div');
     row.className = 'vc-verb-row';
     row.innerHTML = `
       <div class="vc-verb-left">
-        <span class="vc-verb-infinitive">${verb.infinitive}</span>
-        <span class="vc-verb-meaning">${verb.meaning}</span>
+        <span class="vc-verb-infinitive">${vcExploreFlip ? verb.meaning : verb.infinitive}</span>
+        <span class="vc-verb-meaning">${vcExploreFlip ? verb.infinitive : verb.meaning}</span>
       </div>
       <span class="vc-regularity-badge">${verb.regularity || ''}</span>
       <span class="vc-verb-arrow">›</span>`;
@@ -56296,6 +56584,196 @@ function vcRenderVerbList(query) {
 function vcFilterList() {
   const q = document.getElementById('vcSearchInput').value.trim();
   vcRenderVerbList(q);
+}
+
+// ── UNDERSTAND / SPEAK: verb sets + deck list ──
+function vcVerbsInSets() {
+  if (typeof verbConjugationData === 'undefined') return [];
+  return verbConjugationData.filter(v => vcSets.includes(v.freq || 2));
+}
+
+function vcRenderSetPills() {
+  const el = document.getElementById('vcSetPills');
+  el.innerHTML = '';
+  VC_SET_DEFS.forEach(def => {
+    const n = (typeof verbConjugationData === 'undefined') ? 0
+            : verbConjugationData.filter(v => (v.freq || 2) === def.key).length;
+    const pill = document.createElement('span');
+    pill.className = 'vc-check-pill' + (vcSets.includes(def.key) ? ' active' : '');
+    pill.textContent = `${def.label} · ${n}`;
+    pill.onclick = () => {
+      if (vcSets.includes(def.key)) {
+        if (vcSets.length === 1) return;                  // always keep one set on
+        vcSets = vcSets.filter(k => k !== def.key);
+      } else {
+        vcSets = vcSets.concat(def.key).sort();
+      }
+      try { localStorage.setItem(VC_SETS_KEY, JSON.stringify(vcSets)); } catch {}
+      vcRenderSetPills();
+      vcRenderStudyList();
+    };
+    el.appendChild(pill);
+  });
+}
+
+function vcPersonsShort(persons) {
+  return persons.map(p => (VC_PERSON_LABELS[p] || p).replace(/ \/ /g, '/')).join(' · ');
+}
+
+function vcRenderStudyList() {
+  const list = document.getElementById('vcStudyList');
+  if (!list) return;
+  list.innerHTML = '';
+  const mode = vcPracticeDirection;
+  document.getElementById('vcStudyHint').textContent =
+    (mode === 'understanding' ? 'Spanish → recognise it. ' : 'English → say it. ') +
+    'Cards are shuffled · tap to flip · swipe for next. Persons: ' + vcPersonsShort(vcSettings.persons) + ' (⚙ to change).';
+
+  const rows = [{
+    kind: 'infinitive',
+    title: 'Infinitives',
+    sub: mode === 'understanding' ? 'abrir → to open' : 'to open → abrir',
+  }].concat(VC_ALL_TENSES.map(t => ({
+    kind: t,
+    title: VC_TENSE_LABELS[t],
+    sub: VC_STUDY_GLOSS[t] || '',
+  })));
+
+  rows.forEach(r => {
+    const count = vcBuildStudyDeck(r.kind, mode, false).length;
+    const row = document.createElement('div');
+    row.className = 'vc-verb-row';
+    row.innerHTML = `
+      <div class="vc-verb-left">
+        <span class="vc-verb-infinitive">${r.title}</span>
+        <span class="vc-verb-meaning">${r.sub}</span>
+      </div>
+      <span class="vc-regularity-badge">${count} cards</span>
+      <span class="vc-verb-arrow">›</span>`;
+    row.onclick = () => { if (count) vcOpenStudyDeck(r.kind); };
+    list.appendChild(row);
+  });
+}
+
+// Build a study deck.  kind = 'infinitive' | a tense key.  Words only, no sentences.
+//   Understanding: identical forms for one verb are merged (e.g. yo/él "abría") so the back is never ambiguous.
+//   Speaking: one card per verb × person.
+function vcBuildStudyDeck(kind, mode, shuffle) {
+  const verbs = vcVerbsInSets();
+  const cards = [];
+  if (kind === 'infinitive') {
+    verbs.forEach(v => cards.push({ study:true, kind:'inf', verb:v }));
+  } else {
+    const persons = vcSettings.persons;
+    verbs.forEach(v => {
+      const conjs = v.conjugaciones && v.conjugaciones[kind];
+      if (!conjs) return;
+      if (mode === 'understanding') {
+        const groups = new Map();
+        persons.forEach(p => {
+          const f = conjs[p];
+          if (!f) return;
+          if (!groups.has(f)) groups.set(f, []);
+          groups.get(f).push(p);
+        });
+        groups.forEach((ps, f) => cards.push({ study:true, kind:'form', verb:v, tense:kind, form:f, persons:ps }));
+      } else {
+        persons.forEach(p => {
+          const f = conjs[p];
+          if (f) cards.push({ study:true, kind:'form', verb:v, tense:kind, form:f, persons:[p] });
+        });
+      }
+    });
+  }
+  if (shuffle) {
+    for (let i = cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+  }
+  return cards;
+}
+
+function vcOpenStudyDeck(kind) {
+  const deck = vcBuildStudyDeck(kind, vcPracticeDirection, true);
+  if (!deck.length) return;
+  vcStudyActive  = true;
+  vcDeck         = deck;
+  vcCardIndex    = 0;
+  vcRevealed     = false;
+  vcBrowseActive = true;
+  document.getElementById('vcDeckTitle').textContent =
+    (vcPracticeDirection === 'understanding' ? 'Understand' : 'Speak') + ' · ' +
+    (kind === 'infinitive' ? 'Infinitives' : (VC_TENSE_LABELS[kind] || kind));
+  document.querySelector('#vcDeckScreen .vc-gear-btn').style.display = 'none';
+  _vcSyncMuteBtn();
+  vcShowCard();
+  showScreen('vcDeckScreen');
+}
+
+// Render the front of a study card
+function vcShowStudyCard(card) {
+  const mode = vcPracticeDirection;
+  document.getElementById('vcCardFace').classList.remove('is-back');
+  document.getElementById('vcCardScene').classList.remove('card-flipped');
+  document.getElementById('vcCardCounter').textContent = `${vcCardIndex + 1} / ${vcDeck.length}`;
+
+  const tag = document.getElementById('vcCardTag');
+  const tgt = document.getElementById('vcCardTarget');
+  const ctx = document.getElementById('vcCardContext');
+  const tenseEl  = document.getElementById('vcTenseLabel');
+  const personEl = document.getElementById('vcPersonLabel');
+
+  if (card.kind === 'inf') {
+    tenseEl.textContent = 'Infinitive';
+    personEl.textContent = '';
+    ctx.textContent = '';
+    if (mode === 'understanding') { tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL'; tgt.textContent = card.verb.infinitive; }
+    else                          { tag.className = 'card-tag en'; tag.textContent = 'ENGLISH'; tgt.textContent = card.verb.meaning; }
+  } else {
+    tenseEl.innerHTML = `${VC_TENSE_LABELS[card.tense]} <span class="vc-tense-gloss">(${VC_STUDY_GLOSS[card.tense] || ''})</span>`;
+    const who = vcPersonsShort(card.persons);
+    if (mode === 'understanding') {
+      personEl.textContent = '';
+      ctx.textContent = '';
+      tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
+      tgt.textContent = card.form;
+    } else {
+      personEl.textContent = '';
+      ctx.textContent = who;
+      tag.className = 'card-tag en'; tag.textContent = 'ENGLISH';
+      tgt.textContent = card.verb.meaning;
+    }
+  }
+  _vcUpdateSwipeHints(false);
+}
+
+// Render the back of a study card
+function vcRevealStudy(card) {
+  const mode = vcPracticeDirection;
+  vcRevealed = true;
+  document.getElementById('vcCardFace').classList.add('is-back');
+  document.getElementById('vcCardScene').classList.add('card-flipped');
+
+  const tag = document.getElementById('vcCardTag');
+  const tgt = document.getElementById('vcCardTarget');
+  const ctx = document.getElementById('vcCardContext');
+
+  if (card.kind === 'inf') {
+    if (mode === 'understanding') { tag.className = 'card-tag en'; tag.textContent = 'ENGLISH'; tgt.textContent = card.verb.meaning; }
+    else                          { tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL'; tgt.textContent = card.verb.infinitive; }
+    ctx.textContent = card.verb.regularity || '';
+  } else if (mode === 'understanding') {
+    tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
+    tgt.textContent = card.verb.infinitive;
+    ctx.textContent = card.verb.meaning;
+    document.getElementById('vcPersonLabel').textContent = vcPersonsShort(card.persons);
+  } else {
+    tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
+    tgt.textContent = card.form;
+    ctx.textContent = card.verb.infinitive;
+  }
+  _vcUpdateSwipeHints(true);
 }
 
 // ── VC VERB DETAIL SCREEN (conjugation table) ──
@@ -56372,10 +56850,12 @@ function vcStartPractice(direction) {
 function openVerbDeck(verbIndex, direction) {
   if (!vcSettings) vcSettings = vcLoadSettings();
   vcCurrentVerbIndex = verbIndex;
+  vcStudyActive = false;
   if (direction) vcPracticeDirection = direction;
   const verb = verbConjugationData[verbIndex];
 
   document.getElementById('vcDeckTitle').textContent = verb.infinitive;
+  document.querySelector('#vcDeckScreen .vc-gear-btn').style.display = '';
 
   // Build deck
   vcDeck      = buildVerbDeck(verb, vcSettings);
@@ -56393,6 +56873,12 @@ function openVerbDeck(verbIndex, direction) {
 function closeVerbDeck() {
   vcBrowseActive = false;
   document.getElementById('vcDeckSettingsPanel').classList.add('hidden');
+  if (vcStudyActive) {            // study deck → back to the Understand / Speak list
+    vcStudyActive = false;
+    vcRenderStudyList();
+    showScreen('vcListScreen');
+    return;
+  }
   showScreen('vcDetailScreen');
 }
 
@@ -56410,6 +56896,7 @@ function vcShowCard() {
   }
   const card = vcDeck[vcCardIndex];
   vcRevealed = false;
+  if (card.study) { vcShowStudyCard(card); return; }
 
   // Meta bar
   document.getElementById('vcTenseLabel').textContent  = card.tenseLabel;
@@ -56447,6 +56934,11 @@ function vcReveal() {
   const card = vcDeck[vcCardIndex];
   const face = document.getElementById('vcCardFace');
   const tag  = document.getElementById('vcCardTag');
+
+  if (card.study) {
+    if (vcRevealed) vcShowCard(); else vcRevealStudy(card);
+    return;
+  }
 
   if (!vcRevealed) {
     vcRevealed = true;
@@ -56513,6 +57005,12 @@ function _vcSyncMuteBtn() {
   if (btn) btn.textContent = muted ? '🔇' : '🔊';
 }
 
+// Re-read VC settings whenever the app-wide dialect changes (vos <-> tú)
+window.addEventListener('app-dialect-change', () => {
+  vcSettings = vcLoadSettings();
+  try { vcRefreshVerbScreens(); } catch {}
+});
+
 // ── SPLASH ──
 function buildSplash() {
   const grid = document.getElementById('splashGrid');
@@ -56542,7 +57040,7 @@ function buildSplash() {
     // Insert Verb Conjugations directly after Grammar
     if (s.label === 'Grammar') {
       appendSubjectCard(grid, '🔤', '#74ACDF', 'Verb Conjugations',
-        (typeof verbConjugationData !== 'undefined' ? verbConjugationData.length : 0) + ' verbs · browse conjugations',
+        (typeof verbConjugationData !== 'undefined' ? verbConjugationData.length : 0) + ' verbs · explore & practise',
         null, () => openVerbConjugator());
     }
   });
