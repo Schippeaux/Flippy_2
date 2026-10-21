@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Learning Spanish — v24.7</title>
+<title>Flippy — v24.8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -619,8 +619,8 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <!-- SPLASH -->
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
-    <div class="splash-logo">Learning Spanish</div>
-    <div class="splash-sub">Buenos Aires · v24.7</div>
+    <div class="splash-logo">Flippy</div>
+    <div class="splash-sub" id="appVersionLine">v24.8</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -56801,7 +56801,7 @@ async function checkForUpdate() {
   try {
     const res = await fetch(location.pathname + '?v=' + Date.now(), { cache: 'no-store' });
     const txt = await res.text();
-    const m = txt.match(/Learning Spanish — v([\d.]+)/);
+    const m = txt.match(/Flippy — v([\d.]+)/);
     if (!m) { _refreshMsg('Could not read the latest version.', true); return; }
     _refreshMsg(m[1] === _appVersion()
       ? 'You are on the latest version (v' + _appVersion() + ').'
