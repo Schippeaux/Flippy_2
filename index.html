@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v24.8</title>
+<title>Flippy — v24.9</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -620,7 +620,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v24.8</div>
+    <div class="splash-sub" id="appVersionLine">v24.9</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -35731,77 +35731,1819 @@ const sections = [
     "cl": [
 {
     title: "Prepositional",
+    info: { body: `<p>Prepositional expressions are multi-word clusters built around a preposition. Chile shares most of the pan-Hispanic stock but adds its own, and one of them — <b>al tiro</b> — is probably the single most Chilean thing you can say. Note also <b>de repente</b>, which in Chile means <i>sometimes</i> rather than <i>suddenly</i>, and <b>donde</b> + a person, which needs no preposition at all: <i>voy donde mi abuela</i>. <span class="rio-highlight">Register:</span> informal Chilean pairs the pronoun <i>tú</i> with voseo verb endings (-as &rarr; -ái, -es &rarr; -ís): <i>tú tenís, tú estái, tú cachái</i>. The pronoun <i>vos</i> is rare in Chile and sounds aggressive or joking. Cards here use the spoken forms.</p>` },
     cards: [
+
+    // --- Chilean-specific -------------------------------------------------
+
+    { id: "EXCL_PREP_001", en: "right away", es: "al tiro",
+      enCtx: "I'll do it right away.", esCtx: "Lo hago al tiro.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_001.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_002", en: "obviously, a given", es: "de cajón",
+      enCtx: "Of course he'll win, that's a given.", esCtx: "Que va a ganar es de cajón.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_002.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_003", en: "on the way past", es: "a la pasada",
+      enCtx: "I'll pick up the bread on the way past.", esCtx: "Compro el pan a la pasada.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_003.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_004", en: "thoroughly, right to the bottom", es: "a concho",
+      enCtx: "He read the report thoroughly.", esCtx: "Se leyó el informe a concho.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_004.mp3" },
+
+    { id: "EXCL_PREP_005", en: "casually, with no organisation", es: "al lote",
+      enCtx: "The whole meeting was run casually.", esCtx: "La reunión se hizo al lote.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_005.mp3" },
+
+    { id: "EXCL_PREP_006", en: "sometimes, now and again", es: "de repente",
+      enCtx: "Sometimes I go to my mum's for lunch.", esCtx: "De repente voy a almorzar donde mi mamá.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_006.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_007", en: "in a rush, half-done", es: "a la rápida",
+      enCtx: "I had breakfast in a rush.", esCtx: "Tomé desayuno a la rápida.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_007.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_008", en: "in the meantime", es: "por mientras",
+      enCtx: "In the meantime, have a seat.", esCtx: "Por mientras, siéntate.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_008.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_009", en: "on foot", es: "a pata",
+      enCtx: "We went to the stadium on foot.", esCtx: "Nos fuimos al estadio a pata.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_009.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_010", en: "unfairly, by force", es: "a la mala",
+      enCtx: "They took it off him by force.", esCtx: "Se lo quitaron a la mala.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_010.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_011", en: "at someone's place (no preposition after 'donde')", es: "donde mi abuela",
+      enCtx: "I'm having lunch at my grandmother's.", esCtx: "Voy a almorzar donde mi abuela.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_011.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_012", en: "keeping an eye out", es: "al aguaite",
+      enCtx: "Stay here keeping an eye out while I go in.", esCtx: "Quédate al aguaite mientras entro.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_012.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PREP_013", en: "in a scramble, free-for-all", es: "a la chuña",
+      enCtx: "They threw the sweets out for a free-for-all.", esCtx: "Tiraron los dulces a la chuña.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_013.mp3" },
+
+    // --- Shared with most of Latin America, still needed by a learner ------
+
+    { id: "EXCL_PREP_014", en: "just in case", es: "por si acaso",
+      enCtx: "Take a jacket just in case.", esCtx: "Llévate una chaqueta por si acaso.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_014.mp3" },
+
+    { id: "EXCL_PREP_015", en: "maybe, perhaps", es: "a lo mejor",
+      enCtx: "Maybe he's already left.", esCtx: "A lo mejor ya se fue.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_015.mp3" },
+
+    { id: "EXCL_PREP_016", en: "more or less", es: "más o menos",
+      enCtx: "How did it go? More or less.", esCtx: "¿Cómo te fue? Más o menos.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_016.mp3" },
+
+    { id: "EXCL_PREP_017", en: "on purpose", es: "a propósito",
+      enCtx: "He did it on purpose.", esCtx: "Lo hizo a propósito.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_017.mp3" },
+
+    { id: "EXCL_PREP_018", en: "straight off, without hesitating", es: "de una",
+      enCtx: "He said yes straight off.", esCtx: "Dijo que sí de una.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_018.mp3" },
+
+    { id: "EXCL_PREP_019", en: "for real, seriously", es: "en serio",
+      enCtx: "Are you serious?", esCtx: "¿En serio?",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_019.mp3" },
+
+    { id: "EXCL_PREP_020", en: "either way, whatever happens", es: "de todas maneras",
+      enCtx: "Either way I'm going.", esCtx: "De todas maneras voy a ir.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_020.mp3" },
+
+    { id: "EXCL_PREP_021", en: "out of nowhere", es: "de la nada",
+      enCtx: "He turned up out of nowhere.", esCtx: "Apareció de la nada.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_021.mp3" },
+
+    { id: "EXCL_PREP_022", en: "at the last minute", es: "a última hora",
+      enCtx: "They cancelled at the last minute.", esCtx: "Cancelaron a última hora.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_022.mp3" },
+
+    { id: "EXCL_PREP_023", en: "by heart", es: "de memoria",
+      enCtx: "I know the address by heart.", esCtx: "Me sé la dirección de memoria.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_023.mp3" },
+
+    { id: "EXCL_PREP_024", en: "for nothing, free of charge", es: "de balde",
+      enCtx: "They let us in free of charge.", esCtx: "Nos dejaron entrar de balde.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_024.mp3" },
+
+    { id: "EXCL_PREP_025", en: "in the end", es: "al final",
+      enCtx: "In the end nobody went.", esCtx: "Al final no fue nadie.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_025.mp3" },
+
+    { id: "EXCL_PREP_026", en: "on my own", es: "por mi cuenta",
+      enCtx: "I'd rather do it on my own.", esCtx: "Prefiero hacerlo por mi cuenta.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_026.mp3" },
+
+    { id: "EXCL_PREP_027", en: "upside down / inside out", es: "al revés",
+      enCtx: "You've got your jumper on inside out.", esCtx: "Tienes el chaleco al revés.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_027.mp3" },
+
+    { id: "EXCL_PREP_028", en: "every now and then", es: "cada cierto tiempo",
+      enCtx: "Every now and then we get together.", esCtx: "Cada cierto tiempo nos juntamos.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_028.mp3" },
+
+    { id: "EXCL_PREP_029", en: "without fail", es: "sin falta",
+      enCtx: "Call me tomorrow without fail.", esCtx: "Llámame mañana sin falta.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_029.mp3" },
+
+    { id: "EXCL_PREP_030", en: "along the way, as you go", es: "sobre la marcha",
+      enCtx: "We'll sort it out as we go.", esCtx: "Lo vamos viendo sobre la marcha.",
+      audioES: "audio/expressions_cl/01_Prepositional/EXCL_PREP_030.mp3" }
+
     ]
 },
 
 {
     title: "Verb Phrase",
+    info: { body: `<p>Verb plus complement, where the meaning lives in the pair rather than the verb. Chile is unusually rich here, and a striking number involve animals: <b>pasarlo chancho</b>, <b>echar la foca</b>, <b>hacer perro muerto</b>. Single Chilean verbs on their own — cachar, tincar, carretear — are vocabulary rather than expressions and live in the Slang chapter.</p>` },
     cards: [
+
+    // --- Chilean-specific -------------------------------------------------
+
+    { id: "EXCL_VERB_001", en: "to talk nonsense / waste everyone's time", es: "dar jugo",
+      enCtx: "Stop wasting time and get to work.", esCtx: "Deja de dar jugo y ponte a trabajar.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_001.mp3" },
+
+    { id: "EXCL_VERB_002", en: "to tell someone off", es: "echar la foca",
+      enCtx: "The boss gave me a real telling-off.", esCtx: "El jefe me echó la foca.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_002.mp3" },
+
+    { id: "EXCL_VERB_003", en: "to take a bad fall / to get beaten up", es: "sacarse la cresta",
+      enCtx: "He came off his bike and took a bad fall.", esCtx: "Se cayó de la bici y se sacó la cresta.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_003.mp3" },
+
+    { id: "EXCL_VERB_004", en: "to be broke", es: "andar pato",
+      enCtx: "I can't, I'm broke this month.", esCtx: "No puedo, ando pato este mes.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_004.mp3" },
+
+    { id: "EXCL_VERB_005", en: "to be fed up", es: "estar chato",
+      enCtx: "I'm fed up with the traffic.", esCtx: "Estoy chato del taco.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_005.mp3" },
+
+    { id: "EXCL_VERB_006", en: "to have a great time", es: "pasarlo chancho",
+      enCtx: "We had a great time at the party.", esCtx: "Lo pasamos chancho en el carrete.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_006.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_007", en: "to crack a joke", es: "tirar la talla",
+      enCtx: "He's always cracking jokes.", esCtx: "Siempre anda tirando la talla.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_007.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_008", en: "to make a blunder", es: "mandarse un condoro",
+      enCtx: "I made a real blunder at the meeting.", esCtx: "Me mandé un condoro en la reunión.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_008.mp3" },
+
+    { id: "EXCL_VERB_009", en: "to have afternoon tea", es: "tomar once",
+      enCtx: "Come over for afternoon tea on Sunday.", esCtx: "Ven a tomar once el domingo.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_009.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_010", en: "to skip school", es: "hacer la cimarra",
+      enCtx: "He skipped school to go to the beach.", esCtx: "Hizo la cimarra para ir a la playa.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_010.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_011", en: "to go overboard", es: "irse al chancho",
+      enCtx: "They went overboard with the prices.", esCtx: "Se fueron al chancho con los precios.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_011.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_012", en: "to leave without paying", es: "hacer perro muerto",
+      enCtx: "They left the restaurant without paying.", esCtx: "Hicieron perro muerto en el restaurante.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_012.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_013", en: "to have connections", es: "tener pituto",
+      enCtx: "He got in because he has connections.", esCtx: "Entró porque tiene pituto.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_013.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_014", en: "to make a complete mess of things", es: "dejar la escoba",
+      enCtx: "The kids made a complete mess of the house.", esCtx: "Los niños dejaron la escoba en la casa.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_014.mp3" },
+
+    { id: "EXCL_VERB_015", en: "to go unnoticed", es: "pasar piola",
+      enCtx: "I'd rather go unnoticed at these things.", esCtx: "Prefiero pasar piola en estas cosas.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_015.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_016", en: "to make someone jealous", es: "sacar pica",
+      enCtx: "He posts it just to make people jealous.", esCtx: "Lo sube puro para sacar pica.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_016.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_017", en: "to chip in", es: "ponerse con algo",
+      enCtx: "Chip in something for the present.", esCtx: "Ponte con algo para el regalo.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_017.mp3" },
+
+    { id: "EXCL_VERB_018", en: "to all chip in for something", es: "hacer una vaca",
+      enCtx: "Let's all chip in for the barbecue.", esCtx: "Hagamos una vaca para el asado.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_018.mp3" },
+
+    { id: "EXCL_VERB_019", en: "to get hit with heavy traffic", es: "quedarse en el taco",
+      enCtx: "I got stuck in traffic for an hour.", esCtx: "Me quedé en el taco una hora.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_019.mp3" },
+
+    { id: "EXCL_VERB_020", en: "I've got a feeling that…", es: "me tinca que",
+      enCtx: "I've got a feeling we'll be late.", esCtx: "Me tinca que vamos a llegar tarde.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_020.mp3" },
+
+    { id: "EXCL_VERB_021", en: "to be in a bad mood / have it in for someone", es: "tener mala leche",
+      enCtx: "Don't be like that, you've got it in for him.", esCtx: "No seái así, tenís mala leche con él.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_021.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_022", en: "to be in a bad way, to be down", es: "estar para el gato",
+      enCtx: "I slept badly, I'm in a bad way today.", esCtx: "Dormí mal, hoy estoy para el gato.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_022.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_VERB_023", en: "I can't stand…", es: "me carga",
+      enCtx: "I can't stand waiting around.", esCtx: "Me carga esperar.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_023.mp3" },
+
+    { id: "EXCL_VERB_024", en: "to be hungover", es: "andar con la caña",
+      enCtx: "I'm hungover after last night's party.", esCtx: "Ando con la caña después del carrete.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_024.mp3" },
+
+    // --- Shared, but high-frequency in Chile ------------------------------
+
+    { id: "EXCL_VERB_025", en: "to put your foot in it", es: "meter la pata",
+      enCtx: "I put my foot in it in front of everyone.", esCtx: "Metí la pata delante de todos.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_025.mp3" },
+
+    { id: "EXCL_VERB_026", en: "to pay attention", es: "poner atención",
+      enCtx: "Pay attention to what I'm telling you.", esCtx: "Pon atención a lo que te digo.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_026.mp3" },
+
+    { id: "EXCL_VERB_027", en: "to be worth it", es: "valer la pena",
+      enCtx: "The trip was worth it.", esCtx: "El viaje valió la pena.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_027.mp3" },
+
+    { id: "EXCL_VERB_028", en: "to be in a hurry", es: "andar apurado",
+      enCtx: "Sorry, I'm in a hurry.", esCtx: "Perdona, ando apurado.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_028.mp3" },
+
+    { id: "EXCL_VERB_029", en: "to take something the wrong way", es: "tomarlo a mal",
+      enCtx: "Don't take it the wrong way.", esCtx: "No lo tomís a mal.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_029.mp3" },
+
+    { id: "EXCL_VERB_030", en: "to make up your mind", es: "decidirse de una vez",
+      enCtx: "Make up your mind, we're leaving.", esCtx: "Decídete de una vez, nos vamos.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_030.mp3" },
+
+    { id: "EXCL_VERB_031", en: "to get together with friends", es: "juntarse con los amigos",
+      enCtx: "We're getting together on Friday.", esCtx: "Nos juntamos el viernes.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_031.mp3" },
+
+    { id: "EXCL_VERB_032", en: "to run late", es: "quedarse corto de tiempo",
+      enCtx: "I ran out of time and didn't finish.", esCtx: "Me quedé corto de tiempo y no alcancé.",
+      audioES: "audio/expressions_cl/02_Verb_Phrase/EXCL_VERB_032.mp3" }
+
     ]
 },
 
 {
     title: "Connector",
+    info: { body: `<p>The words that join clauses and steer an argument. Most are shared across Latin America, but three are worth special attention in Chile: <b>igual</b> used to soften a contrast, <b>eso sí</b> for a caveat, and <b>en todo caso</b> as a general-purpose <i>anyway</i>. Bare particles with no propositional content — po, ya po — are in the Fillers &amp; Particles chapter.</p>` },
     cards: [
+
+    // --- Chilean-specific or Chilean-weighted -----------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_CONN_001", en: "still / anyway (softening a contrast)", es: "igual",
+      enCtx: "It was expensive, but I bought it anyway.", esCtx: "Estaba caro, pero igual lo compré.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_001.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONN_002", en: "mind you / that said", es: "eso sí",
+      enCtx: "It's a good place. Mind you, it's pricey.", esCtx: "Es buen lugar. Eso sí, es caro.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_002.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONN_003", en: "anyway / in any case", es: "en todo caso",
+      enCtx: "Anyway, we'll talk tomorrow.", esCtx: "En todo caso, hablamos mañana.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_003.mp3" },
+
+    { id: "EXCL_CONN_004", en: "it may well be that", es: "capaz que",
+      enCtx: "It may well rain later.", esCtx: "Capaz que llueva más tarde.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_004.mp3" },
+
+    { id: "EXCL_CONN_005", en: "say, for instance", es: "ponte tú",
+      enCtx: "Say you miss the bus — then what?", esCtx: "Ponte tú que pierdes la micro, ¿y ahí?",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_005.mp3" },
+
+    { id: "EXCL_CONN_006", en: "that's got nothing to do with it", es: "ná que ver",
+      enCtx: "That's got nothing to do with what I said.", esCtx: "Ná que ver con lo que dije.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_006.mp3" },
+
+    { id: "EXCL_CONN_007", en: "it makes no difference", es: "da lo mismo",
+      enCtx: "It makes no difference which one we take.", esCtx: "Da lo mismo cuál llevemos.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_007.mp3" },
+
+    { id: "EXCL_CONN_008", en: "and that's all there is to it", es: "y eso no más",
+      enCtx: "I said sorry and that's all there is to it.", esCtx: "Le pedí perdón y eso no más.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_008.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONN_009", en: "but of course (asserting what should be obvious)", es: "si po",
+      enCtx: "But of course — I told you it'd be better.", esCtx: "Si po, te dije que era mejor.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_009.mp3" },
+
+    { id: "EXCL_CONN_010", en: "the thing is", es: "lo que pasa es que",
+      enCtx: "The thing is, I didn't have time.", esCtx: "Lo que pasa es que no tuve tiempo.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_010.mp3" },
+
+    { id: "EXCL_CONN_011", en: "as it turns out", es: "resulta que",
+      enCtx: "As it turns out, he never called.", esCtx: "Resulta que nunca llamó.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_011.mp3" },
+
+    { id: "EXCL_CONN_012", en: "at the end of the day", es: "a fin de cuentas",
+      enCtx: "At the end of the day it's your decision.", esCtx: "A fin de cuentas es tu decisión.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_012.mp3" },
+
+    // --- Shared across Latin America, still needed by a learner -----------
+
+    { id: "EXCL_CONN_013", en: "in other words", es: "o sea",
+      enCtx: "In other words, he's not coming.", esCtx: "O sea, no viene.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_013.mp3" },
+
+    { id: "EXCL_CONN_014", en: "that is to say", es: "es decir",
+      enCtx: "Next Monday, that is to say the fifth.", esCtx: "El lunes que viene, es decir el cinco.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_014.mp3" },
+
+    { id: "EXCL_CONN_015", en: "however", es: "sin embargo",
+      enCtx: "It was late; however, we went.", esCtx: "Era tarde; sin embargo, fuimos.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_015.mp3" },
+
+    { id: "EXCL_CONN_016", en: "so, therefore", es: "así que",
+      enCtx: "It was raining, so we stayed in.", esCtx: "Estaba lloviendo, así que nos quedamos.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_016.mp3" },
+
+    { id: "EXCL_CONN_017", en: "since, given that", es: "ya que",
+      enCtx: "Since you're here, give me a hand.", esCtx: "Ya que estás acá, ayúdame.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_017.mp3" },
+
+    { id: "EXCL_CONN_018", en: "on the other hand", es: "en cambio",
+      enCtx: "She likes it; he, on the other hand, doesn't.", esCtx: "A ella le gusta; a él, en cambio, no.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_018.mp3" },
+
+    { id: "EXCL_CONN_019", en: "besides, what's more", es: "además",
+      enCtx: "It's late, and besides I'm tired.", esCtx: "Es tarde y además estoy cansado.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_019.mp3" },
+
+    { id: "EXCL_CONN_020", en: "in fact", es: "de hecho",
+      enCtx: "In fact, I was just about to call you.", esCtx: "De hecho, te iba a llamar.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_020.mp3" },
+
+    { id: "EXCL_CONN_021", en: "by the way", es: "a todo esto",
+      enCtx: "By the way, did you pay the bill?", esCtx: "A todo esto, ¿pagaste la cuenta?",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_021.mp3" },
+
+    { id: "EXCL_CONN_022", en: "even so", es: "aun así",
+      enCtx: "He apologised; even so, I'm annoyed.", esCtx: "Pidió disculpas; aun así, estoy molesto.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_022.mp3" },
+
+    { id: "EXCL_CONN_023", en: "in short", es: "en resumen",
+      enCtx: "In short, it didn't work.", esCtx: "En resumen, no funcionó.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_023.mp3" },
+
+    { id: "EXCL_CONN_024", en: "as long as", es: "siempre y cuando",
+      enCtx: "I'll go as long as you drive.", esCtx: "Voy siempre y cuando manejes tú.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_024.mp3" },
+
+    { id: "EXCL_CONN_025", en: "otherwise", es: "si no",
+      enCtx: "Leave now, otherwise you'll be late.", esCtx: "Sal ahora, si no vas a llegar tarde.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_025.mp3" },
+
+    { id: "EXCL_CONN_026", en: "first of all", es: "en primer lugar",
+      enCtx: "First of all, thanks for coming.", esCtx: "En primer lugar, gracias por venir.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_026.mp3" },
+
+    { id: "EXCL_CONN_027", en: "lastly", es: "por último",
+      enCtx: "Lastly, don't forget the keys.", esCtx: "Por último, no olvides las llaves.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_027.mp3" },
+
+    { id: "EXCL_CONN_028", en: "anyway, moving on", es: "en fin",
+      enCtx: "Anyway, let's get going.", esCtx: "En fin, vámonos.",
+      audioES: "audio/expressions_cl/03_Connector/EXCL_CONN_028.mp3" }
+
     ]
 },
 
 {
     title: "Conversational",
+    info: { body: `<p>Complete conversational formulas: greetings, farewells, agreement, surprise, apology. This is where Chile diverges hardest from Buenos Aires. Several entries are lexicalised in the voseo form and exist in no other — nobody says <i>¿cachas?</i> or <i>¿cómo estás?</i> among friends in Santiago; it is <b>¿cachái?</b> and <b>¿cómo estái?</b>. <span class="rio-highlight">Register:</span> informal Chilean pairs the pronoun <i>tú</i> with voseo verb endings (-as &rarr; -ái, -es &rarr; -ís): <i>tú tenís, tú estái, tú cachái</i>. The pronoun <i>vos</i> is rare in Chile and sounds aggressive or joking. Cards here use the spoken forms.</p>` },
     cards: [
+
+    // --- Greetings and openings -------------------------------------------
+
+    { id: "EXCL_CONV_001", en: "How are you?", es: "¿Cómo estái?",
+      enCtx: "Hey, how are you? Long time no see.", esCtx: "Hola, ¿cómo estái? Tanto tiempo.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_001.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_002", en: "How's it going?", es: "¿Cómo andái?",
+      enCtx: "How's it going? All good?", esCtx: "¿Cómo andái? ¿Todo bien?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_002.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_003", en: "What's up?", es: "¿Qué onda?",
+      enCtx: "What's up, are we going or not?", esCtx: "¿Qué onda, vamos o no?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_003.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_004", en: "What's new?", es: "¿Quiubo?",
+      enCtx: "What's new? How did it go yesterday?", esCtx: "¿Quiubo? ¿Cómo te fue ayer?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_004.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_005", en: "Hello? (answering the phone)", es: "¿Aló?",
+      enCtx: "Hello? Who's calling?", esCtx: "¿Aló? ¿Quién habla?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_005.mp3" },
+
+    { id: "EXCL_CONV_006", en: "How did it go?", es: "¿Cómo te fue?",
+      enCtx: "How did it go at the doctor's?", esCtx: "¿Cómo te fue en el doctor?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_006.mp3" },
+
+    // --- Comprehension checks and confirmation ----------------------------
+
+    { id: "EXCL_CONV_007", en: "You know? / Get it?", es: "¿Cachái?",
+      enCtx: "It's not that simple, you know?", esCtx: "No es tan simple, ¿cachái?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_007.mp3" },
+
+    { id: "EXCL_CONV_008", en: "See what I mean?", es: "¿Te fijái?",
+      enCtx: "He never answers. See what I mean?", esCtx: "Nunca contesta. ¿Te fijái?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_008.mp3" },
+
+    { id: "EXCL_CONV_009", en: "Right?", es: "¿Cierto?",
+      enCtx: "We said eight, right?", esCtx: "Quedamos a las ocho, ¿cierto?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_009.mp3" },
+
+    { id: "EXCL_CONV_010", en: "Can you imagine?", es: "¿Te imaginái?",
+      enCtx: "Can you imagine if we'd gone?", esCtx: "¿Te imaginái si hubiéramos ido?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_010.mp3" },
+
+    { id: "EXCL_CONV_011", en: "Does that sound good to you?", es: "¿Te tinca?",
+      enCtx: "Pizza tonight — sound good?", esCtx: "Pizza esta noche, ¿te tinca?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_011.mp3" },
+
+    { id: "EXCL_CONV_012", en: "Look, listen (drawing attention)", es: "Fíjate",
+      enCtx: "Look, I'd never thought of that.", esCtx: "Fíjate que nunca lo había pensado.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_012.mp3" },
+
+    // --- Agreement, refusal, indifference ---------------------------------
+
+    { id: "EXCL_CONV_013", en: "OK then / right, let's go", es: "Ya po",
+      enCtx: "OK then, hurry up.", esCtx: "Ya po, apúrate.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_013.mp3" },
+
+    { id: "EXCL_CONV_014", en: "Yeah, of course", es: "Sí po",
+      enCtx: "Are you coming? Yeah, of course.", esCtx: "¿Vai a venir? Sí po.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_014.mp3" },
+
+    { id: "EXCL_CONV_015", en: "No, obviously not", es: "No po",
+      enCtx: "Did you tell him? No, obviously not.", esCtx: "¿Le contaste? No po.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_015.mp3" },
+
+    { id: "EXCL_CONV_016", en: "I couldn't care less", es: "No estoy ni ahí",
+      enCtx: "Don't you have homework? I couldn't care less.", esCtx: "¿No tenís tarea? No estoy ni ahí.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_016.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_017", en: "Never mind, forget it", es: "Filo",
+      enCtx: "They didn't invite me. Never mind.", esCtx: "No me invitaron. Filo.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_017.mp3" },
+
+    { id: "EXCL_CONV_018", en: "Fair enough, that's true", es: "Tenís razón",
+      enCtx: "Fair enough, I hadn't thought of that.", esCtx: "Tenís razón, no lo había pensado.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_018.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_019", en: "Don't be like that", es: "No seái mala onda",
+      enCtx: "Don't be like that, come with us.", esCtx: "No seái mala onda, vente con nosotros.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_019.mp3" },
+
+    // --- Reactions: surprise, sympathy, frustration -----------------------
+
+    { id: "EXCL_CONV_020", en: "Oh no / damn", es: "¡Pucha!",
+      enCtx: "Oh no, I forgot the keys.", esCtx: "¡Pucha, se me olvidaron las llaves!",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_020.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_021", en: "Oh damn (milder)", es: "¡Chuta!",
+      enCtx: "Oh damn, is it that late already?", esCtx: "¡Chuta! ¿Ya es tan tarde?",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_021.mp3" },
+
+    { id: "EXCL_CONV_022", en: "What a drag", es: "Qué lata",
+      enCtx: "What a drag, it's raining again.", esCtx: "Qué lata, está lloviendo de nuevo.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_022.mp3" },
+
+    { id: "EXCL_CONV_023", en: "How boring", es: "Qué fome",
+      enCtx: "The film was so boring.", esCtx: "La película estuvo muy fome.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_023.mp3" },
+
+    { id: "EXCL_CONV_024", en: "No way! / You're kidding", es: "¡No puede ser!",
+      enCtx: "Really? No way!", esCtx: "¿En serio? ¡No puede ser!",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_024.mp3" },
+
+    { id: "EXCL_CONV_025", en: "That's great / brilliant", es: "¡Qué bacán!",
+      enCtx: "That's great, congratulations!", esCtx: "¡Qué bacán, felicitaciones!",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_025.mp3" },
+
+    { id: "EXCL_CONV_026", en: "What a shame", es: "Qué pena",
+      enCtx: "What a shame you can't come.", esCtx: "Qué pena que no podái venir.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_026.mp3" },
+
+    // --- Politeness, apology, thanks --------------------------------------
+
+    { id: "EXCL_CONV_027", en: "Excuse me (getting past)", es: "Permiso",
+      enCtx: "Excuse me, I'm getting off here.", esCtx: "Permiso, me bajo aquí.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_027.mp3" },
+
+    { id: "EXCL_CONV_028", en: "Sorry, my mistake", es: "Perdona, culpa mía",
+      enCtx: "Sorry, my mistake, I got the day wrong.", esCtx: "Perdona, culpa mía, me equivoqué de día.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_028.mp3" },
+
+    { id: "EXCL_CONV_029", en: "Thanks so much", es: "Muchas gracias",
+      enCtx: "Thanks so much for the lift.", esCtx: "Muchas gracias por traerme.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_029.mp3" },
+
+    { id: "EXCL_CONV_030", en: "Likewise, same to you", es: "Igualmente",
+      enCtx: "Have a good weekend. Likewise.", esCtx: "Buen fin de semana. Igualmente.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_030.mp3" },
+
+    // --- Farewells ---------------------------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_031", en: "Bye (affectionate)", es: "Chaíto",
+      enCtx: "Bye, see you tomorrow.", esCtx: "Chaíto, nos vemos mañana.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_031.mp3" },
+
+    { id: "EXCL_CONV_032", en: "See you later", es: "Nos vemos",
+      enCtx: "See you later, take care.", esCtx: "Nos vemos, cuídate.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_032.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_CONV_033", en: "Take care of yourself", es: "Que estís bien",
+      enCtx: "Take care of yourself, talk soon.", esCtx: "Que estís bien, hablamos.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_033.mp3" },
+
+    { id: "EXCL_CONV_034", en: "Say hi to everyone", es: "Saludos a todos",
+      enCtx: "Say hi to everyone at home.", esCtx: "Saludos a todos en la casa.",
+      audioES: "audio/expressions_cl/04_Conversational/EXCL_CONV_034.mp3" }
+
     ]
 },
 
 {
     title: "Idiomatic",
+    info: { body: `<p>Fixed phrases whose meaning you could never assemble from the parts. Chilean idiom runs heavily to vivid comparison — <b>más apretado que mano de guagua</b>, <b>más helado que abrazo de suegra</b> — and the construction <i>más X que Y</i> is productive, so you will hear versions nobody has written down.</p>` },
     cards: [
+
+    { id: "EXCL_IDIOM_001", en: "to get a move on", es: "chicotear los caracoles",
+      enCtx: "Get a move on, we're late.", esCtx: "Chicotea los caracoles, vamos atrasados.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_001.mp3" },
+
+    { id: "EXCL_IDIOM_002", en: "to have constant bad luck", es: "andar meado de gato",
+      enCtx: "Nothing goes right for him, he's got terrible luck.", esCtx: "Nada le resulta, anda meado de gato.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_002.mp3" },
+
+    { id: "EXCL_IDIOM_003", en: "to be blind drunk", es: "estar como zapato",
+      enCtx: "He turned up blind drunk.", esCtx: "Llegó como zapato.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_003.mp3" },
+
+    { id: "EXCL_IDIOM_004", en: "to be tipsy, well on the way", es: "estar arriba de la pelota",
+      enCtx: "By midnight they were all well on the way.", esCtx: "A medianoche estaban todos arriba de la pelota.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_004.mp3" },
+
+    { id: "EXCL_IDIOM_005", en: "to humiliate someone publicly", es: "dejar como chaleco de mono",
+      enCtx: "They humiliated him in front of everyone.", esCtx: "Lo dejaron como chaleco de mono delante de todos.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_005.mp3" },
+
+    { id: "EXCL_IDIOM_006", en: "just in case", es: "por si las moscas",
+      enCtx: "I'll bring the charger just in case.", esCtx: "Llevo el cargador por si las moscas.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_006.mp3" },
+
+    { id: "EXCL_IDIOM_007", en: "to keep your eyes open", es: "ojo al charqui",
+      enCtx: "Keep your eyes open, this neighbourhood's dodgy.", esCtx: "Ojo al charqui, este barrio es medio malo.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_007.mp3" },
+
+    { id: "EXCL_IDIOM_008", en: "to throw someone off with a distraction", es: "embolinar la perdiz",
+      enCtx: "Stop trying to throw me off and answer.", esCtx: "Deja de embolinar la perdiz y respóndeme.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_008.mp3" },
+
+    { id: "EXCL_IDIOM_009", en: "to back out at the last moment", es: "tirar el poto para las moras",
+      enCtx: "He backed out the day before.", esCtx: "Tiró el poto para las moras el día antes.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_009.mp3" },
+
+    { id: "EXCL_IDIOM_010", en: "to dodge a responsibility", es: "sacarle el poto a la jeringa",
+      enCtx: "He always dodges the hard jobs.", esCtx: "Siempre le saca el poto a la jeringa.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_010.mp3" },
+
+    { id: "EXCL_IDIOM_011", en: "to be stuck-up", es: "ser un chupete de fierro",
+      enCtx: "She's completely stuck-up.", esCtx: "Es un chupete de fierro.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_011.mp3" },
+
+    { id: "EXCL_IDIOM_012", en: "to be tight with money", es: "más apretado que mano de guagua",
+      enCtx: "Don't expect him to pay, he's unbelievably tight.", esCtx: "No esperís que pague, es más apretado que mano de guagua.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_012.mp3" },
+
+    { id: "EXCL_IDIOM_013", en: "freezing cold", es: "más helado que abrazo de suegra",
+      enCtx: "The house was freezing.", esCtx: "La casa estaba más helada que abrazo de suegra.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_013.mp3" },
+
+    { id: "EXCL_IDIOM_014", en: "deadly boring", es: "más aburrido que cajero de peaje",
+      enCtx: "The talk was deadly boring.", esCtx: "La charla estuvo más aburrida que cajero de peaje.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_014.mp3" },
+
+    { id: "EXCL_IDIOM_015", en: "parched, gasping for a drink", es: "más seco que escupo de momia",
+      enCtx: "I'm parched, pass me a beer.", esCtx: "Estoy más seco que escupo de momia, pásame una chela.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_015.mp3" },
+
+    { id: "EXCL_IDIOM_016", en: "the share-out is unfair", es: "está mal pelado el chancho",
+      enCtx: "He got twice as much — that's not a fair split.", esCtx: "A él le tocó el doble, está mal pelado el chancho.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_016.mp3" },
+
+    { id: "EXCL_IDIOM_017", en: "to come at exactly the right moment", es: "caer de perillas",
+      enCtx: "That money came at exactly the right moment.", esCtx: "Esa plata me cayó de perillas.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_017.mp3" },
+
+    { id: "EXCL_IDIOM_018", en: "to con someone, to spin a line", es: "vender la pescada",
+      enCtx: "Don't believe him, he's spinning you a line.", esCtx: "No le creái, te está vendiendo la pescada.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_018.mp3" },
+
+    { id: "EXCL_IDIOM_019", en: "to be loaded, to have money", es: "estar forrado",
+      enCtx: "His family is loaded.", esCtx: "Su familia está forrada.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_019.mp3" },
+
+    { id: "EXCL_IDIOM_020", en: "to get badly beaten up", es: "quedar como membrillo colegial",
+      enCtx: "He came out of the fight in a terrible state.", esCtx: "Salió de la pelea como membrillo colegial.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_020.mp3" },
+
+    { id: "EXCL_IDIOM_021", en: "to tease someone relentlessly", es: "agarrar para el chuleteo",
+      enCtx: "They teased him about it all night.", esCtx: "Lo agarraron para el chuleteo toda la noche.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_021.mp3" },
+
+    { id: "EXCL_IDIOM_022", en: "to finally twig, for the penny to drop", es: "pegarse el alcachofazo",
+      enCtx: "It took him a week for the penny to drop.", esCtx: "Se demoró una semana en pegarse el alcachofazo.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_022.mp3" },
+
+    { id: "EXCL_IDIOM_023", en: "to let your hair down completely", es: "soltársele las trenzas",
+      enCtx: "After a couple of drinks she really let her hair down.", esCtx: "Con un par de copetes se le soltaron las trenzas.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_023.mp3" },
+
+    { id: "EXCL_IDIOM_024", en: "to put real effort into something", es: "ponerle pino",
+      enCtx: "Put some effort in and you'll finish today.", esCtx: "Ponle pino y lo terminái hoy.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_024.mp3" },
+
+    { id: "EXCL_IDIOM_025", en: "to be itching with impatience", es: "cortar las huinchas",
+      enCtx: "He's itching to get started.", esCtx: "Está cortando las huinchas por empezar.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_025.mp3" },
+
+    { id: "EXCL_IDIOM_026", en: "to switch sides, to change your tune", es: "darse vuelta la chaqueta",
+      enCtx: "He changed his tune as soon as it suited him.", esCtx: "Se dio vuelta la chaqueta apenas le convino.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_026.mp3" },
+
+    { id: "EXCL_IDIOM_027", en: "to go around looking for trouble", es: "andar arrastrando el poncho",
+      enCtx: "He's been looking for trouble all evening.", esCtx: "Anda arrastrando el poncho toda la noche.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_027.mp3" },
+
+    { id: "EXCL_IDIOM_028", en: "to lose your patience", es: "sacar los choros del canasto",
+      enCtx: "Don't push him, you'll make him lose his patience.", esCtx: "No lo molestís, le vai a sacar los choros del canasto.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_028.mp3" },
+
+    { id: "EXCL_IDIOM_029", en: "to have lost the plot", es: "peinar la muñeca",
+      enCtx: "That bloke has lost the plot.", esCtx: "Ese gallo peina la muñeca.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_029.mp3" },
+
+    { id: "EXCL_IDIOM_030", en: "to be having an affair", es: "andar de patas negras",
+      enCtx: "Everyone knew he was having an affair.", esCtx: "Todos sabían que andaba de patas negras.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_030.mp3" },
+
+    // UNCONFIRMED — widely used in my experience but not found in a published source
+    { id: "EXCL_IDIOM_031", en: "to be fast asleep", es: "estar durmiendo a pata suelta",
+      enCtx: "He's fast asleep, don't wake him.", esCtx: "Está durmiendo a pata suelta, no lo despertís.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_031.mp3" },
+
+    // UNCONFIRMED — widely used in my experience but not found in a published source
+    { id: "EXCL_IDIOM_032", en: "to not have a clue", es: "no tener ni idea",
+      enCtx: "I haven't got a clue what he meant.", esCtx: "No tengo ni idea de lo que quiso decir.",
+      audioES: "audio/expressions_cl/05_Idiomatic/EXCL_IDIOM_032.mp3" }
+
     ]
 },
 
 {
     title: "Proverb",
+    info: { body: `<p>Refranes are largely inherited from Spain and shared across the Spanish-speaking world, so most of this chapter will be familiar from any other dialect. That is the point: a learner on the Chilean setting still needs them. The genuinely Chilean sayings sit at the top — <b>al que le quede el poncho, que se lo ponga</b> is the one to know.</p>` },
     cards: [
+
+    // --- Chilean ----------------------------------------------------------
+
+    { id: "EXCL_PROV_001", en: "if the cap fits, wear it", es: "al que le quede el poncho, que se lo ponga",
+      enCtx: "I'm naming no names — if the cap fits, wear it.", esCtx: "No voy a dar nombres: al que le quede el poncho, que se lo ponga.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_001.mp3" },
+
+    { id: "EXCL_PROV_002", en: "the boss has the last word", es: "donde hay patrón, no manda marinero",
+      enCtx: "He decides, not us — the boss has the last word.", esCtx: "Decide él, no nosotros: donde hay patrón, no manda marinero.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_002.mp3" },
+
+    // UNCONFIRMED — Chilean in my experience, not found in a published collection
+    { id: "EXCL_PROV_003", en: "there's no such thing as a free lunch", es: "nadie da nada por nada",
+      enCtx: "Be careful — nobody gives anything away for free.", esCtx: "Ten cuidado, nadie da nada por nada.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_003.mp3" },
+
+    // UNCONFIRMED — Chilean in my experience, not found in a published collection
+    { id: "EXCL_PROV_004", en: "better to be alone than in bad company", es: "más vale solo que mal acompañado",
+      enCtx: "He left the group — better alone than in bad company.", esCtx: "Se salió del grupo: más vale solo que mal acompañado.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_004.mp3" },
+
+    // --- Pan-Hispanic, in general use in Chile ----------------------------
+
+    { id: "EXCL_PROV_005", en: "a bird in the hand is worth two in the bush", es: "más vale pájaro en mano que cien volando",
+      enCtx: "Take the offer — a bird in the hand.", esCtx: "Acepta la oferta: más vale pájaro en mano que cien volando.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_005.mp3" },
+
+    { id: "EXCL_PROV_006", en: "the early bird catches the worm", es: "el que madruga, Dios lo ayuda",
+      enCtx: "Get there early — the early bird catches the worm.", esCtx: "Llega temprano: el que madruga, Dios lo ayuda.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_006.mp3" },
+
+    { id: "EXCL_PROV_007", en: "you snooze, you lose", es: "camarón que se duerme se lo lleva la corriente",
+      enCtx: "He waited too long — you snooze, you lose.", esCtx: "Esperó demasiado: camarón que se duerme se lo lleva la corriente.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_007.mp3" },
+
+    { id: "EXCL_PROV_008", en: "every cloud has a silver lining", es: "no hay mal que por bien no venga",
+      enCtx: "I lost the job but found a better one — every cloud.", esCtx: "Perdí la pega pero encontré una mejor: no hay mal que por bien no venga.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_008.mp3" },
+
+    { id: "EXCL_PROV_009", en: "don't look a gift horse in the mouth", es: "a caballo regalado no se le miran los dientes",
+      enCtx: "It's free — don't look a gift horse in the mouth.", esCtx: "Es gratis: a caballo regalado no se le miran los dientes.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_009.mp3" },
+
+    { id: "EXCL_PROV_010", en: "better late than never", es: "más vale tarde que nunca",
+      enCtx: "You finally called — better late than never.", esCtx: "Al fin llamaste: más vale tarde que nunca.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_010.mp3" },
+
+    { id: "EXCL_PROV_011", en: "put a brave face on it", es: "al mal tiempo, buena cara",
+      enCtx: "It's not ideal, but put a brave face on it.", esCtx: "No es lo ideal, pero al mal tiempo, buena cara.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_011.mp3" },
+
+    { id: "EXCL_PROV_012", en: "after the storm comes the calm", es: "tras la tempestad viene la calma",
+      enCtx: "Give it time — after the storm comes the calm.", esCtx: "Dale tiempo: tras la tempestad viene la calma.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_012.mp3" },
+
+    { id: "EXCL_PROV_013", en: "nothing ventured, nothing gained", es: "el que no arriesga, no gana",
+      enCtx: "Apply for it — nothing ventured, nothing gained.", esCtx: "Postula: el que no arriesga, no gana.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_013.mp3" },
+
+    { id: "EXCL_PROV_014", en: "silence implies consent", es: "quien calla, otorga",
+      enCtx: "He said nothing, and silence implies consent.", esCtx: "No dijo nada, y quien calla, otorga.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_014.mp3" },
+
+    { id: "EXCL_PROV_015", en: "the cobbler's children go barefoot", es: "en casa de herrero, cuchillo de palo",
+      enCtx: "He's a builder with a leaking roof — cobbler's children.", esCtx: "Es constructor y tiene el techo malo: en casa de herrero, cuchillo de palo.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_015.mp3" },
+
+    { id: "EXCL_PROV_016", en: "there's no smoke without fire", es: "cuando el río suena, agua lleva",
+      enCtx: "People are talking — no smoke without fire.", esCtx: "Algo se comenta: cuando el río suena, agua lleva.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_016.mp3" },
+
+    { id: "EXCL_PROV_017", en: "you're known by the company you keep", es: "dime con quién andas y te diré quién eres",
+      enCtx: "Look who he goes around with — you're known by the company you keep.", esCtx: "Mira con quién anda: dime con quién andas y te diré quién eres.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_017.mp3" },
+
+    { id: "EXCL_PROV_018", en: "a chip off the old block", es: "de tal palo, tal astilla",
+      enCtx: "He's exactly like his father — chip off the old block.", esCtx: "Es igual a su papá: de tal palo, tal astilla.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_018.mp3" },
+
+    { id: "EXCL_PROV_019", en: "there's no substitute for experience", es: "más sabe el diablo por viejo que por diablo",
+      enCtx: "Listen to her — no substitute for experience.", esCtx: "Escúchala: más sabe el diablo por viejo que por diablo.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_019.mp3" },
+
+    { id: "EXCL_PROV_020", en: "his bark is worse than his bite", es: "perro que ladra no muerde",
+      enCtx: "Ignore the shouting — his bark is worse than his bite.", esCtx: "Ignora los gritos: perro que ladra no muerde.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_020.mp3" },
+
+    { id: "EXCL_PROV_021", en: "you can't teach an old dog new tricks", es: "caballo viejo no aprende trote nuevo",
+      enCtx: "He won't change now — old dog, new tricks.", esCtx: "No va a cambiar: caballo viejo no aprende trote nuevo.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_021.mp3" },
+
+    { id: "EXCL_PROV_022", en: "misery loves company (and it's cold comfort)", es: "mal de muchos, consuelo de tontos",
+      enCtx: "Everyone failed it, but that's cold comfort.", esCtx: "A todos les fue mal, pero mal de muchos, consuelo de tontos.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_022.mp3" },
+
+    { id: "EXCL_PROV_023", en: "he who laughs last laughs longest", es: "el que ríe último, ríe mejor",
+      enCtx: "Don't celebrate yet — he who laughs last.", esCtx: "No celebrís todavía: el que ríe último, ríe mejor.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_023.mp3" },
+
+    { id: "EXCL_PROV_024", en: "out of sight, out of mind", es: "ojos que no ven, corazón que no siente",
+      enCtx: "Better not to know — out of sight, out of mind.", esCtx: "Mejor no saber: ojos que no ven, corazón que no siente.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_024.mp3" },
+
+    { id: "EXCL_PROV_025", en: "slow and steady wins the race", es: "despacio se llega lejos",
+      enCtx: "Don't rush it — slow and steady.", esCtx: "No te apurís: despacio se llega lejos.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_025.mp3" },
+
+    { id: "EXCL_PROV_026", en: "every man for himself", es: "cada uno se rasca con sus propias uñas",
+      enCtx: "Nobody's going to help — every man for himself.", esCtx: "Nadie va a ayudar: cada uno se rasca con sus propias uñas.",
+      audioES: "audio/expressions_cl/06_Proverb/EXCL_PROV_026.mp3" }
+
     ]
 },
 
 {
     title: "Quantifier / Degree",
+    info: { body: `<p>How much, how many, how intense. Chile intensifies differently from Argentina: where Buenos Aires reaches for <i>re-</i>, Santiago reaches for <b>harto</b>, <b>caleta</b>, <b>terrible</b> and <b>súper</b>. These are among the most audibly Chilean words in the language and worth drilling early.</p>` },
     cards: [
+
+    // --- Chilean ----------------------------------------------------------
+
+    { id: "EXCL_QUANT_001", en: "loads of, tons of", es: "caleta de",
+      enCtx: "There were loads of people.", esCtx: "Había caleta de gente.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_001.mp3" },
+
+    { id: "EXCL_QUANT_002", en: "a fair amount, quite a bit", es: "ene",
+      enCtx: "It cost quite a bit.", esCtx: "Costó ene plata.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_002.mp3" },
+
+    { id: "EXCL_QUANT_003", en: "a tiny bit", es: "un pichintún",
+      enCtx: "Just a tiny bit of sugar, thanks.", esCtx: "Un pichintún de azúcar no más, gracias.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_003.mp3" },
+
+    { id: "EXCL_QUANT_004", en: "brilliant, the best", es: "la raja",
+      enCtx: "The concert was brilliant.", esCtx: "El concierto estuvo la raja.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_004.mp3" },
+
+    { id: "EXCL_QUANT_005", en: "over the top, full-on", es: "cuático",
+      enCtx: "The reaction was a bit over the top.", esCtx: "La reacción fue media cuática.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_005.mp3" },
+
+    { id: "EXCL_QUANT_006", en: "incredibly, massively (before an adjective)", es: "terrible de",
+      enCtx: "The film was incredibly good.", esCtx: "La película estuvo terrible de buena.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_006.mp3" },
+
+    // UNCONFIRMED — ubiquitous in Chile in my experience, not in the collections I checked
+    { id: "EXCL_QUANT_007", en: "a lot, plenty", es: "harto",
+      enCtx: "There's plenty of food left.", esCtx: "Queda harta comida.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_007.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_008", en: "a huge number of", es: "cualquier cantidad de",
+      enCtx: "He's got a huge number of records.", esCtx: "Tiene cualquier cantidad de discos.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_008.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_009", en: "and on top of that", es: "más encima",
+      enCtx: "It was late and on top of that it was raining.", esCtx: "Era tarde y más encima llovía.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_009.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_010", en: "nothing but, all they do is", es: "puro",
+      enCtx: "All they do is mess about.", esCtx: "Andan puro hueveando.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_010.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_011", en: "kind of, a bit (before an adjective)", es: "medio",
+      enCtx: "He's a bit odd.", esCtx: "Es medio raro.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_011.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_012", en: "really, very (before an adjective)", es: "súper",
+      enCtx: "It was really easy.", esCtx: "Fue súper fácil.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_012.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_QUANT_013", en: "a whole pile of", es: "una pila de",
+      enCtx: "I've got a whole pile of work.", esCtx: "Tengo una pila de pega.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_013.mp3" },
+
+    // --- Shared, still needed by a learner --------------------------------
+
+    { id: "EXCL_QUANT_014", en: "loads, a ton", es: "un montón",
+      enCtx: "There's loads left over.", esCtx: "Sobró un montón.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_014.mp3" },
+
+    { id: "EXCL_QUANT_015", en: "quite a lot", es: "bastante",
+      enCtx: "It rained quite a lot.", esCtx: "Llovió bastante.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_015.mp3" },
+
+    { id: "EXCL_QUANT_016", en: "hardly any", es: "casi nada",
+      enCtx: "There's hardly any left.", esCtx: "Queda casi nada.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_016.mp3" },
+
+    { id: "EXCL_QUANT_017", en: "barely, only just", es: "apenas",
+      enCtx: "I barely slept.", esCtx: "Apenas dormí.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_017.mp3" },
+
+    { id: "EXCL_QUANT_018", en: "not at all", es: "para nada",
+      enCtx: "It didn't bother me at all.", esCtx: "No me molestó para nada.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_018.mp3" },
+
+    { id: "EXCL_QUANT_019", en: "way too much", es: "demasiado",
+      enCtx: "You put in way too much salt.", esCtx: "Le echaste demasiada sal.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_019.mp3" },
+
+    { id: "EXCL_QUANT_020", en: "not that much", es: "no tanto",
+      enCtx: "Did you like it? Not that much.", esCtx: "¿Te gustó? No tanto.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_020.mp3" },
+
+    { id: "EXCL_QUANT_021", en: "at most", es: "a lo más",
+      enCtx: "It'll take an hour at most.", esCtx: "Se demora una hora a lo más.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_021.mp3" },
+
+    { id: "EXCL_QUANT_022", en: "at least", es: "por lo menos",
+      enCtx: "There were at least fifty people.", esCtx: "Había por lo menos cincuenta personas.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_022.mp3" },
+
+    { id: "EXCL_QUANT_023", en: "more than enough", es: "de sobra",
+      enCtx: "We've got more than enough time.", esCtx: "Tenemos tiempo de sobra.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_023.mp3" },
+
+    { id: "EXCL_QUANT_024", en: "little by little", es: "de a poco",
+      enCtx: "Little by little it's coming together.", esCtx: "De a poco va quedando.",
+      audioES: "audio/expressions_cl/07_Quantifier_Degree/EXCL_QUANT_024.mp3" }
+
     ]
 },
 
 {
     title: "Time",
+    info: { body: `<p>When, how often, how long. Two Chilean habits to absorb: <b>recién</b> means <i>just now</i> rather than <i>barely</i>, and the day is divided with <i>en la mañana</i> rather than <i>por la mañana</i>. The most Chilean time expression of all, <b>al tiro</b>, sits in the Prepositional chapter.</p>` },
     cards: [
+
+    // --- Chilean ----------------------------------------------------------
+
+    { id: "EXCL_TIME_001", en: "ancient, from the year dot", es: "del año de la cocoa",
+      enCtx: "That phone is ancient.", esCtx: "Ese teléfono es del año de la cocoa.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_001.mp3" },
+
+    // UNCONFIRMED — distinctly Chilean in my experience, not in the collections I checked
+    { id: "EXCL_TIME_002", en: "a moment ago, earlier on", es: "denantes",
+      enCtx: "I saw him a moment ago.", esCtx: "Lo vi denantes.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_002.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_003", en: "just now, a second ago", es: "recién",
+      enCtx: "He left just now.", esCtx: "Se fue recién.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_003.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_004", en: "in a bit, shortly", es: "al rato",
+      enCtx: "I'll call you in a bit.", esCtx: "Te llamo al rato.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_004.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_005", en: "constantly, every five minutes", es: "a cada rato",
+      enCtx: "He checks his phone every five minutes.", esCtx: "Mira el celular a cada rato.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_005.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_006", en: "around (a given hour)", es: "tipo",
+      enCtx: "We'll get there around eight.", esCtx: "Llegamos tipo ocho.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_006.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_007", en: "ages ago", es: "hace caleta",
+      enCtx: "I haven't seen her in ages.", esCtx: "No la veo hace caleta.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_007.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_008", en: "in the morning (Chilean preference for 'en' over 'por')", es: "en la mañana",
+      enCtx: "I'll do it in the morning.", esCtx: "Lo hago en la mañana.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_008.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_TIME_009", en: "in one go, in a single stretch", es: "de un viaje",
+      enCtx: "He drank it in one go.", esCtx: "Se lo tomó de un viaje.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_009.mp3" },
+
+    // --- Shared, still needed by a learner --------------------------------
+
+    { id: "EXCL_TIME_010", en: "the other day", es: "el otro día",
+      enCtx: "I bumped into him the other day.", esCtx: "Me lo encontré el otro día.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_010.mp3" },
+
+    { id: "EXCL_TIME_011", en: "the day before yesterday", es: "anteayer",
+      enCtx: "It arrived the day before yesterday.", esCtx: "Llegó anteayer.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_011.mp3" },
+
+    { id: "EXCL_TIME_012", en: "the day after tomorrow", es: "pasado mañana",
+      enCtx: "The exam is the day after tomorrow.", esCtx: "La prueba es pasado mañana.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_012.mp3" },
+
+    { id: "EXCL_TIME_013", en: "for now, for the time being", es: "por ahora",
+      enCtx: "For now we'll leave it as it is.", esCtx: "Por ahora lo dejamos así.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_013.mp3" },
+
+    { id: "EXCL_TIME_014", en: "in a little while", es: "en un rato más",
+      enCtx: "We'll eat in a little while.", esCtx: "Comemos en un rato más.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_014.mp3" },
+
+    { id: "EXCL_TIME_015", en: "in the long run", es: "a la larga",
+      enCtx: "In the long run it works out cheaper.", esCtx: "A la larga sale más barato.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_015.mp3" },
+
+    { id: "EXCL_TIME_016", en: "by this stage, at this point", es: "a esta altura",
+      enCtx: "At this point there's no going back.", esCtx: "A esta altura ya no hay vuelta.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_016.mp3" },
+
+    { id: "EXCL_TIME_017", en: "any minute now", es: "en cualquier momento",
+      enCtx: "She'll be here any minute.", esCtx: "Llega en cualquier momento.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_017.mp3" },
+
+    { id: "EXCL_TIME_018", en: "a long time ago", es: "hace tiempo",
+      enCtx: "That happened a long time ago.", esCtx: "Eso pasó hace tiempo.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_018.mp3" },
+
+    { id: "EXCL_TIME_019", en: "from now on", es: "de aquí en adelante",
+      enCtx: "From now on we do it this way.", esCtx: "De aquí en adelante lo hacemos así.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_019.mp3" },
+
+    { id: "EXCL_TIME_020", en: "not yet", es: "todavía no",
+      enCtx: "Has it arrived? Not yet.", esCtx: "¿Ya llegó? Todavía no.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_020.mp3" },
+
+    { id: "EXCL_TIME_021", en: "the following day", es: "al día siguiente",
+      enCtx: "The following day nobody mentioned it.", esCtx: "Al día siguiente nadie lo mencionó.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_021.mp3" },
+
+    { id: "EXCL_TIME_022", en: "once and for all", es: "de una vez por todas",
+      enCtx: "Let's sort this out once and for all.", esCtx: "Arreglemos esto de una vez por todas.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_022.mp3" },
+
+    { id: "EXCL_TIME_023", en: "at the same time", es: "al mismo tiempo",
+      enCtx: "They both arrived at the same time.", esCtx: "Llegaron los dos al mismo tiempo.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_023.mp3" },
+
+    { id: "EXCL_TIME_024", en: "sooner or later", es: "tarde o temprano",
+      enCtx: "Sooner or later he'll find out.", esCtx: "Tarde o temprano se va a enterar.",
+      audioES: "audio/expressions_cl/08_Time/EXCL_TIME_024.mp3" }
+
     ]
 },
 
 {
     title: "Insults",
     strong: true,
+    info: { body: `<p>Chilean insults, from affectionate to genuinely dangerous. The defining feature is that the central word, <b>weón</b>, runs the entire range depending purely on tone — it is split across several cards here for that reason. Three cards are slurs, included so you recognise them; their English side says plainly not to use them.</p>` },
     cards: [
+
+    // --- The weón range ---------------------------------------------------
+
+    { id: "EXCL_INSULT_001", en: "mate, dude (affectionate — the commonest use)", es: "weón",
+      enCtx: "All right mate, how's it going?", esCtx: "Hola weón, ¿cómo estái?",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_001.mp3", strong: true },
+
+    { id: "EXCL_INSULT_002", en: "idiot (same word, hostile tone)", es: "erís weón",
+      enCtx: "You're an idiot, you've ruined it.", esCtx: "Erís weón, lo echaste a perder.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_002.mp3", strong: true },
+
+    { id: "EXCL_INSULT_003", en: "idiot, halfwit (stronger than weón alone)", es: "ahueonado",
+      enCtx: "Don't be such a halfwit.", esCtx: "No seái tan ahueonado.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_003.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_004", en: "useless article, waste of space", es: "saco de weas",
+      enCtx: "That bloke's a waste of space.", esCtx: "Ese gallo es un saco de weas.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_004.mp3", strong: true },
+
+    // --- The strongest ----------------------------------------------------
+
+    // UNCONFIRMED gloss — the word is unmistakably Chilean, the strength rating is mine
+    { id: "EXCL_INSULT_005", en: "the strongest common insult in Chile — roughly 'motherfucker'", es: "conchetumadre",
+      enCtx: "He called him the worst thing he could think of.", esCtx: "Le dijo conchetumadre y se fue.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_005.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_INSULT_006", en: "extremely strong intensifier-insult, from 'culear'", es: "culiao",
+      enCtx: "That bastard took my seat.", esCtx: "El culiao me quitó el asiento.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_006.mp3", strong: true },
+
+    // --- Character attacks ------------------------------------------------
+
+    { id: "EXCL_INSULT_007", en: "snitch, tattletale", es: "sapo",
+      enCtx: "Nobody likes a snitch.", esCtx: "A nadie le gusta un sapo.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_007.mp3", strong: true },
+
+    { id: "EXCL_INSULT_008", en: "low-class, rough (classist — carries real sting)", es: "roto",
+      enCtx: "He called him low-class, which started the fight.", esCtx: "Le dijo roto y ahí empezó la pelea.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_008.mp3", strong: true },
+
+    { id: "EXCL_INSULT_009", en: "chav, scally (classist, about dress and manner)", es: "flaite",
+      enCtx: "Don't call people that, it's a class insult.", esCtx: "No le digái flaite, es un insulto clasista.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_009.mp3", strong: true },
+
+    { id: "EXCL_INSULT_010", en: "brazen, with a nerve", es: "carirraja",
+      enCtx: "He's got some nerve asking for more.", esCtx: "Es un carirraja, pidió más todavía.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_010.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_011", en: "cheeky, forward, with no shame", es: "patudo",
+      enCtx: "You're so cheeky, you took the last one.", esCtx: "Erís muy patudo, te llevaste el último.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_011.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_012", en: "fool, mug, easily taken in", es: "gil",
+      enCtx: "Don't be a mug, they're conning you.", esCtx: "No seái gil, te están estafando.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_012.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_013", en: "fraud, someone who doesn't deliver", es: "chanta",
+      enCtx: "That mechanic's a fraud.", esCtx: "Ese mecánico es un chanta.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_013.mp3", strong: true },
+
+    // --- Slurs. Included for recognition only. See the chapter note. -------
+
+    { id: "EXCL_INSULT_014", en: "homophobic slur, also thrown as a general insult meaning 'coward' — recognise it, do not use it", es: "maricón",
+      enCtx: "He used a homophobic slur and the room went quiet.", esCtx: "Le gritó maricón y se hizo un silencio.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_014.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_INSULT_015", en: "Chilean homophobic slur — recognise it, do not use it", es: "hueco",
+      enCtx: "That word is a slur in Chile.", esCtx: "Esa palabra es un insulto homofóbico en Chile.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_015.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_INSULT_016", en: "Chilean homophobic slur — recognise it, do not use it", es: "fleto",
+      enCtx: "Another slur you may hear and should never repeat.", esCtx: "Otro insulto que vai a escuchar y nunca deberíai repetir.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_016.mp3", strong: true },
+
+    // --- Milder -----------------------------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_017", en: "brat, little upstart", es: "pendejo",
+      enCtx: "Who does that little upstart think he is?", esCtx: "¿Quién se cree ese pendejo?",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_017.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_018", en: "tight-fisted", es: "amarrete",
+      enCtx: "He's too tight to buy a round.", esCtx: "Es muy amarrete para invitar una ronda.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_018.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_019", en: "full of himself", es: "creído",
+      enCtx: "He's so full of himself since the promotion.", esCtx: "Anda muy creído desde que lo ascendieron.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_019.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_020", en: "lazy sod", es: "flojo de mierda",
+      enCtx: "Get up, you lazy sod.", esCtx: "Levántate, flojo de mierda.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_020.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_021", en: "idiot (feminine form of weón)", es: "weona",
+      enCtx: "Same word, feminine — tone decides whether it stings.", esCtx: "La misma palabra en femenino: el tono decide si duele.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_021.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_022", en: "rat, someone who sells you out", es: "rata",
+      enCtx: "He turned out to be a rat.", esCtx: "Resultó ser una rata.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_022.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_023", en: "clueless, away with the fairies", es: "volado",
+      enCtx: "He's completely away with the fairies today.", esCtx: "Anda volado hoy día.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_023.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_INSULT_024", en: "nobody, a nothing", es: "ni un brillo",
+      enCtx: "His argument was worth nothing.", esCtx: "Su argumento fue ni un brillo.",
+      audioES: "audio/expressions_cl/09_Insults/EXCL_INSULT_024.mp3", strong: true }
+
     ]
 },
 
 {
     title: "Expletives",
     strong: true,
+    info: { body: `<p>Expletives are thrown at a situation rather than at a person. <b>Chucha</b> and <b>weá</b> do most of the work, and <b>weá</b> in particular will stand in for any noun whose name the speaker cannot be bothered to produce. The mild exclamations <i>pucha</i> and <i>chuta</i>, usable in any company, are in the Conversational chapter.</p>` },
     cards: [
+
+    // --- The core ---------------------------------------------------------
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_001", en: "damn! — the all-purpose Chilean expletive", es: "¡chucha!",
+      enCtx: "Damn, I left my wallet behind.", esCtx: "¡Chucha, se me quedó la billetera!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_001.mp3", strong: true },
+
+    { id: "EXCL_EXCL_002", en: "thing, business, crap (stands in for any noun)", es: "weá",
+      enCtx: "Pass me that thing.", esCtx: "Pásame esa weá.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_002.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_003", en: "what the hell is this?", es: "¿qué weá es esta?",
+      enCtx: "What the hell is this supposed to be?", esCtx: "¿Qué weá es esta?",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_003.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_004", en: "bloody hell! (strong, surprise or dismay)", es: "¡puta la weá!",
+      enCtx: "Bloody hell, it's broken again.", esCtx: "¡Puta la weá, se echó a perder otra vez!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_004.mp3", strong: true },
+
+    { id: "EXCL_EXCL_005", en: "it's wrecked / it's a disaster", es: "está pa la cagá",
+      enCtx: "The car's completely wrecked.", esCtx: "El auto está pa la cagá.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_005.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_006", en: "it all went to hell", es: "quedó la cagá",
+      enCtx: "The meeting went completely to hell.", esCtx: "En la reunión quedó la cagá.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_006.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_007", en: "wow! / bloody hell! (can be admiring)", es: "¡la cagó!",
+      enCtx: "Wow, that's amazing.", esCtx: "¡La cagó, qué bueno!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_007.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_008", en: "mate / man (vulgar sentence-filler, used constantly)", es: "weón, te digo",
+      enCtx: "Mate, I'm telling you, it was unbelievable.", esCtx: "Weón, te digo, fue increíble.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_008.mp3", strong: true },
+
+    // --- Telling someone to go away ---------------------------------------
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_009", en: "get lost! (strong)", es: "¡ándate a la chucha!",
+      enCtx: "Get lost, I don't want to hear it.", esCtx: "¡Ándate a la chucha, no quiero saber!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_009.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_010", en: "get lost! (slightly milder variant)", es: "¡ándate a la cresta!",
+      enCtx: "Oh, get lost.", esCtx: "Ya, ándate a la cresta.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_010.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_011", en: "miles away, in the middle of nowhere", es: "en la chucha",
+      enCtx: "His house is miles away.", esCtx: "Su casa queda en la chucha.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_011.mp3", strong: true },
+
+    // --- Refusal and disbelief --------------------------------------------
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_012", en: "no chance, not a hope", es: "ni cagando",
+      enCtx: "Will you lend him money? Not a hope.", esCtx: "¿Le vai a prestar plata? Ni cagando.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_012.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_013", en: "don't talk rubbish", es: "no digái weás",
+      enCtx: "Don't talk rubbish, that never happened.", esCtx: "No digái weás, eso nunca pasó.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_013.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_014", en: "stop messing about", es: "déjate de weás",
+      enCtx: "Stop messing about and help me.", esCtx: "Déjate de weás y ayúdame.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_014.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_015", en: "you're joking / you're having me on", es: "me estái weveando",
+      enCtx: "You're having me on, surely.", esCtx: "Me estái weveando, ¿no?",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_015.mp3", strong: true },
+
+    // --- Milder, usable in more company -----------------------------------
+
+    { id: "EXCL_EXCL_016", en: "oh hell", es: "¡mierda!",
+      enCtx: "Oh hell, I'm late.", esCtx: "¡Mierda, voy atrasado!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_016.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_017", en: "for heaven's sake", es: "¡por la cresta!",
+      enCtx: "For heaven's sake, answer the phone.", esCtx: "¡Por la cresta, contesta el teléfono!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_017.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_018", en: "what a mess, what a palaver", es: "¡qué lío!",
+      enCtx: "What a palaver over nothing.", esCtx: "¡Qué lío por nada!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_018.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_019", en: "messing about, faffing around (the noun)", es: "puro hueveo",
+      enCtx: "The whole afternoon was just faffing around.", esCtx: "La tarde fue puro hueveo.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_019.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_020", en: "bloody hell, that's expensive", es: "¡puta que está caro!",
+      enCtx: "Bloody hell, that's expensive.", esCtx: "¡Puta que está caro!",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_020.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_021", en: "I'm completely fed up with this", es: "estoy chato de esta weá",
+      enCtx: "I'm completely fed up with this.", esCtx: "Estoy chato de esta weá.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_021.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_EXCL_022", en: "what a shambles", es: "está la escoba",
+      enCtx: "It's a complete shambles in there.", esCtx: "Allá adentro está la escoba.",
+      audioES: "audio/expressions_cl/10_Expletives/EXCL_EXCL_022.mp3", strong: true }
+
     ]
 },
 
 {
     title: "Sexual",
     strong: true,
+    info: { body: `<p>Written the way a bilingual dictionary writes this material: the term, its meaning, how strong it is. Several entries exist mainly to stop you misreading ordinary conversation — <b>chucha</b> is usually just <i>damn</i>, and <b>cachar</b> means <i>to understand</i> nine times out of ten.</p>` },
     cards: [
+
+    // --- Words with a double life -----------------------------------------
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_SEX_001", en: "vulgar term for the vagina — but in daily speech almost always just 'damn' (see ch. 10)", es: "chucha",
+      enCtx: "Nine times out of ten this word is simply an expletive.", esCtx: "Nueve de cada diez veces esta palabra es solo un garabato.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_001.mp3", strong: true },
+
+    // UNCONFIRMED gloss
+    { id: "EXCL_SEX_002", en: "older vulgar sense of 'cachar' — to have sex; the everyday meaning is 'to understand'", es: "cachar (sentido vulgar)",
+      enCtx: "Context decides: with a person as object it may carry the older sense.", esCtx: "El contexto decide: con persona como objeto puede tener el sentido antiguo.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_002.mp3", strong: true },
+
+    { id: "EXCL_SEX_003", en: "penis (vulgar); also 'me importa un pico' — I couldn't care less", es: "pico",
+      enCtx: "I couldn't care less what he thinks.", esCtx: "Me importa un pico lo que piense.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_003.mp3", strong: true },
+
+    { id: "EXCL_SEX_004", en: "backside, bum (mildly vulgar, very common)", es: "poto",
+      enCtx: "I fell flat on my backside.", esCtx: "Me caí de poto.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_004.mp3", strong: true },
+
+    // --- Relationships and hooking up -------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_005", en: "to get off with someone, to hook up", es: "pinchar",
+      enCtx: "They hooked up at the party.", esCtx: "Se pincharon en el carrete.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_005.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_006", en: "to make out, to get off with (kissing)", es: "agarrar",
+      enCtx: "They were making out all night.", esCtx: "Estuvieron agarrando toda la noche.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_006.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_007", en: "to sleep with someone (vulgar but not the strongest)", es: "tirar",
+      enCtx: "It's a crude way of saying they slept together.", esCtx: "Es una forma vulgar de decir que se acostaron.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_007.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_008", en: "to have sex (the strongest common verb; source of the insult 'culiao')", es: "culear",
+      enCtx: "The insult in chapter 09 comes from this verb.", esCtx: "El insulto del capítulo 09 viene de este verbo.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_008.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_009", en: "to sleep together (neutral, usable in any company)", es: "acostarse con alguien",
+      enCtx: "They slept together and nobody knew.", esCtx: "Se acostaron y nadie lo supo.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_009.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_010", en: "to be going steady (neutral — the normal Chilean word)", es: "pololear",
+      enCtx: "They've been going out for two years.", esCtx: "Llevan dos años pololeando.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_010.mp3", strong: true },
+
+    // --- Attraction -------------------------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_011", en: "good-looking, fit", es: "rico",
+      enCtx: "Careful — about food it means delicious, about a person it's sexual.", esCtx: "Ojo: de comida significa sabroso, de persona es sexual.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_011.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_012", en: "good-looking bloke", es: "mino",
+      enCtx: "Her boyfriend is good-looking.", esCtx: "Su pololo es un mino.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_012.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_013", en: "turned on, horny (vulgar)", es: "caliente",
+      enCtx: "The literal meaning is 'hot', so context matters.", esCtx: "El sentido literal es 'con calor', así que el contexto importa.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_013.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_014", en: "to fancy someone", es: "gustarle alguien",
+      enCtx: "I think she fancies him.", esCtx: "Creo que le gusta.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_014.mp3", strong: true },
+
+    // --- Infidelity and reputation ----------------------------------------
+
+    { id: "EXCL_SEX_015", en: "a bit on the side, a lover", es: "patas negras",
+      enCtx: "Everyone in the office knew about the affair.", esCtx: "Toda la oficina sabía del patas negras.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_015.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_016", en: "to cheat on someone", es: "sacar la vuelta",
+      enCtx: "He cheated on her for a year.", esCtx: "Le sacó la vuelta por un año.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_016.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_017", en: "to be cheated on (lit. to be left wearing horns)", es: "quedar con los cachos",
+      enCtx: "He was the last to find out he'd been cheated on.", esCtx: "Fue el último en saber que quedó con los cachos.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_017.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_SEX_018", en: "to chat someone up persistently", es: "jotear",
+      enCtx: "He spent the whole night chatting her up.", esCtx: "Se pasó la noche joteando.",
+      audioES: "audio/expressions_cl/11_Sexual/EXCL_SEX_018.mp3", strong: true }
+
     ]
 },
 
 {
     title: "Put-downs",
     strong: true,
+    info: { body: `<p>A put-down is a whole remark aimed at deflating someone, rather than a single name you call them. Most are not vulgar, and several are what friends say to each other, so tone matters more here than vocabulary. <b>Te creís la muerte</b> is the classic.</p>` },
     cards: [
+
+    // --- Deflating someone's self-regard ----------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_001", en: "you think you're the bee's knees", es: "te creís la muerte",
+      enCtx: "You think you're the bee's knees since you got that car.", esCtx: "Te creís la muerte desde que tenís ese auto.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_001.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_002", en: "who do you think you are?", es: "¿quién te creís que soi?",
+      enCtx: "Who do you think you are, talking to me like that?", esCtx: "¿Quién te creís que soi para hablarme así?",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_002.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_003", en: "he fancies himself as a…", es: "se las da de",
+      enCtx: "He fancies himself as an expert.", esCtx: "Se las da de experto.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_003.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_004", en: "that's out of your league", es: "te queda grande",
+      enCtx: "That job's out of your league.", esCtx: "Esa pega te queda grande.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_004.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_005", en: "look at yourself before you talk", es: "mírate primero",
+      enCtx: "Look at yourself before you criticise me.", esCtx: "Mírate primero antes de criticarme.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_005.mp3", strong: true },
+
+    // --- Calling someone useless or clueless -------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_006", en: "you haven't got a clue", es: "no cachái ná",
+      enCtx: "Don't get involved, you haven't got a clue.", esCtx: "No te metái, no cachái ná.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_006.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_007", en: "you're all talk", es: "erís puro hablar",
+      enCtx: "You're all talk and no action.", esCtx: "Erís puro hablar y nada de hacer.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_007.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_008", en: "you're not up to it / you've got nothing left", es: "no dai más",
+      enCtx: "Sit down, you're not up to it.", esCtx: "Siéntate, no dai más.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_008.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_009", en: "all you do is waste time", es: "andái puro dando jugo",
+      enCtx: "All you've done all morning is waste time.", esCtx: "Andái puro dando jugo toda la mañana.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_009.mp3", strong: true },
+
+    // UNCONFIRMED — a famous Chilean reference: a pilot who vanished in 1914
+    { id: "EXCL_PUTDOWN_010", en: "more lost than Lieutenant Bello (hopelessly lost or clueless)", es: "más perdido que el teniente Bello",
+      enCtx: "He arrived more lost than Lieutenant Bello.", esCtx: "Llegó más perdido que el teniente Bello.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_010.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_011", en: "you've still got a lot to learn", es: "te falta mundo",
+      enCtx: "You've still got a lot to learn, kid.", esCtx: "Te falta mundo todavía, cabro.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_011.mp3", strong: true },
+
+    // --- Shutting someone down ---------------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_012", en: "shut your mouth", es: "cállate la boca",
+      enCtx: "Shut your mouth, nobody asked you.", esCtx: "Cállate la boca, nadie te preguntó.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_012.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_013", en: "don't come at me with that", es: "no me vengái con eso",
+      enCtx: "Don't come at me with that excuse.", esCtx: "No me vengái con esa excusa.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_013.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_014", en: "nobody asked you", es: "nadie te preguntó",
+      enCtx: "Nobody asked you, thanks.", esCtx: "Nadie te preguntó, gracias.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_014.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_015", en: "that's your problem, not mine", es: "ese es tu problema",
+      enCtx: "That's your problem, sort it out yourself.", esCtx: "Ese es tu problema, arréglalo tú.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_015.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_016", en: "I'm not interested in you at all", es: "ni ahí contigo",
+      enCtx: "Say what you like, I'm not interested.", esCtx: "Di lo que querái, ni ahí contigo.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_016.mp3", strong: true },
+
+    // --- Serves you right ---------------------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_017", en: "that's what you get for being an idiot", es: "eso te pasa por weón",
+      enCtx: "That's what you get for being an idiot.", esCtx: "Eso te pasa por weón.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_017.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_018", en: "I told you so", es: "te lo dije",
+      enCtx: "I told you so and you didn't listen.", esCtx: "Te lo dije y no me escuchaste.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_018.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_019", en: "you brought it on yourself", es: "te lo buscaste",
+      enCtx: "Don't complain, you brought it on yourself.", esCtx: "No reclamís, te lo buscaste.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_019.mp3", strong: true },
+
+    // --- Dismissing what someone said ---------------------------------------
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_020", en: "you're talking rubbish", es: "estái puro inventando",
+      enCtx: "You're talking rubbish, that never happened.", esCtx: "Estái puro inventando, eso nunca pasó.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_020.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_021", en: "spare me", es: "ahórrate el cuento",
+      enCtx: "Spare me the story, I know what happened.", esCtx: "Ahórrate el cuento, sé lo que pasó.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_021.mp3", strong: true },
+
+    // UNCONFIRMED
+    { id: "EXCL_PUTDOWN_022", en: "don't be like that (reproach between friends)", es: "no seái así",
+      enCtx: "Don't be like that, I was only joking.", esCtx: "No seái así, era broma no más.",
+      audioES: "audio/expressions_cl/12_Put-downs/EXCL_PUTDOWN_022.mp3", strong: true }
+
+    ]
+},
+
+{
+    title: "Slang",
+    info: { body: `<p>Single Chilean words that need explaining rather than translating. The word list in Vocabulary handles words that simply swap for a neutral equivalent; these have no neutral equivalent, or have drifted away from the standard meaning. This is most of what anyone means by &quot;Chilean slang&quot;.</p>` },
+    cards: [
+
+    // --- People -----------------------------------------------------------
+
+    { id: "EXCL_SLANG_001", en: "boyfriend / girlfriend", es: "pololo",
+      enCtx: "She came with her boyfriend.", esCtx: "Vino con su pololo.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_001.mp3" },
+
+    { id: "EXCL_SLANG_002", en: "posh, upper-class", es: "cuico",
+      enCtx: "It's a very posh neighbourhood.", esCtx: "Es un barrio muy cuico.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_002.mp3" },
+
+    { id: "EXCL_SLANG_003", en: "cop, police officer", es: "paco",
+      enCtx: "There were cops on the corner.", esCtx: "Había pacos en la esquina.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_003.mp3" },
+
+    { id: "EXCL_SLANG_004", en: "attractive woman", es: "mina",
+      enCtx: "Who's that woman over there?", esCtx: "¿Quién es esa mina?",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_004.mp3" },
+
+    { id: "EXCL_SLANG_005", en: "bloke, guy", es: "gallo",
+      enCtx: "That bloke works with me.", esCtx: "Ese gallo trabaja conmigo.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_005.mp3" },
+
+    { id: "EXCL_SLANG_006", en: "tacky, low-rent", es: "picante",
+      enCtx: "The decoration was a bit tacky.", esCtx: "La decoración estaba media picante.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_006.mp3" },
+
+    { id: "EXCL_SLANG_007", en: "slow on the uptake, dim", es: "leso",
+      enCtx: "Don't be dim, it's obvious.", esCtx: "No seái leso, es obvio.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_007.mp3" },
+
+    { id: "EXCL_SLANG_008", en: "baby, infant", es: "guagua",
+      enCtx: "The baby slept all night.", esCtx: "La guagua durmió toda la noche.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_008.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_SLANG_009", en: "teenager, young person", es: "lolo",
+      enCtx: "The place is full of teenagers.", esCtx: "El lugar está lleno de lolos.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_009.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_SLANG_010", en: "bloke who chats up every woman he meets", es: "jote",
+      enCtx: "Watch out for him, he's a bit of a creep.", esCtx: "Cuidado con él, es medio jote.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_010.mp3" },
+
+    // --- Going out, drinking ----------------------------------------------
+
+    { id: "EXCL_SLANG_011", en: "party, night out", es: "carrete",
+      enCtx: "The party went on till six.", esCtx: "El carrete duró hasta las seis.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_011.mp3" },
+
+    { id: "EXCL_SLANG_012", en: "to go out partying", es: "carretear",
+      enCtx: "We went out partying on Saturday.", esCtx: "Salimos a carretear el sábado.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_012.mp3" },
+
+    { id: "EXCL_SLANG_013", en: "beer", es: "chela",
+      enCtx: "Shall we get a beer?", esCtx: "¿Nos tomamos una chela?",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_013.mp3" },
+
+    { id: "EXCL_SLANG_014", en: "booze, a drink", es: "copete",
+      enCtx: "Bring some booze.", esCtx: "Trae copete.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_014.mp3" },
+
+    { id: "EXCL_SLANG_015", en: "drunk", es: "curado",
+      enCtx: "He got completely drunk.", esCtx: "Quedó curado.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_015.mp3" },
+
+    { id: "EXCL_SLANG_016", en: "hangover", es: "caña",
+      enCtx: "I've got a terrible hangover.", esCtx: "Tengo una caña terrible.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_016.mp3" },
+
+    { id: "EXCL_SLANG_017", en: "to have a laugh, enjoy yourself", es: "vacilar",
+      enCtx: "We had a great laugh.", esCtx: "Vacilamos harto.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_017.mp3" },
+
+    // --- Work, money, daily life ------------------------------------------
+
+    { id: "EXCL_SLANG_018", en: "job, work", es: "pega",
+      enCtx: "I've got a lot of work on.", esCtx: "Tengo harta pega.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_018.mp3" },
+
+    { id: "EXCL_SLANG_019", en: "a thousand pesos", es: "luca",
+      enCtx: "It cost me five thousand.", esCtx: "Me costó cinco lucas.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_019.mp3" },
+
+    { id: "EXCL_SLANG_020", en: "traffic jam", es: "taco",
+      enCtx: "There was a huge traffic jam.", esCtx: "Había un taco tremendo.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_020.mp3" },
+
+    { id: "EXCL_SLANG_021", en: "city bus", es: "micro",
+      enCtx: "I'll catch the bus home.", esCtx: "Me voy en micro a la casa.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_021.mp3" },
+
+    { id: "EXCL_SLANG_022", en: "afternoon tea (the Chilean evening meal)", es: "once",
+      enCtx: "Afternoon tea is at six.", esCtx: "La once es a las seis.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_022.mp3" },
+
+    { id: "EXCL_SLANG_023", en: "junk, clutter", es: "cachureo",
+      enCtx: "The garage is full of junk.", esCtx: "El garaje está lleno de cachureos.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_023.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_SLANG_024", en: "jumper, sweater", es: "chomba",
+      enCtx: "Put a jumper on, it's cold.", esCtx: "Ponte una chomba, hace frío.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_024.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_SLANG_025", en: "hot dog with avocado and tomato", es: "completo",
+      enCtx: "Two hot dogs, please.", esCtx: "Dos completos, por favor.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_025.mp3" },
+
+    // --- Quality, mood, judgement -----------------------------------------
+
+    { id: "EXCL_SLANG_026", en: "boring, dull", es: "fome",
+      enCtx: "What a dull day.", esCtx: "Qué día más fome.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_026.mp3" },
+
+    { id: "EXCL_SLANG_027", en: "great, cool", es: "bacán",
+      enCtx: "The place is great.", esCtx: "El lugar es bacán.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_027.mp3" },
+
+    { id: "EXCL_SLANG_028", en: "shoddy, poor quality", es: "charcha",
+      enCtx: "The work came out shoddy.", esCtx: "El trabajo quedó charcha.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_028.mp3" },
+
+    { id: "EXCL_SLANG_029", en: "low-key, discreet", es: "piola",
+      enCtx: "Keep it low-key, don't say anything.", esCtx: "Quédate piola, no digái nada.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_029.mp3" },
+
+    { id: "EXCL_SLANG_030", en: "a bore, a drag", es: "lata",
+      enCtx: "Doing the tax return is a drag.", esCtx: "Hacer la declaración es una lata.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_030.mp3" },
+
+    { id: "EXCL_SLANG_031", en: "to get down, to be dispirited", es: "achacarse",
+      enCtx: "Don't get down about it, it'll pass.", esCtx: "No te achacís, va a pasar.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_031.mp3" },
+
+    // --- Talking, understanding -------------------------------------------
+
+    { id: "EXCL_SLANG_032", en: "to get it, to understand", es: "cachar",
+      enCtx: "I didn't get what he said.", esCtx: "No caché lo que dijo.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_032.mp3" },
+
+    { id: "EXCL_SLANG_033", en: "to gossip", es: "copuchar",
+      enCtx: "They spent the afternoon gossiping.", esCtx: "Se pasaron la tarde copuchando.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_033.mp3" },
+
+    { id: "EXCL_SLANG_034", en: "gossip, or a tangled mess of a situation", es: "cahuín",
+      enCtx: "Don't get involved in that mess.", esCtx: "No te metái en ese cahuín.",
+      audioES: "audio/expressions_cl/13_Slang/EXCL_SLANG_034.mp3" }
+
+    ]
+},
+
+{
+    title: "Fillers & Particles",
+    info: { body: `<p>Particles carry almost no meaning of their own and are close to pure dialect signal — they are what makes someone <i>sound</i> Chilean rather than merely use Chilean words. <b>Po</b> is the emblem. <b>Cachái</b> appears here as well as in Conversational: as a question it checks you are following, as a filler it is just glue.</p>` },
+    cards: [
+
+    { id: "EXCL_PART_001", en: "sentence-final emphasis particle, untranslatable", es: "po",
+      enCtx: "Come on then, let's go.", esCtx: "Ya po, vamos.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_001.mp3" },
+
+    { id: "EXCL_PART_002", en: "yeah / hurry up (po fused onto ya)", es: "yapo",
+      enCtx: "Come on, hurry up.", esCtx: "Yapo, apúrate.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_002.mp3" },
+
+    { id: "EXCL_PART_003", en: "you know, like (mid-sentence filler)", es: "cachái",
+      enCtx: "I was tired, you know, and I just left.", esCtx: "Estaba cansado, cachái, y me fui no más.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_003.mp3" },
+
+    { id: "EXCL_PART_004", en: "hey, listen (getting attention)", es: "oye",
+      enCtx: "Hey, have you got a minute?", esCtx: "Oye, ¿tenís un minuto?",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_004.mp3" },
+
+    { id: "EXCL_PART_005", en: "look, see (introducing a point)", es: "mira",
+      enCtx: "Look, it's not that simple.", esCtx: "Mira, no es tan simple.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_005.mp3" },
+
+    { id: "EXCL_PART_006", en: "let's see, hang on", es: "a ver",
+      enCtx: "Let's see, where did I put it?", esCtx: "A ver, ¿dónde lo dejé?",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_006.mp3" },
+
+    { id: "EXCL_PART_007", en: "right, OK (acknowledging)", es: "ya",
+      enCtx: "Right, I'm on my way.", esCtx: "Ya, voy saliendo.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_007.mp3" },
+
+    { id: "EXCL_PART_008", en: "of course, exactly", es: "claro",
+      enCtx: "Of course, that's what I meant.", esCtx: "Claro, a eso me refería.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_008.mp3" },
+
+    { id: "EXCL_PART_009", en: "obviously", es: "obvio",
+      enCtx: "Are you coming? Obviously.", esCtx: "¿Vai a venir? Obvio.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_009.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_010", en: "just, simply (softening a statement)", es: "no más",
+      enCtx: "Sit down, go on.", esCtx: "Siéntate no más.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_010.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_011", en: "oh right, I see", es: "ah ya",
+      enCtx: "Oh right, now I get it.", esCtx: "Ah ya, ahora entiendo.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_011.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_012", en: "um, er (hesitation)", es: "este",
+      enCtx: "It was, um, on Tuesday.", esCtx: "Fue, este, el martes.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_012.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_013", en: "that's it, exactly that", es: "eso",
+      enCtx: "That's it, you've got it.", esCtx: "Eso, lo pillaste.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_013.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_014", en: "you get me? (checking you're being followed)", es: "¿me entendís?",
+      enCtx: "It has to be today, you get me?", esCtx: "Tiene que ser hoy, ¿me entendís?",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_014.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_015", en: "right? (demanding agreement)", es: "¿o no?",
+      enCtx: "It's better this way, right?", esCtx: "Así es mejor, ¿o no?",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_015.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_016", en: "come on, go on (urging)", es: "dale",
+      enCtx: "Go on, tell me.", esCtx: "Dale, cuéntame.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_016.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_017", en: "well, so (starting a turn)", es: "bueno",
+      enCtx: "Well, let's get started then.", esCtx: "Bueno, empecemos entonces.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_017.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_018", en: "honestly, seriously (emphasis)", es: "de verdad",
+      enCtx: "Honestly, I had no idea.", esCtx: "De verdad, no tenía idea.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_018.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_019", en: "whatever, anyway (dismissing)", es: "en fin po",
+      enCtx: "Anyway, never mind.", esCtx: "En fin po, da igual.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_019.mp3" },
+
+    // UNCONFIRMED
+    { id: "EXCL_PART_020", en: "eh? what? (asking for a repeat)", es: "¿ah?",
+      enCtx: "Eh? Say that again.", esCtx: "¿Ah? Repíteme eso.",
+      audioES: "audio/expressions_cl/14_Fillers_Particles/EXCL_PART_020.mp3" }
+
     ]
 }
     ],
