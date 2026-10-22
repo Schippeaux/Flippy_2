@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v24.9</title>
+<title>Flippy — v25.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -539,6 +539,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-settings-panel.hidden { display:none; }
 .vc-settings-inner { background:var(--card-bg); border-radius:20px 20px 0 0; padding:1.25rem 1.25rem calc(var(--safe-b) + 1.25rem); width:100%; max-height:80vh; overflow-y:auto; box-sizing:border-box; }
 .vc-settings-title { font-family:'Inconsolata',monospace; font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-light); margin-bottom:1rem; }
+.vc-decklen-row { display:flex; align-items:center; gap:0.7rem; }
+.vc-decklen-row input { width:4.5rem; padding:0.55rem; border:1px solid var(--border); border-radius:8px; font-family:'Inconsolata',monospace; font-size:0.9rem; background:var(--bg); color:var(--text-dark); }
+.vc-decklen-row span { font-size:0.72rem; color:var(--text-light); line-height:1.35; }
 .vc-settings-section-label { font-family:'Inconsolata',monospace; font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); margin:0.85rem 0 0.5rem; }
 .vc-settings-checks { display:flex; flex-wrap:wrap; gap:0.4rem; }
 .vc-settings-radios { display:flex; flex-wrap:wrap; gap:0.4rem; }
@@ -620,7 +623,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v24.9</div>
+    <div class="splash-sub" id="appVersionLine">v25.0</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -837,6 +840,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 
       <div class="vc-settings-section-label">Dialect</div>
       <div class="vc-settings-radios" id="vcDialectRadios"></div>
+
+      <div class="vc-settings-section-label">Cards per deck</div>
+      <div class="vc-decklen-row"><input type="number" id="vcDeckLen" min="5" max="150" step="5" inputmode="numeric"><span>Tense decks hold this many cards (one verb each, random person). Infinitives always include every verb.</span></div>
 
       <button class="vc-apply-btn" onclick="vcApplySettings()">Apply</button>
     </div>
@@ -58936,15 +58942,15 @@ let vcPracticeDirection = 'speaking';  // 'speaking' (EN→ES) | 'understanding'
 const VC_SETTINGS_KEY = 'vc_settings';
 
 const VC_TENSE_LABELS = {
-  presente:       'Presente',
-  progresivo:     'Progresivo',
-  indefinido:     'Pretérito indefinido',
-  imperfecto:     'Pretérito imperfecto',
-  perfecto:       'Pretérito perfecto compuesto',
-  futuro:         'Futuro simple',
-  condicional:    'Condicional',
-  subjPresente:   'Subjuntivo presente',
-  subjImperfecto: 'Subjuntivo imperfecto',
+  presente:       'Present',
+  progresivo:     'Progressive',
+  indefinido:     'Preterite',
+  imperfecto:     'Imperfect',
+  perfecto:       'Present Perfect',
+  futuro:         'Future',
+  condicional:    'Conditional',
+  subjPresente:   'Present Subjunctive',
+  subjImperfecto: 'Imperfect Subjunctive',
 };
 
 // Short English gloss shown next to each tense header in the conjugation table
@@ -59149,6 +59155,120 @@ const VC_STUDY_GLOSS = {
   subjImperfecto: 'if I did — hypotheticals, past wishes',
 };
 
+// ── ENGLISH CONJUGATION ENGINE ──────────────────────────────────────────
+// Builds a natural English phrase with the subject baked in (e.g. "she brings",
+// "she was bringing") for the front of a speaking-mode study card, from the
+// verb's own `meaning` field. English-only logic — no dependency on Spanish data
+// beyond the meaning string and the tense/person keys already in the card.
+const VC_EN_PRONOUN = {
+  yo: 'I', vos: 'you', tu: 'you', el: 'she',
+  nosotros: 'we', vosotros: 'you all', ellos: 'they',
+};
+const VC_EN_THIRD_SINGULAR = new Set(['el']);
+
+// head-verb -> [3rd-person-present, simple-past, past-participle, gerund]
+const VC_EN_IRREGULAR = {
+  be:['is','was','been','being'], go:['goes','went','gone','going'], have:['has','had','had','having'],
+  do:['does','did','done','doing'], say:['says','said','said','saying'], see:['sees','saw','seen','seeing'],
+  know:['knows','knew','known','knowing'], come:['comes','came','come','coming'], take:['takes','took','taken','taking'],
+  give:['gives','gave','given','giving'], find:['finds','found','found','finding'], think:['thinks','thought','thought','thinking'],
+  tell:['tells','told','told','telling'], become:['becomes','became','become','becoming'], leave:['leaves','left','left','leaving'],
+  feel:['feels','felt','felt','feeling'], put:['puts','put','put','putting'], bring:['brings','brought','brought','bringing'],
+  begin:['begins','began','begun','beginning'], write:['writes','wrote','written','writing'], sell:['sells','sold','sold','selling'],
+  send:['sends','sent','sent','sending'], break:['breaks','broke','broken','breaking'], meet:['meets','met','met','meeting'],
+  run:['runs','ran','run','running'], pay:['pays','paid','paid','paying'], eat:['eats','ate','eaten','eating'],
+  drink:['drinks','drank','drunk','drinking'], grow:['grows','grew','grown','growing'], fall:['falls','fell','fallen','falling'],
+  teach:['teaches','taught','taught','teaching'], buy:['buys','bought','bought','buying'], sing:['sings','sang','sung','singing'],
+  sleep:['sleeps','slept','slept','sleeping'], speak:['speaks','spoke','spoken','speaking'], hear:['hears','heard','heard','hearing'],
+  forget:['forgets','forgot','forgotten','forgetting'], choose:['chooses','chose','chosen','choosing'],
+  understand:['understands','understood','understood','understanding'], win:['wins','won','won','winning'],
+  lose:['loses','lost','lost','losing'], read:['reads','read','read','reading'], cut:['cuts','cut','cut','cutting'],
+  wake:['wakes','woke','woken','waking'], drive:['drives','drove','driven','driving'], get:['gets','got','gotten','getting'],
+  fit:['fits','fit','fit','fitting'], prefer:['prefers','preferred','preferred','preferring'],
+};
+
+function vcEnVowelGroups(w) { const m = w.match(/[aeiouy]+/g); return m ? m.length : 0; }
+function vcEnEndsCVC(w) { return /[^aeiou][aeiou][^aeiouwxy]$/.test(w); }
+function vcEnDoublesFinal(w) { return vcEnVowelGroups(w) === 1 && vcEnEndsCVC(w); }
+
+function vcEnRegularForms(v) {
+  let pres3, past, ger;
+  if (/[^aeiou]y$/.test(v))            { pres3 = v.slice(0,-1)+'ies'; past = v.slice(0,-1)+'ied'; ger = v+'ing'; }
+  else if (/ie$/.test(v))              { pres3 = v+'s'; past = v+'d'; ger = v.slice(0,-2)+'ying'; }
+  else if (/e$/.test(v) && !/ee$/.test(v)) { pres3 = v+'s'; past = v+'d'; ger = v.slice(0,-1)+'ing'; }
+  else if (/[sxz]$|[cs]h$/.test(v))    { pres3 = v+'es'; past = v+'ed'; ger = v+'ing'; }
+  else if (vcEnDoublesFinal(v))        { pres3 = v+'s'; past = v+v.slice(-1)+'ed'; ger = v+v.slice(-1)+'ing'; }
+  else                                  { pres3 = v+'s'; past = v+'ed'; ger = v+'ing'; }
+  return [pres3, past, past, ger];
+}
+function vcEnForms(head) { return VC_EN_IRREGULAR[head] || vcEnRegularForms(head); }
+
+// Modal/fixed-phrase verbs (deber, soler) whose English gloss doesn't conjugate like an
+// ordinary verb — hand-built per tense rather than run through the generic engine.
+function vcEnSpecialPhrase(key, tense, isThirdSingular) {
+  const has = isThirdSingular ? 'has' : 'have';
+  const is  = isThirdSingular ? 'is'  : 'are';
+  const TABLES = {
+    deber: {
+      presente:'must', progresivo:`${is} having to`, indefinido:'had to', imperfecto:'had to',
+      perfecto:`${has} had to`, futuro:'will have to', condicional:'would have to',
+      subjPresente:'have to', subjImperfecto:'had to',
+    },
+    soler: {
+      presente: isThirdSingular ? 'usually does' : 'usually do',
+      progresivo:`${is} usually doing`, indefinido:'usually used to', imperfecto:'usually used to',
+      perfecto:`${has} usually done`, futuro:'will usually do', condicional:'would usually do',
+      subjPresente:'usually do', subjImperfecto:'usually did',
+    },
+  };
+  return (TABLES[key] && TABLES[key][tense]) || '';
+}
+
+// Strip parenthetical asides BEFORE splitting on " / " (a paren may itself contain a "/").
+function vcEnBaseFrom(meaning) {
+  let cleaned = meaning.replace(/\([^)]*\)/g, '').replace(/\s{2,}/g, ' ').trim();
+  let first = cleaned.split(' / ')[0].trim();
+  if (/^to\s+/i.test(first)) first = first.replace(/^to\s+/i, '');
+  return first; // e.g. "bring", "be", "get married", "look for"
+}
+
+// Builds "she brings" / "she was bringing" etc. from the verb's meaning, a tense key,
+// and the Spanish person key(s) on the card (may be a merged group sharing one form).
+function vcEnConjugate(meaning, tense, persons, verbInfinitiveKey) {
+  const pronouns = [...new Set(persons.map(p => VC_EN_PRONOUN[p] || p))];
+  const subject = pronouns.join('/');
+  const isThirdSingular = persons.every(p => VC_EN_THIRD_SINGULAR.has(p));
+  const isIOnly = pronouns.length === 1 && pronouns[0] === 'I';
+
+  if (verbInfinitiveKey === 'deber' || verbInfinitiveKey === 'soler') {
+    return `${subject} ${vcEnSpecialPhrase(verbInfinitiveKey, tense, isThirdSingular)}`.trim();
+  }
+
+  const base = vcEnBaseFrom(meaning);
+  const words = base.split(/\s+/);
+  const head = words[0], rest = words.slice(1).join(' ');
+  const [pres3, past, participle, ger] = vcEnForms(head);
+  const isBe = head === 'be';
+  const beForm = isThirdSingular ? 'is' : (isIOnly ? 'am' : 'are');
+  const haveForm = isThirdSingular ? 'has' : 'have';
+  const pastBe = isThirdSingular ? 'was' : (isIOnly ? 'was' : 'were');
+
+  let verbPhrase;
+  switch (tense) {
+    case 'presente':       verbPhrase = isThirdSingular ? pres3 : (isBe ? beForm : head); break;
+    case 'progresivo':     verbPhrase = `${beForm} ${ger}`; break;
+    case 'indefinido':     verbPhrase = isBe ? pastBe : past; break;
+    case 'imperfecto':     verbPhrase = `${isThirdSingular ? 'was' : (isIOnly ? 'was' : 'were')} ${ger}`; break;
+    case 'perfecto':       verbPhrase = `${haveForm} ${participle}`; break;
+    case 'futuro':         verbPhrase = `will ${head}`; break;
+    case 'condicional':    verbPhrase = `would ${head}`; break;
+    case 'subjPresente':   verbPhrase = head; break;                      // true subjunctive: bare form, every person
+    case 'subjImperfecto': verbPhrase = isBe ? 'were' : past; break;      // subjunctive "be" is "were" for every person
+    default:                verbPhrase = head;
+  }
+  return `${subject} ${verbPhrase}${rest ? ' ' + rest : ''}`.trim();
+}
+
 // Verb sets (freq field on each verb: 1 essential, 2 high, 3 useful)
 const VC_SET_DEFS = [
   { key:1, label:'Essential' },
@@ -59218,6 +59338,8 @@ function buildVerbDeck(verb, settings) {
 // ── VC SETTINGS PANEL ──
 function vcRenderSettingsPanelInto(tenseContainerId, personContainerId, dialectContainerId) {
   const settings = vcSettings;
+  const dl = document.getElementById('vcDeckLen');
+  if (dl) dl.value = vbGetDeckLen();
 
   // Tenses
   const tenseEl = document.getElementById(tenseContainerId);
@@ -59309,6 +59431,8 @@ function vcApplySettings() {
     return;
   }
 
+  const dlEl = document.getElementById('vcDeckLen');
+  if (kind === 'list' && dlEl && dlEl.value !== '') vbSetDeckLen(dlEl.value);
   vcSettings = { tenses, persons, dialect };
   vcSaveSettings(vcSettings);
   if (dialect !== appGetDialect()) appSetDialect(dialect);   // global; listeners reload settings
@@ -59347,6 +59471,11 @@ function vcLoadPrefs() {
     vcExploreFlip = localStorage.getItem(VC_EXPLORE_FLIP_KEY) === '1';
     // Sessions saved by earlier builds (20-card, expiring daily) use a different key; drop them
     Object.keys(localStorage).filter(k => /sr_(comp|recall)_session_VB_/.test(k)).forEach(k => localStorage.removeItem(k));
+    // Sessions saved before random ordering / fixed decks may hold an alphabetical queue; drop them once
+    if (localStorage.getItem(`${STORE_PREFIX}vb_order_v2`) !== '1') {
+      Object.keys(localStorage).filter(k => k.startsWith(`${STORE_PREFIX}sr_vbsess_`)).forEach(k => localStorage.removeItem(k));
+      localStorage.setItem(`${STORE_PREFIX}vb_order_v2`, '1');
+    }
   } catch {}
 }
 
@@ -59508,6 +59637,75 @@ function vcRenderStudyList() {
 // Build a study deck.  kind = 'infinitive' | a tense key.  Words only, no sentences.
 //   Understanding: identical forms for one verb are merged (e.g. yo/él "abría") so the back is never ambiguous.
 //   Speaking: one card per verb × person.
+// ══ VB DECK SELECTION — a fixed deck of N cards per tense ══════════════
+// Every tense deck holds N cards (setting "Cards per deck", default 50): one per verb, each with a
+// person picked at random, persons shared out equally. The picks are saved so the SAME cards come
+// back every time (you get a chance to memorise them). Order is shuffled at play time, not here.
+// The infinitive deck is exempt: it always holds every verb in the selected sets.
+//   {STORE_PREFIX}vb_decklen            -> N
+//   {STORE_PREFIX}vb_deck_<tense>_<sets> -> [[infinitive, slot], ...]   slot = yo | 2nd | el | nosotros | ellos ...
+// "2nd" is whatever the dialect uses for the second person (vos / tú), so switching dialect keeps the same
+// verbs and slots (the cards themselves are different ids, so their review history is separate).
+const VB_DECKLEN_DEFAULT = 50;
+function vbGetDeckLen() {
+  try { const n = parseInt(localStorage.getItem(`${STORE_PREFIX}vb_decklen`), 10); if (n >= 5 && n <= 500) return n; } catch {}
+  return VB_DECKLEN_DEFAULT;
+}
+function vbSetDeckLen(n) {
+  n = Math.max(5, Math.min(500, parseInt(n, 10) || VB_DECKLEN_DEFAULT));
+  try { localStorage.setItem(`${STORE_PREFIX}vb_decklen`, String(n)); } catch {}
+  return n;
+}
+function vbSlotOf(p)       { return p === appSecondPerson() ? '2nd' : p; }
+function vbPersonOfSlot(s) { return s === '2nd' ? appSecondPerson() : s; }
+function vbDeckKey(kind)   { return `${STORE_PREFIX}vb_deck_${kind}_${vcSets.slice().sort().join('')}`; }
+
+function vbPickPairs(kind, verbs, persons) {
+  const N     = vbGetDeckLen();
+  const slots = persons.map(vbSlotOf);
+  const key   = vbDeckKey(kind);
+  const byInf = new Map(verbs.map(v => [v.infinitive, v]));
+  const ok = (inf, slot) => {
+    const v = byInf.get(inf);
+    return !!(v && slots.includes(slot) && v.conjugaciones && v.conjugaciones[kind] && v.conjugaciones[kind][vbPersonOfSlot(slot)]);
+  };
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+  if (!Array.isArray(saved)) saved = [];
+  const seen = new Set();
+  let pairs = saved.filter(pr => Array.isArray(pr) && ok(pr[0], pr[1]) && !seen.has(pr[0]) && seen.add(pr[0]));
+  pairs = pairs.slice(0, N);                       // shrinking keeps the first N picks
+  const before = JSON.stringify(pairs);
+  if (pairs.length < N) {                          // growing keeps what you have and adds new picks
+    const counts = {}; slots.forEach(sl => { counts[sl] = 0; });
+    pairs.forEach(pr => { counts[pr[1]]++; });
+    const pool = verbs.filter(v => !seen.has(v.infinitive));
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    for (const v of pool) {
+      if (pairs.length >= N) break;
+      const avail = slots.filter(sl => ok(v.infinitive, sl));
+      if (!avail.length) continue;
+      const min  = Math.min(...avail.map(sl => counts[sl]));
+      const cand = avail.filter(sl => counts[sl] === min);
+      const sl   = cand[Math.floor(Math.random() * cand.length)];
+      pairs.push([v.infinitive, sl]); counts[sl]++;
+    }
+  }
+  if (JSON.stringify(pairs) !== before || !localStorage.getItem(key)) {
+    try { localStorage.setItem(key, JSON.stringify(pairs)); } catch {}
+  }
+  return pairs;
+}
+
+function vbNewDeck(kind) {
+  if (kind === 'infinitive') return;
+  if (!confirm('Replace this deck with ' + vbGetDeckLen() + ' new random cards? Your progress on the current cards is kept.')) return;
+  try { localStorage.removeItem(vbDeckKey(kind)); } catch {}
+  vbClearSession('comp', vbChapterId(kind)); vbClearSession('recall', vbChapterId(kind));
+  vbOpenLanding(kind);
+  vcRefreshVerbScreens();
+}
+
 function vcBuildStudyDeck(kind, mode, shuffle) {
   const verbs = vcVerbsInSets();
   const cards = [];
@@ -59516,24 +59714,21 @@ function vcBuildStudyDeck(kind, mode, shuffle) {
   if (kind === 'infinitive') {
     verbs.forEach(v => cards.push({ id:`VB_INF_${v.infinitive}`, study:true, kind:'inf', verb:v }));
   } else {
+    // A fixed deck of N verb+person pairs (see VB DECK SELECTION), not every verb x every person.
     const persons = vcSettings.persons;
-    verbs.forEach(v => {
-      const conjs = v.conjugaciones && v.conjugaciones[kind];
-      if (!conjs) return;
+    const byInf = new Map(verbs.map(v => [v.infinitive, v]));
+    vbPickPairs(kind, verbs, persons).forEach(([inf, slot]) => {
+      const v = byInf.get(inf);
+      const p = vbPersonOfSlot(slot);
+      const conjs = v && v.conjugaciones && v.conjugaciones[kind];
+      const f = conjs && conjs[p];
+      if (!f) return;
       if (mode === 'understanding') {
-        const groups = new Map();
-        persons.forEach(p => {
-          const f = conjs[p];
-          if (!f) return;
-          if (!groups.has(f)) groups.set(f, []);
-          groups.get(f).push(p);
-        });
-        groups.forEach((ps, f) => cards.push({ id:`VB_${kind}_${v.infinitive}_${f}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:ps }));
+        // Same id scheme as before (one card per distinct form); the picked person leads so its sentence is shown
+        const ps = [p].concat(persons.filter(q => q !== p && conjs[q] === f));
+        cards.push({ id:`VB_${kind}_${inf}_${f}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:ps });
       } else {
-        persons.forEach(p => {
-          const f = conjs[p];
-          if (f) cards.push({ id:`VB_${kind}_${v.infinitive}_${p}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:[p] });
-        });
+        cards.push({ id:`VB_${kind}_${inf}_${p}`, study:true, kind:'form', verb:v, tense:kind, form:f, persons:[p] });
       }
     });
   }
@@ -59647,27 +59842,27 @@ function vbLoadSession(mode, cid, cardMap) {
 const vbLastRating = c => c.reviews.length ? c.reviews[c.reviews.length - 1].rating : 0;
 
 // Order for a new session:
-//   1. due today, oldest first
+//   1. due today
 //   2. missed (last answer was Again) even if not due yet — so what you got wrong comes back first
-//   3. new cards you were queued for but never reached in the previous session, in that order
-//   4. the remaining new cards, Essential → High → Useful, random within each tier
+//   3. new cards you were queued for but never reached in the previous session
+//   4. the remaining new cards
 //   5. everything else, soonest due first
+// Within groups 1-4 the order is random (not alphabetical).
 function vbBuildQueue(deck, cardMap, prev, today) {
+  const rnd      = new Map(deck.map(c => [c.id, Math.random()]));   // fresh shuffle every session
+  const byRnd    = (a, b) => rnd.get(a.id) - rnd.get(b.id);
   const reviewed = deck.filter(c => c.reviews.length > 0);
   const fresh    = deck.filter(c => c.reviews.length === 0);
-  const due      = reviewed.filter(c => c.dueDate <= today).sort((a, b) => a.dueDate - b.dueDate);
+  const due      = reviewed.filter(c => c.dueDate <= today).sort(byRnd);
   const dueIds   = new Set(due.map(c => c.id));
-  const missed   = reviewed.filter(c => !dueIds.has(c.id) && vbLastRating(c) <= 2)
-                           .sort((a, b) => a.lastReviewDay - b.lastReviewDay);
+  const missed   = reviewed.filter(c => !dueIds.has(c.id) && vbLastRating(c) <= 2).sort(byRnd);
   const usedIds  = new Set([...dueIds, ...missed.map(c => c.id)]);
   const freshMap = new Map(fresh.map(c => [c.id, c]));
-  const carry    = (prev ? prev.queue.slice(prev.idx) : []).map(id => freshMap.get(id)).filter(Boolean);
+  const carry    = (prev ? prev.queue.slice(prev.idx) : []).map(id => freshMap.get(id)).filter(Boolean).sort(byRnd);
   const carryIds = new Set(carry.map(c => c.id));
-  const tier     = c => (cardMap[c.id].verb.freq || 2) + Math.random() * 0.99;
-  const rest     = fresh.filter(c => !carryIds.has(c.id)).map(c => ({ c, k: tier(c) }))
-                        .sort((a, b) => a.k - b.k).map(x => x.c);
+  const rest     = fresh.filter(c => !carryIds.has(c.id)).sort(byRnd);
   const ahead    = reviewed.filter(c => !usedIds.has(c.id))
-                           .sort((a, b) => (a.dueDate - b.dueDate) || (a.ef - b.ef));
+                           .sort((a, b) => (a.dueDate - b.dueDate) || byRnd(a, b));
   return [...due, ...missed, ...carry, ...rest, ...ahead].map(c => c.id);
 }
 
@@ -59712,7 +59907,8 @@ function vbOpenLanding(kind) {
     ${resume ? `<button class="vc-landing-btn primary" onclick="vbLaunch('${kind}','continue')">Continue · card ${st.pos} of ${st.queueLen}</button>` : ''}
     <button class="vc-landing-btn${resume ? '' : ' primary'}" onclick="vbLaunch('${kind}','new')">New session</button>
     <button class="vc-landing-btn" onclick="vbLaunch('${kind}','browse')">Browse (untracked)</button>
-    <div class="vc-landing-note">A new session starts with cards that are due or that you missed, then cards you hadn't reached yet, then new ones. Nothing is lost if you leave part-way.</div>`;
+    ${kind !== 'infinitive' ? `<button class="vc-landing-btn" onclick="vbNewDeck('${kind}')">New ${vbGetDeckLen()} cards</button>` : ''}
+    <div class="vc-landing-note">A new session starts with cards that are due or that you missed, then cards you hadn't reached yet, then new ones, all in random order. The deck is the same cards each time; “New cards” swaps in a fresh set. Nothing is lost if you leave part-way.</div>`;
   document.getElementById('vcLandingPanel').classList.remove('hidden');
 }
 function vbCloseLanding() { document.getElementById('vcLandingPanel').classList.add('hidden'); }
@@ -59868,7 +60064,6 @@ function vcShowStudyCard(card) {
     else                          { tag.className = 'card-tag en'; tag.textContent = 'ENGLISH'; tgt.textContent = card.verb.meaning; }
   } else {
     tenseEl.innerHTML = `${VC_TENSE_LABELS[card.tense]} <span class="vc-tense-gloss">(${VC_STUDY_GLOSS[card.tense] || ''})</span>`;
-    const who = vcPersonsShort(card.persons);
     if (mode === 'understanding') {
       personEl.textContent = '';
       ctx.textContent = '';
@@ -59876,9 +60071,9 @@ function vcShowStudyCard(card) {
       tgt.textContent = card.form;
     } else {
       personEl.textContent = '';
-      ctx.textContent = who;
+      ctx.textContent = card.verb.meaning;
       tag.className = 'card-tag en'; tag.textContent = 'ENGLISH';
-      tgt.textContent = card.verb.meaning;
+      tgt.textContent = vcEnConjugate(card.verb.meaning, card.tense, card.persons, card.verb.infinitive);
     }
   }
   document.getElementById('vcCardSentence').textContent = vbSentence(card, mode === 'understanding' ? 'es' : 'en');
