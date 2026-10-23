@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.1</title>
+<title>Flippy — v25.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -649,7 +649,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.1</div>
+    <div class="splash-sub" id="appVersionLine">v25.2</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -1007,18 +1007,49 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="topbar-back" onclick="cdOpenMyDecks()">←</div>
     <div class="topbar-title" id="deckViewTitle">Deck</div>
   </div>
-  <div class="lesson-title-bar">
-    <h1 id="deckViewName" contenteditable="true" spellcheck="false"
-        onblur="cdRenameCurrentDeck(this.textContent)"
-        onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
-        style="outline:none;cursor:text"></h1>
+  <div class="vc-tabs">
+    <button class="vc-tab active" id="cdTabExplore"     onclick="cdSetDetailTab('explore')">Explore</button>
+    <button class="vc-tab"        id="cdTabUnderstand"  onclick="cdSetDetailTab('understanding')">Understand</button>
+    <button class="vc-tab"        id="cdTabSpeak"       onclick="cdSetDetailTab('speaking')">Speak</button>
   </div>
-  <div class="cd-deckview-count" id="deckViewCount">0 cards</div>
-  <div class="cd-deckview-list" id="deckViewList"></div>
-  <div class="cd-deckview-empty" id="deckViewEmpty" style="display:none">No cards in this deck yet — tap + on any card to add one.</div>
-  <div class="study-btn-row" style="padding:1rem 1.25rem calc(1rem + var(--safe-b));flex-shrink:0">
-    <button class="study-btn primary" onclick="cdLaunchStudy('understanding')">Understand</button>
-    <button class="study-btn" onclick="cdLaunchStudy('speaking')">Speak</button>
+
+  <!-- EXPLORE pane: rename, card list, reorder, remove -->
+  <div class="vc-pane" id="cdPaneExplore">
+    <div class="lesson-title-bar">
+      <h1 id="deckViewName" contenteditable="true" spellcheck="false"
+          onblur="cdRenameCurrentDeck(this.textContent)"
+          onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+          style="outline:none;cursor:text"></h1>
+    </div>
+    <div class="cd-deckview-count" id="deckViewCount">0 cards</div>
+    <div class="cd-deckview-list" id="deckViewList"></div>
+    <div class="cd-deckview-empty" id="deckViewEmpty" style="display:none">No cards in this deck yet — tap + on any card to add one.</div>
+  </div>
+
+  <!-- UNDERSTAND pane: one row (this deck) -> the usual stats/New Session/Browse landing -->
+  <div class="vc-pane hidden" id="cdPaneUnderstand">
+    <div class="vc-verb-list">
+      <div class="vc-verb-row" onclick="cdOpenDeckLanding('understanding')">
+        <div class="vc-verb-left">
+          <span class="vc-verb-infinitive" id="cdUnderstandLabel">Deck</span>
+          <span class="vc-verb-meaning" id="cdUnderstandSub">0 cards</span>
+        </div>
+        <span class="vc-verb-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPEAK pane: same, opened in the Speaking direction -->
+  <div class="vc-pane hidden" id="cdPaneSpeak">
+    <div class="vc-verb-list">
+      <div class="vc-verb-row" onclick="cdOpenDeckLanding('speaking')">
+        <div class="vc-verb-left">
+          <span class="vc-verb-infinitive" id="cdSpeakLabel">Deck</span>
+          <span class="vc-verb-meaning" id="cdSpeakSub">0 cards</span>
+        </div>
+        <span class="vc-verb-arrow">›</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -61439,14 +61470,28 @@ function cdDeckMenu(deckId) {
 function openDeckView(deckId) {
   cdCurrentDeckViewId = deckId;
   cdRenderDeckView();
+  cdSetDetailTab('explore');
   showScreen('deckViewScreen');
+}
+function cdSetDetailTab(tab) {
+  document.getElementById('cdTabExplore').classList.toggle('active',    tab === 'explore');
+  document.getElementById('cdTabUnderstand').classList.toggle('active', tab === 'understanding');
+  document.getElementById('cdTabSpeak').classList.toggle('active',      tab === 'speaking');
+  document.getElementById('cdPaneExplore').classList.toggle('hidden',    tab !== 'explore');
+  document.getElementById('cdPaneUnderstand').classList.toggle('hidden', tab !== 'understanding');
+  document.getElementById('cdPaneSpeak').classList.toggle('hidden',     tab !== 'speaking');
 }
 function cdRenderDeckView() {
   const deck = cdDeckById(cdCurrentDeckViewId);
   if (!deck) { cdOpenMyDecks(); return; }
   document.getElementById('deckViewTitle').textContent = deck.name;
   document.getElementById('deckViewName').textContent  = deck.name;
-  document.getElementById('deckViewCount').textContent = `${deck.cardRefs.length} card${deck.cardRefs.length===1?'':'s'}`;
+  const countText = `${deck.cardRefs.length} card${deck.cardRefs.length===1?'':'s'}`;
+  document.getElementById('deckViewCount').textContent = countText;
+  document.getElementById('cdUnderstandLabel').textContent = deck.name;
+  document.getElementById('cdUnderstandSub').textContent   = countText;
+  document.getElementById('cdSpeakLabel').textContent       = deck.name;
+  document.getElementById('cdSpeakSub').textContent         = countText;
   const list  = document.getElementById('deckViewList');
   const empty = document.getElementById('deckViewEmpty');
   const cards = deck.cardRefs.map(id => ({ id, card: resolveCardById(id) })).filter(x => x.card);
@@ -61487,7 +61532,7 @@ function cdRenameCurrentDeck(text) {
   if (!name || !cdCurrentDeckViewId) return;
   cdRenameDeck(cdCurrentDeckViewId, name);
 }
-function cdLaunchStudy(mode) {
+function cdOpenDeckLanding(mode) {
   if (!cdCurrentDeckViewId) return;
   const idx = cdChapterIdxForDeck(cdCurrentDeckViewId);
   if (idx === -1) return;
