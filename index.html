@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.0</title>
+<title>Flippy — v25.1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -548,6 +548,32 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-check-pill { font-family:'Inconsolata',monospace; font-size:0.72rem; border:1px solid var(--border); border-radius:20px; padding:0.3rem 0.75rem; cursor:pointer; background:var(--bg); color:var(--text-mid); transition:all 0.12s; user-select:none; }
 .vc-check-pill.active { background:var(--text-dark); color:var(--card-bg); border-color:var(--text-dark); }
 .vc-apply-btn { margin-top:1.25rem; width:100%; padding:0.7rem; border:none; border-radius:12px; background:var(--text-dark); color:var(--card-bg); font-family:'Inconsolata',monospace; font-size:0.78rem; letter-spacing:0.08em; cursor:pointer; }
+/* ── CUSTOM DECKS ──────────────────────────────────────────────── */
+.subject-card-sub { font-family:'Inconsolata',monospace; font-size:0.62rem; color:var(--text-light); letter-spacing:0.03em; }
+.plus-icon-btn { width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; font-size:1.15rem; font-weight:600; color:#7c6fa0; transition:transform 0.1s; }
+.plus-icon-btn:active { transform:scale(0.9); }
+.cd-overlay { position:fixed; inset:0; background:rgba(26,26,30,0.45); z-index:500; display:flex; align-items:flex-end; }
+.cd-overlay.hidden { display:none; }
+.cd-deck-pick-row { display:flex; align-items:center; gap:0.6rem; padding:0.75rem 0.1rem; border-bottom:1px solid var(--border); cursor:pointer; }
+.cd-deck-pick-row:last-child { border-bottom:none; }
+.cd-deck-pick-check { width:18px; color:#7c6fa0; font-weight:700; flex-shrink:0; text-align:center; }
+.cd-deck-pick-name { flex:1; font-family:'Lora',serif; font-size:0.9rem; color:var(--text-dark); }
+.cd-deck-pick-count { font-family:'Inconsolata',monospace; font-size:0.6rem; color:var(--text-light); flex-shrink:0; }
+.cd-newdeck-row { margin-top:0.5rem; }
+.cd-newdeck-btn { width:100%; padding:0.7rem; border:1px dashed var(--border); border-radius:10px; background:none; color:#7c6fa0; font-family:'Inconsolata',monospace; font-size:0.72rem; letter-spacing:0.05em; cursor:pointer; }
+.cd-newdeck-input-row { display:flex; gap:0.5rem; margin-top:0.5rem; }
+.cd-newdeck-input { flex:1; padding:0.6rem 0.7rem; border:1px solid var(--border); border-radius:10px; font-family:'Lora',serif; font-size:0.9rem; background:var(--bg); color:var(--text-dark); box-sizing:border-box; }
+.cd-empty-decks-note { padding:0.6rem 0; color:var(--text-light); font-family:'Lora',serif; font-size:0.85rem; }
+.cd-deck-menu-btn { border:none; background:none; color:var(--text-light); font-size:1.1rem; cursor:pointer; padding:0 0.3rem; flex-shrink:0; }
+.cd-deckview-count { padding:0 1.25rem 0.5rem; font-family:'Inconsolata',monospace; font-size:0.65rem; color:var(--text-light); }
+.cd-deckview-list { flex:1; overflow-y:auto; }
+.cd-deckview-empty { padding:2.5rem 1.25rem; text-align:center; color:var(--text-light); font-family:'Lora',serif; font-size:0.9rem; }
+.cd-card-row { display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1.25rem; border-bottom:1px solid var(--border); background:var(--card-bg); }
+.cd-card-row.dragging { opacity:0.4; }
+.cd-drag-handle { color:var(--text-light); cursor:grab; font-size:1rem; flex-shrink:0; }
+.cd-card-text { flex:1; font-family:'Lora',serif; font-size:0.9rem; color:var(--text-dark); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cd-card-source { font-family:'Inconsolata',monospace; font-size:0.58rem; color:var(--text-light); flex-shrink:0; }
+.cd-card-remove { border:none; background:none; color:var(--text-light); font-size:0.95rem; cursor:pointer; flex-shrink:0; padding:0.2rem 0.3rem; }
 
 /* Verb detail screen — conjugation table + practice buttons */
 .vc-detail-meta { display:flex; align-items:center; gap:0.6rem; padding:0.85rem 1.25rem 0.6rem; flex-shrink:0; border-bottom:1px solid var(--border); }
@@ -623,7 +649,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.0</div>
+    <div class="splash-sub" id="appVersionLine">v25.1</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -776,6 +802,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="topbar-back" onclick="_deckBack()" title="Back">←</div>
     <button class="hint-btn deck-hint-fill" id="deckHintBtn" onclick="_deckHint()" style="display:none">hint</button>
     <div class="deck-bottom-right">
+      <button class="plus-icon-btn" id="deckPlusBtn" onclick="cdOpenAddOverlay('generic')" title="Add to deck">+</button>
       <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
       <button class="mute-icon-btn mute-btn-deck" id="muteBtnDeck" onclick="toggleAudioMute()" title="Audio">🔊</button>
       <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('cardScreen')">📖</div>
@@ -945,6 +972,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="topbar-back" onclick="closeVerbDeck()" title="Back">←</div>
     <div class="deck-bottom-right">
       <button class="vc-shuffle-btn" onclick="vcShuffle()" title="Shuffle">⇄</button>
+      <button class="plus-icon-btn" id="vcPlusBtn" onclick="cdOpenAddOverlay('verb')" title="Add to deck" style="display:none">+</button>
       <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
       <button class="mute-icon-btn" id="vcMuteBtn" onclick="toggleAudioMute()" title="Audio">🔊</button>
     </div>
@@ -965,6 +993,50 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
       <div class="vc-settings-radios" id="vcDeckDialectRadios"></div>
 
       <button class="vc-apply-btn" onclick="vcApplySettings()">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- CUSTOM DECKS                                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+
+<!-- DECK VIEW SCREEN -->
+<div class="screen hidden" id="deckViewScreen">
+  <div class="topbar">
+    <div class="topbar-back" onclick="cdOpenMyDecks()">←</div>
+    <div class="topbar-title" id="deckViewTitle">Deck</div>
+  </div>
+  <div class="lesson-title-bar">
+    <h1 id="deckViewName" contenteditable="true" spellcheck="false"
+        onblur="cdRenameCurrentDeck(this.textContent)"
+        onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+        style="outline:none;cursor:text"></h1>
+  </div>
+  <div class="cd-deckview-count" id="deckViewCount">0 cards</div>
+  <div class="cd-deckview-list" id="deckViewList"></div>
+  <div class="cd-deckview-empty" id="deckViewEmpty" style="display:none">No cards in this deck yet — tap + on any card to add one.</div>
+  <div class="study-btn-row" style="padding:1rem 1.25rem calc(1rem + var(--safe-b));flex-shrink:0">
+    <button class="study-btn primary" onclick="cdLaunchStudy('understanding')">Understand</button>
+    <button class="study-btn" onclick="cdLaunchStudy('speaking')">Speak</button>
+  </div>
+</div>
+
+<!-- ADD TO DECK OVERLAY -->
+<div class="cd-overlay hidden" id="addToDeckOverlay" onclick="if(event.target===this) cdCloseAddOverlay()">
+  <div class="vc-settings-inner">
+    <div class="vc-settings-title" style="display:flex;align-items:center;justify-content:space-between">
+      <span>Add to deck</span>
+      <span style="cursor:pointer;font-size:1rem" onclick="cdCloseAddOverlay()">✕</span>
+    </div>
+    <div id="addToDeckList"></div>
+    <div class="cd-newdeck-row" id="addToDeckNewRow">
+      <button class="cd-newdeck-btn" onclick="cdShowNewDeckInput()">+ New deck</button>
+    </div>
+    <div class="cd-newdeck-input-row" id="addToDeckNewInputRow" style="display:none">
+      <input type="text" id="addToDeckNewInput" class="cd-newdeck-input" placeholder="Deck name"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); cdConfirmNewDeck();}">
+      <button class="vc-apply-btn" style="margin:0;width:auto;padding:0.6rem 1rem" onclick="cdConfirmNewDeck()">Add</button>
     </div>
   </div>
 </div>
@@ -57108,13 +57180,16 @@ function _srRenderLanding() {
   const prefix = sections[currentSubjectIdx].prefix;
   // srPrefix is set per dialect on sections whose chapter set swaps, so each
   // dialect keeps its own review history. Falls back to prefix everywhere else.
-  const chId   = `${sections[currentSubjectIdx].srPrefix || prefix}${currentLessonIdx + 1}`;
+  // ch.srId is a per-chapter override (Custom Decks use it): a deck's position
+  // in the list can change, so a positional id would scramble its history.
+  const chId   = ch.srId || `${sections[currentSubjectIdx].srPrefix || prefix}${currentLessonIdx + 1}`;
   const isExpressions = prefix === 'EX';
   const isSituations  = prefix === 'SI';
   const isVocab       = prefix === 'V';
-  const isFlatSection = isExpressions || isSituations;
+  const isCustomDeck  = prefix === 'CD';
+  const isFlatSection = isExpressions || isSituations || isCustomDeck;
 
-  // Vocab / flat sections (Expressions, Situations) use no level suffix; Grammar uses srLevel
+  // Vocab / flat sections (Expressions, Situations, Custom Decks) use no level suffix; Grammar uses srLevel
   srLevel = (isVocab || isFlatSection) ? null : (srLevel || 'L1');
   srChapterId = chId;
   srLiveCards = isVocab || isFlatSection ? (ch.cards || []) : _srCardsForLevel(ch, srLevel);
@@ -57202,7 +57277,7 @@ function _srRenderLanding() {
 
 function _srRenderInfo() {
   const _pfx = sections[currentSubjectIdx].prefix;
-  const isExpressions = _pfx === 'EX' || _pfx === 'SI';
+  const isExpressions = _pfx === 'EX' || _pfx === 'SI' || _pfx === 'CD';
   const panel = document.getElementById('studyPanel');
   panel.innerHTML = `
     <div class="sr-info-back" onclick="_srRenderLanding()">← Back</div>
@@ -60007,6 +60082,8 @@ function vbUpdateBar() {
   const R = document.querySelector('#vcSwipeIndicators .swipe-ind-right .swipe-ind-label');
   if (!bar) return;
   if (shuffle) shuffle.style.display = vbSr ? 'none' : '';
+  const vcPlus = document.getElementById('vcPlusBtn');
+  if (vcPlus) vcPlus.style.display = (vbSr && !vbSr.complete) ? '' : 'none';
   const rating = !!vbSr && !vbSr.complete;
   if (L) L.textContent = !rating ? 'Next' : (vcRevealed ? 'Got it' : '');
   if (R) R.textContent = !rating ? 'Prev' : (vcRevealed ? 'Again'  : '');
@@ -60356,7 +60433,7 @@ function buildSplash() {
   grid.innerHTML = '';
 
 
-  const direct = sections.filter(s => !subjectConfig[s.label]?.group);
+  const direct = sections.filter(s => !subjectConfig[s.label]?.group && s.prefix !== 'CD');
   const groups = {};
   sections.forEach((s, i) => {
     const g = subjectConfig[s.label]?.group;
@@ -60389,6 +60466,8 @@ function buildSplash() {
     const sub  = group.items.map(it => it.s.label).join(', ');
     appendSubjectCard(grid, meta.icon, meta.color, group.label, group.items.length + ' subjects', sub, () => openGroup(group));
   });
+
+  cdAppendMyDecksTile(grid);
 }
 
 function appendSubjectCard(grid, icon, color, name, meta, sub, onclick) {
@@ -60887,6 +60966,7 @@ function showScreen(id) {
     else if (id==='vcListScreen')    { s.id==='splashScreen' ? s.classList.add('slide-left') : s.classList.add('hidden'); }
     else if (id==='vcDetailScreen')  { (s.id==='splashScreen'||s.id==='vcListScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
     else if (id==='vcDeckScreen')    { (s.id==='splashScreen'||s.id==='vcListScreen'||s.id==='vcDetailScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
+    else if (id==='deckViewScreen')  { (s.id==='splashScreen'||s.id==='lessonScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
   });
 }
 function goHome()    { showScreen('splashScreen'); }
@@ -61053,11 +61133,374 @@ function shuffle(arr) {
   }
 }
 
+// ══════════════════════════════════════════════════════════════════
+// CUSTOM DECKS — user-built decks, studied like any Grammar/Vocab
+// chapter. A custom deck is a pseudo-chapter (prefix 'CD') fed into
+// the existing SR engine (srChapterId / srLiveCards / _srRenderLanding
+// etc.) rather than a parallel study system — see
+// 00_docs/specs/CUSTOM_DECKS_SPEC.md for the full design.
+// ══════════════════════════════════════════════════════════════════
+const CD_STORE_KEY = `${STORE_PREFIX}custom_decks`;
+let customDecks = [];            // [{id, name, cardRefs:[id,...], created, modified}]
+let customDecksSectionIdx = -1;  // index of the pseudo-section inside `sections`
+let cdCurrentDeckViewId = null;  // deck currently open in Deck View
+let cdDragFromIdx = null;        // drag-reorder source index
+
+function cdLoad() {
+  try { customDecks = JSON.parse(localStorage.getItem(CD_STORE_KEY) || '[]'); }
+  catch (e) { customDecks = []; }
+  if (!Array.isArray(customDecks)) customDecks = [];
+}
+function cdSave() {
+  try { localStorage.setItem(CD_STORE_KEY, JSON.stringify(customDecks)); }
+  catch (e) { /* storage full or blocked — deck list just won't persist */ }
+}
+
+// ── Resolving a card by id, from anywhere in the app ─────────────────
+function vbVerbByInf(inf) {
+  const list = (typeof verbConjugationData !== 'undefined') ? verbConjugationData : [];
+  return list.find(v => v.infinitive === inf);
+}
+// Verb Understand/Speak cards are generated on the fly (see vcBuildStudyDeck) —
+// there's no static object to find by reference, so this rebuilds a
+// flashcard-shaped snapshot straight from the live verb data.
+function vbResolveCardById(id) {
+  if (!id.startsWith('VB_')) return null;
+  const rest = id.slice(3);
+  if (rest.startsWith('INF_')) {
+    const inf = rest.slice(4);
+    const v = vbVerbByInf(inf);
+    if (!v) return null;
+    return { id, en: v.meaning || inf, es: inf, hint: '', audioES: null, audioEN: null };
+  }
+  const us1 = rest.indexOf('_');
+  if (us1 < 0) return null;
+  const tense = rest.slice(0, us1);
+  const after = rest.slice(us1 + 1);
+  const us2 = after.indexOf('_');
+  if (us2 < 0) return null;
+  const inf  = after.slice(0, us2);
+  const tail = after.slice(us2 + 1);
+  const v = vbVerbByInf(inf);
+  if (!v || !v.conjugaciones || !v.conjugaciones[tense]) return null;
+  const conj  = v.conjugaciones[tense];
+  const label = (typeof VC_TENSE_LABELS !== 'undefined' && VC_TENSE_LABELS[tense]) || tense;
+  const en    = `${v.meaning || inf} — ${label}`;
+  if (conj[tail] !== undefined) return { id, en, es: conj[tail], hint: '', audioES: null, audioEN: null };
+  const person = Object.keys(conj).find(p => conj[p] === tail);
+  if (person) return { id, en, es: tail, hint: '', audioES: null, audioEN: null };
+  return null;
+}
+
+// Finds a card anywhere in the static sections (Grammar, Vocabulary,
+// Expressions, Situations, Topics, Dialects) by id, or falls through to
+// the verb resolver. Returns the SAME object instance the source section
+// uses — a reference, not a copy — so edits and dialect text propagate.
+function resolveCardById(id) {
+  if (id.startsWith('VB_')) return vbResolveCardById(id);
+  for (let s = 0; s < sections.length; s++) {
+    const sec = sections[s];
+    if (!sec || sec.prefix === 'CD' || !Array.isArray(sec.chapters)) continue;
+    for (let c = 0; c < sec.chapters.length; c++) {
+      const ch = sec.chapters[c];
+      if (!ch) continue;
+      for (let k = 0; k < _DIALECT_CARD_KEYS.length; k++) {
+        const arr = ch[_DIALECT_CARD_KEYS[k]];
+        if (!Array.isArray(arr)) continue;
+        const found = arr.find(x => x && x.id === id);
+        if (found) return found;
+      }
+    }
+  }
+  return null;
+}
+// A short source label for the Deck View list ("G01", "V3", "EX", "Verbs")
+function cdSourceLabel(id) {
+  if (id.startsWith('VB_')) return 'Verbs';
+  const m = id.match(/^([A-Z]+)(\d+)?_/);
+  return m ? (m[1] + (m[2] || '')) : '';
+}
+function _cdEsc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+// ── The pseudo-section ────────────────────────────────────────────────
+function cdRefreshSection() {
+  let changed = false;
+  customDecks.forEach(deck => {
+    const before = deck.cardRefs.length;
+    deck.cardRefs = deck.cardRefs.filter(id => !!resolveCardById(id));
+    if (deck.cardRefs.length !== before) changed = true;
+  });
+  if (changed) cdSave();
+
+  const chapters = customDecks.map(deck => ({
+    title: deck.name,
+    info: null,
+    conceptCards: [],
+    srId: 'CD_' + deck.id,
+    cards: deck.cardRefs.map(id => resolveCardById(id)).filter(Boolean),
+    _deckId: deck.id,
+  }));
+
+  if (customDecksSectionIdx === -1) {
+    customDecksSectionIdx = sections.length;
+    sections.push({ label: 'My Decks', prefix: 'CD', chapters });
+  } else {
+    sections[customDecksSectionIdx].chapters = chapters;
+  }
+}
+function cdInit() { cdLoad(); cdRefreshSection(); }
+function cdDeckById(id) { return customDecks.find(d => d.id === id); }
+function cdChapterIdxForDeck(id) {
+  return sections[customDecksSectionIdx].chapters.findIndex(c => c._deckId === id);
+}
+
+// ── Deck CRUD ────────────────────────────────────────────────────────
+function cdCreateDeck(name) {
+  name = (name || '').trim();
+  if (!name) return null;
+  const deck = { id: 'cd_' + Date.now(), name, cardRefs: [], created: Date.now(), modified: Date.now() };
+  customDecks.push(deck);
+  cdSave(); cdRefreshSection();
+  return deck;
+}
+function cdRenameDeck(id, name) {
+  name = (name || '').trim();
+  const deck = cdDeckById(id);
+  if (!deck || !name) return;
+  deck.name = name; deck.modified = Date.now();
+  cdSave(); cdRefreshSection();
+}
+function cdDeleteDeck(id) {
+  [`${STORE_PREFIX}sr_comp_CD_${id}`, `${STORE_PREFIX}sr_recall_CD_${id}`,
+   `${STORE_PREFIX}sr_comp_session_CD_${id}`, `${STORE_PREFIX}sr_recall_session_CD_${id}`]
+    .forEach(k => { try { localStorage.removeItem(k); } catch(e){} });
+  customDecks = customDecks.filter(d => d.id !== id);
+  cdSave(); cdRefreshSection();
+}
+function cdAddCardToDeck(deckId, cardId) {
+  const deck = cdDeckById(deckId);
+  if (!deck || deck.cardRefs.includes(cardId)) return false;
+  deck.cardRefs.push(cardId); deck.modified = Date.now();
+  cdSave(); cdRefreshSection();
+  return true;
+}
+function cdRemoveCardFromDeck(deckId, cardId) {
+  const deck = cdDeckById(deckId);
+  if (!deck) return;
+  deck.cardRefs = deck.cardRefs.filter(id => id !== cardId);
+  deck.modified = Date.now();
+  cdSave(); cdRefreshSection();
+}
+function cdDeckHasCard(deckId, cardId) {
+  const deck = cdDeckById(deckId);
+  return !!deck && deck.cardRefs.includes(cardId);
+}
+
+// ── Current card id, wherever the + button was tapped ────────────────
+function _cdCurrentGenericCardId() {
+  if (srInSession) return srQueue[srQueueIdx];
+  if (srBrowseActive) { const c = srLiveCards[cardIdx]; return c ? c.id : null; }
+  return null;
+}
+function _cdCurrentVerbCardId() {
+  if (!vbSr || vbSr.complete) return null;
+  return vbSr.queue[vbSr.idx];
+}
+
+// ── Add-to-Deck overlay ────────────────────────────────────────────────
+function cdOpenAddOverlay(context) {
+  const cardId = context === 'verb' ? _cdCurrentVerbCardId() : _cdCurrentGenericCardId();
+  if (!cardId) return;
+  const overlay = document.getElementById('addToDeckOverlay');
+  overlay.dataset.cardId = cardId;
+  document.getElementById('addToDeckNewInputRow').style.display = 'none';
+  document.getElementById('addToDeckNewRow').style.display = '';
+  cdRenderAddOverlayList(cardId);
+  overlay.classList.remove('hidden');
+}
+function cdRenderAddOverlayList(cardId) {
+  const list = document.getElementById('addToDeckList');
+  if (!customDecks.length) {
+    list.innerHTML = '<div class="cd-empty-decks-note">No decks yet — make one below.</div>';
+    return;
+  }
+  list.innerHTML = customDecks.map(d => {
+    const inDeck = d.cardRefs.includes(cardId);
+    return `<div class="cd-deck-pick-row" onclick="cdToggleCardInDeck('${d.id}')">
+      <span class="cd-deck-pick-check">${inDeck ? '✓' : ''}</span>
+      <span class="cd-deck-pick-name">${_cdEsc(d.name)}</span>
+      <span class="cd-deck-pick-count">${d.cardRefs.length} card${d.cardRefs.length===1?'':'s'}</span>
+    </div>`;
+  }).join('');
+}
+function cdToggleCardInDeck(deckId) {
+  const cardId = document.getElementById('addToDeckOverlay').dataset.cardId;
+  if (!cardId) return;
+  if (cdDeckHasCard(deckId, cardId)) cdRemoveCardFromDeck(deckId, cardId);
+  else cdAddCardToDeck(deckId, cardId);
+  cdRenderAddOverlayList(cardId);
+  setTimeout(cdCloseAddOverlay, 260);
+}
+function cdShowNewDeckInput() {
+  document.getElementById('addToDeckNewRow').style.display = 'none';
+  const row = document.getElementById('addToDeckNewInputRow');
+  row.style.display = 'flex';
+  const input = document.getElementById('addToDeckNewInput');
+  input.value = ''; input.focus();
+}
+function cdConfirmNewDeck() {
+  const input = document.getElementById('addToDeckNewInput');
+  const name = input.value.trim();
+  if (!name) return;
+  const deck = cdCreateDeck(name);
+  const cardId = document.getElementById('addToDeckOverlay').dataset.cardId;
+  if (deck && cardId) cdAddCardToDeck(deck.id, cardId);
+  cdCloseAddOverlay();
+}
+function cdCloseAddOverlay() {
+  document.getElementById('addToDeckOverlay').classList.add('hidden');
+}
+
+// ── My Decks — splash tile ────────────────────────────────────────────
+function cdAppendMyDecksTile(grid) {
+  const n = customDecks.length;
+  const sub = n === 0 ? 'No decks yet' : (n + (n===1 ? ' deck' : ' decks'));
+  const card = document.createElement('div');
+  card.className = 'subject-card';
+  card.innerHTML = `<div class="subject-card-accent" style="background:#7c6fa0"></div>
+    <div class="subject-card-icon">🗂</div>
+    <div class="subject-card-name">My Decks</div>
+    <div class="subject-card-sub">${sub}</div>`;
+  card.onclick = cdOpenMyDecks;
+  grid.appendChild(card);
+}
+
+// ── My Decks — list screen (reuses #lessonScreen's chrome) ────────────
+function cdOpenMyDecks() {
+  document.getElementById('lessonScreenTitle').textContent = 'My Decks';
+  document.getElementById('lessonBack').onclick = goHome;
+  document.getElementById('grammarTabsBar').style.display = 'none';
+  cdRenderMyDecksList();
+  showScreen('lessonScreen');
+}
+function cdRenderMyDecksList() {
+  const list = document.getElementById('lessonList');
+  list.innerHTML = '';
+  customDecks.forEach(deck => {
+    const div = document.createElement('div');
+    div.className = 'lesson-item';
+    div.innerHTML = `<span class="lesson-name">${_cdEsc(deck.name)}</span>
+      <span class="lesson-count">${deck.cardRefs.length} card${deck.cardRefs.length===1?'':'s'}</span>
+      <button class="cd-deck-menu-btn" title="Rename or delete">⋮</button>
+      <span class="lesson-arrow">›</span>`;
+    div.querySelector('.cd-deck-menu-btn').onclick = (e) => { e.stopPropagation(); cdDeckMenu(deck.id); };
+    div.onclick = () => openDeckView(deck.id);
+    list.appendChild(div);
+  });
+  if (!customDecks.length) {
+    const empty = document.createElement('div');
+    empty.className = 'cd-empty-decks-note';
+    empty.style.padding = '0.9rem 1.25rem';
+    empty.textContent = 'No decks yet. Tap + on any card to start one, or add one below.';
+    list.appendChild(empty);
+  }
+  const newRow = document.createElement('div');
+  newRow.className = 'cd-newdeck-row';
+  newRow.style.padding = '0.9rem 1.25rem';
+  newRow.innerHTML = `<button class="cd-newdeck-btn">+ New Deck</button>`;
+  newRow.querySelector('button').onclick = cdNewDeckFromList;
+  list.appendChild(newRow);
+}
+function cdNewDeckFromList() {
+  const name = prompt('Name this deck:');
+  if (name && name.trim()) { cdCreateDeck(name); cdRenderMyDecksList(); }
+}
+function cdDeckMenu(deckId) {
+  const deck = cdDeckById(deckId);
+  if (!deck) return;
+  const choice = prompt('Rename deck (or type DELETE to remove it):', deck.name);
+  if (choice === null) return;
+  if (choice.trim().toUpperCase() === 'DELETE') {
+    if (confirm(`Delete "${deck.name}"? This removes the deck and its study history. Cards stay in their original sections.`)) {
+      cdDeleteDeck(deckId);
+      cdRenderMyDecksList();
+    }
+  } else if (choice.trim()) {
+    cdRenameDeck(deckId, choice.trim());
+    cdRenderMyDecksList();
+  }
+}
+
+// ── Deck View ──────────────────────────────────────────────────────────
+function openDeckView(deckId) {
+  cdCurrentDeckViewId = deckId;
+  cdRenderDeckView();
+  showScreen('deckViewScreen');
+}
+function cdRenderDeckView() {
+  const deck = cdDeckById(cdCurrentDeckViewId);
+  if (!deck) { cdOpenMyDecks(); return; }
+  document.getElementById('deckViewTitle').textContent = deck.name;
+  document.getElementById('deckViewName').textContent  = deck.name;
+  document.getElementById('deckViewCount').textContent = `${deck.cardRefs.length} card${deck.cardRefs.length===1?'':'s'}`;
+  const list  = document.getElementById('deckViewList');
+  const empty = document.getElementById('deckViewEmpty');
+  const cards = deck.cardRefs.map(id => ({ id, card: resolveCardById(id) })).filter(x => x.card);
+  list.innerHTML = '';
+  empty.style.display = cards.length ? 'none' : '';
+  cards.forEach(({ id, card }) => {
+    const row = document.createElement('div');
+    row.className = 'cd-card-row';
+    row.draggable = true;
+    row.dataset.id = id;
+    const text = (card.en || card.es || '').slice(0, 60);
+    row.innerHTML = `<span class="cd-drag-handle">≡</span>
+      <span class="cd-card-text">${_cdEsc(text)}</span>
+      <span class="cd-card-source">${cdSourceLabel(id)}</span>
+      <button class="cd-card-remove" title="Remove from deck">✕</button>`;
+    row.querySelector('.cd-card-remove').onclick = () => {
+      cdRemoveCardFromDeck(deck.id, id);
+      cdRenderDeckView();
+    };
+    row.addEventListener('dragstart', () => { cdDragFromIdx = deck.cardRefs.indexOf(id); row.classList.add('dragging'); });
+    row.addEventListener('dragend',   () => { row.classList.remove('dragging'); });
+    row.addEventListener('dragover',  e => e.preventDefault());
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      const toIdx = deck.cardRefs.indexOf(id);
+      if (cdDragFromIdx === null || toIdx === -1 || cdDragFromIdx === toIdx) return;
+      const [moved] = deck.cardRefs.splice(cdDragFromIdx, 1);
+      deck.cardRefs.splice(toIdx, 0, moved);
+      deck.modified = Date.now();
+      cdSave(); cdRefreshSection();
+      cdRenderDeckView();
+    });
+    list.appendChild(row);
+  });
+}
+function cdRenameCurrentDeck(text) {
+  const name = (text || '').trim();
+  if (!name || !cdCurrentDeckViewId) return;
+  cdRenameDeck(cdCurrentDeckViewId, name);
+}
+function cdLaunchStudy(mode) {
+  if (!cdCurrentDeckViewId) return;
+  const idx = cdChapterIdxForDeck(cdCurrentDeckViewId);
+  if (idx === -1) return;
+  openLesson(customDecksSectionIdx, idx);
+  if (mode === 'speaking') showTab('speaking');
+}
+
 // ── INIT ──
 // Restore audio mute preference
 try { audioMuted = localStorage.getItem('audioMuted') === '1'; } catch(e) {}
 _updateMuteBtn();
 dialectApply();          // resolve every card's Spanish before the first render
 updateDialectChrome();
+cdInit();                 // build the Custom Decks pseudo-section before the splash renders its tile
 buildSplash();
 </script>
