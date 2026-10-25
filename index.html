@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.4</title>
+<title>Flippy — v25.5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -217,6 +217,8 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 
 /* ── DICTIONARY SCREEN ── */
 .dict-icon-btn { width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; font-size:1rem; color:var(--text-dark); transition:all 0.15s; }
+.home-icon-btn { width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; font-size:1rem; color:var(--text-dark); transition:all 0.15s; }
+.home-icon-btn:active, .dict-icon-btn:active { transform:scale(0.92); }
 .dict-icon-btn:active { transform:scale(0.92); }
 .speed-icon-btn { width:36px; height:40px; border-radius:10px; border:1px solid var(--border); background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; color:var(--text-dark); gap:1px; transition:transform 0.1s; padding:0; }
 .speed-icon-btn:active { transform:scale(0.92); }
@@ -352,7 +354,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .dialect-row-tick { font-family:'Inconsolata',monospace; font-size:0.8rem; color:var(--text-dark); flex-shrink:0; width:1rem; text-align:right; }
 
 /* ── SETTINGS ── */
-.splash-settings-btn { position:fixed; bottom:calc(1.1rem + var(--safe-b)); right:1.1rem; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--card-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-mid); transition:transform 0.1s; z-index:50; }
+.splash-settings-btn { position:absolute; top:1.1rem; right:1.1rem; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--card-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-mid); transition:transform 0.1s; z-index:10; }
 .splash-settings-btn:active { transform:scale(0.92); }
 #settingsScreen { overflow-y:auto; }
 .settings-section { padding:1.25rem; }
@@ -659,7 +661,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.4</div>
+    <div class="splash-sub" id="appVersionLine">v25.5</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -690,6 +692,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div id="structuredPanel" style="display:none"></div>
   <div class="menu-bottom-bar">
     <div class="topbar-back" id="lessonBack">←</div>
+    <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
     <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('lessonScreen')">📖</div>
     <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
   </div>
@@ -807,6 +810,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div class="deck-bottom-bar active" id="deckBottomBar">
     <div class="deck-bottom-left">
       <div class="topbar-back" onclick="_deckBack()" title="Back">←</div>
+      <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
       <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('cardScreen')">📖</div>
       <button class="hint-btn" id="deckHintBtn" onclick="_deckHint()" style="display:none">hint</button>
       <button class="theory-icon-btn" id="deckTheoryBtn" onclick="_openTheoryOverlay()" title="Theory" style="display:none">ⓘ</button>
@@ -817,12 +821,12 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     </div>
   </div>
 
-  <!-- Theory peek overlay (shown over the deck during Understanding/Speaking) -->
-  <div class="theory-overlay" id="theoryOverlay" onclick="_closeTheoryOverlay()">
-    <span class="theory-overlay-hint">tap anywhere to close</span>
-    <div class="info-panel active" id="theoryOverlayContent" style="padding:0;display:block"></div>
-  </div>
+</div>
 
+<!-- Theory peek overlay — global, shared by the Grammar deck and the Verb Conjugation deck -->
+<div class="theory-overlay" id="theoryOverlay" onclick="_closeTheoryOverlay()">
+  <span class="theory-overlay-hint">tap anywhere to close</span>
+  <div class="info-panel active" id="theoryOverlayContent" style="padding:0;display:block"></div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════ -->
@@ -853,8 +857,6 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <!-- CONJUGATIONS pane: one list of tenses, each opens its own Theory/Understanding/Speaking screen -->
   <div class="vc-pane hidden" id="vcPaneStudy">
     <div class="vc-study-head">
-      <div class="vc-settings-section-label" style="margin-top:0">Verb sets</div>
-      <div class="vc-sets" id="vcSetPills"></div>
       <div class="vc-study-hint" id="vcStudyHint"></div>
     </div>
     <div class="vc-verb-list" id="vcStudyList"></div>
@@ -882,6 +884,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   </div>
   <div class="menu-bottom-bar">
     <div class="topbar-back" onclick="closeVerbConjugator()">←</div>
+    <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
     <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcListScreen')">📖</div>
   </div>
 </div>
@@ -906,6 +909,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   </div>
   <div class="menu-bottom-bar">
     <div class="topbar-back" onclick="closeVerbDetail()">←</div>
+    <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
     <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcDetailScreen')">📖</div>
   </div>
 
@@ -942,6 +946,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div class="vc-pane hidden" id="vcTensePracticePanel" style="padding:1.25rem;overflow-y:auto"></div>
   <div class="menu-bottom-bar">
     <div class="topbar-back" onclick="closeVcTenseScreen()">←</div>
+    <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
     <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcTenseScreen')">📖</div>
   </div>
 </div>
@@ -1000,7 +1005,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div class="deck-bottom-bar active" id="vcBottomBar">
     <div class="deck-bottom-left">
       <div class="topbar-back" onclick="closeVerbDeck()" title="Back">←</div>
+      <div class="home-icon-btn" title="Home" onclick="_goHomeFromAnywhere()">⌂</div>
       <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcDeckScreen')">📖</div>
+      <button class="theory-icon-btn" id="vcDeckTheoryBtn" onclick="_openVcTheoryOverlay()" title="Theory" style="display:none">ⓘ</button>
     </div>
     <div class="deck-bottom-right">
       <button class="vc-shuffle-btn" onclick="vcShuffle()" title="Shuffle">⇄</button>
@@ -57947,11 +57954,17 @@ function _deckBack() {
 }
 
 // Hint button in deck bottom bar
+function _showTheoryOverlayHTML(html) {
+  document.getElementById('theoryOverlayContent').innerHTML = html;
+  document.getElementById('theoryOverlay').classList.add('open');
+}
 function _openTheoryOverlay() {
   const src = document.getElementById('infoPanelContent');
-  if (!src) return;
-  document.getElementById('theoryOverlayContent').innerHTML = src.innerHTML;
-  document.getElementById('theoryOverlay').classList.add('open');
+  if (src) _showTheoryOverlayHTML(src.innerHTML);
+}
+function _openVcTheoryOverlay() {
+  if (!vcCurrentTenseKind) return;
+  _showTheoryOverlayHTML(_vcTenseTheoryHTML(vcCurrentTenseKind));
 }
 function _closeTheoryOverlay() {
   document.getElementById('theoryOverlay').classList.remove('open');
@@ -59793,7 +59806,7 @@ function vcSetTab(tab) {
 
 function vcRefreshVerbScreens() {
   if (vcTab === 'explore') vcRenderVerbList(document.getElementById('vcSearchInput').value.trim());
-  else { vcRenderSetPills(); vcRenderStudyList(); }
+  else { vcRenderStudyList(); }
 }
 
 function vcToggleExploreFlip() {
@@ -59851,30 +59864,25 @@ function vcVerbsInSets() {
   return verbConjugationData.filter(v => vcSets.includes(v.freq || 2));
 }
 
-function vcRenderSetPills() {
-  const el = document.getElementById('vcSetPills');
-  el.innerHTML = '';
-  VC_SET_DEFS.forEach(def => {
+function _vcSetPillsHTML() {
+  const pills = VC_SET_DEFS.map(def => {
     const n = (typeof verbConjugationData === 'undefined') ? 0
             : verbConjugationData.filter(v => (v.freq || 2) === def.key).length;
-    const pill = document.createElement('span');
-    pill.className = 'vc-check-pill' + (vcSets.includes(def.key) ? ' active' : '');
-    pill.textContent = `${def.label} · ${n}`;
-    pill.onclick = () => {
-      if (vcSets.includes(def.key)) {
-        if (vcSets.length === 1) return;                  // always keep one set on
-        vcSets = vcSets.filter(k => k !== def.key);
-      } else {
-        vcSets = vcSets.concat(def.key).sort();
-      }
-      try { localStorage.setItem(VC_SETS_KEY, JSON.stringify(vcSets)); } catch {}
-      vcRenderSetPills();
-      vcRenderStudyList();
-    };
-    el.appendChild(pill);
-  });
+    const active = vcSets.includes(def.key) ? ' active' : '';
+    return `<span class="vc-check-pill${active}" onclick="vcTogglePracticeSet(${def.key})">${def.label} · ${n}</span>`;
+  }).join('');
+  return `<div class="vc-settings-section-label" style="margin-top:0">Verb sets</div><div class="vc-sets">${pills}</div>`;
 }
-
+function vcTogglePracticeSet(key) {
+  if (vcSets.includes(key)) {
+    if (vcSets.length === 1) return;                  // always keep one set on
+    vcSets = vcSets.filter(k => k !== key);
+  } else {
+    vcSets = vcSets.concat(key).sort();
+  }
+  try { localStorage.setItem(VC_SETS_KEY, JSON.stringify(vcSets)); } catch {}
+  if (vcCurrentTenseKind) vbOpenLanding(vcCurrentTenseKind);   // re-render the Understanding/Speaking tab with new stats
+}
 function vcPersonsShort(persons) {
   return persons.map(p => (VC_PERSON_LABELS[p] || p).replace(/ \/ /g, '/')).join(' · ');
 }
@@ -60209,6 +60217,7 @@ function vbOpenLanding(kind) {
   const st = vbDeckStats(kind);
   const resume = st.left > 0;
   target.innerHTML = `
+    ${_vcSetPillsHTML()}
     <div class="vc-landing-stats">
       <span><strong>${st.due}</strong> due</span>
       <span><strong>${st.missed}</strong> missed</span>
@@ -60250,6 +60259,7 @@ function vbStartSession(kind, how) {
   vbSr = { kind, mode, cid, deck, cardMap, queue, idx,
            ratings:[0,0,0,0,0], preConf: Math.round(getChapterConfidence(deck)), complete:false };
   vcStudyActive  = true;
+  document.getElementById('vcDeckTheoryBtn').style.display = '';
   vcDeck         = queue.map(id => cardMap[id]);
   vcCardIndex    = idx;
   vcRevealed     = false;
@@ -60339,6 +60349,7 @@ function vcOpenBrowseDeck(kind) {
   if (!deck.length) return;
   vbSr           = null;
   vcStudyActive  = true;
+  document.getElementById('vcDeckTheoryBtn').style.display = '';
   vcDeck         = deck;
   vcCardIndex    = 0;
   vcRevealed     = false;
@@ -60499,6 +60510,7 @@ function openVerbDeck(verbIndex, direction) {
   if (!vcSettings) vcSettings = vcLoadSettings();
   vcCurrentVerbIndex = verbIndex;
   vcStudyActive = false;
+  document.getElementById('vcDeckTheoryBtn').style.display = 'none';
   vbSr = null; vbUpdateBar();
   if (direction) vcPracticeDirection = direction;
   const verb = verbConjugationData[verbIndex];
@@ -61222,6 +61234,12 @@ function showScreen(id) {
   });
 }
 function goHome()    { cdClearLocation(); showScreen('splashScreen'); }
+// Used by every bottom-bar home button: saves/cleans up whatever is active first.
+function _goHomeFromAnywhere() {
+  if (srBrowseActive || srInSession) goLessons();
+  if (vcBrowseActive) closeVerbDeck();
+  goHome();
+}
 function goLessons() {
   if (srBrowseActive) { srCloseBrowse(); return; }
   if (srInSession)    { srBackToLanding(); return; }
