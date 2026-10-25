@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.3</title>
+<title>Flippy — v25.4</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -61,7 +61,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .lesson-list { flex:1; overflow-y:auto; padding:0.5rem 0 calc(var(--safe-b) + 1rem); }
 .lesson-item { display:flex; align-items:center; padding:0.9rem 1.25rem; border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.1s; gap:0.75rem; }
 .lesson-item:active { background:rgba(0,0,0,0.03); }
-.lesson-num  { font-size:0.6rem; color:var(--text-light); min-width:28px; letter-spacing:0.06em; font-family:'Inconsolata',monospace; }
+.lesson-num  { font-size:0.6rem; color:var(--terracotta); font-weight:700; min-width:28px; letter-spacing:0.06em; font-family:'Inconsolata',monospace; }
 .lesson-name { font-family:'Lora',serif; font-size:0.95rem; color:var(--text-dark); flex:1; }
 .lesson-count{ font-size:0.6rem; color:var(--text-light); letter-spacing:0.04em; }
 .lesson-arrow{ font-size:0.8rem; color:var(--text-light); }
@@ -72,9 +72,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 /* Tabs */
 .lesson-title-bar { padding:0.9rem 1.25rem 0.7rem; background:var(--card-bg); border-bottom:1px solid var(--border); flex-shrink:0; }
 .lesson-title-bar h1 { font-family:'Lora',serif; font-weight:600; font-size:1.25rem; color:var(--text-dark); line-height:1.2; }
-.chapter-tabs { display:flex; flex-shrink:0; border-bottom:1px solid var(--border); }
-.chapter-tab { flex:1; padding:0.6rem; border:none; font-family:'Inconsolata',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.15s; background:var(--bg); color:var(--text-light); }
-.chapter-tab.active { background:var(--text-dark); color:var(--card-bg); }
+.chapter-tabs { display:flex; flex-shrink:0; border-top:2px solid var(--terracotta); border-bottom:2px solid var(--terracotta); }
+.chapter-tab { flex:1; padding:0.6rem; border:none; font-family:'Inconsolata',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.15s; background:var(--bg); color:var(--terracotta); }
+.chapter-tab.active { background:var(--text-dark); color:var(--terracotta); }
 
 /* Progress */
 .progress-area { padding:0.5rem 1.25rem 0.4rem; background:var(--card-bg); border-bottom:1px solid var(--border); flex-shrink:0; }
@@ -198,7 +198,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .bottom-bar { height:calc(var(--bottombar-h) + var(--safe-b)); padding-bottom:var(--safe-b); flex-shrink:0; display:flex; align-items:center; justify-content:space-around; padding-left:1.25rem; padding-right:1.25rem; background:var(--card-bg); border-top:1px solid var(--border); gap:0.6rem; }
 .nav-btn  { width:48px; height:48px; border-radius:50%; border:1px solid var(--border); background:var(--bg); color:var(--text-dark); font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.1s; flex-shrink:0; }
 .nav-btn:active { transform:scale(0.92); }
-.hint-btn { width:48px; height:48px; border-radius:50%; border:1px solid var(--border); background:var(--bg); color:var(--text-mid); font-family:'Inconsolata',monospace; font-size:0.62rem; letter-spacing:0.04em; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.1s; flex-shrink:0; }
+.hint-btn { width:48px; height:40px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text-mid); font-family:'Inconsolata',monospace; font-size:0.62rem; letter-spacing:0.04em; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:transform 0.1s; flex-shrink:0; }
 .hint-btn.active  { background:var(--accent); color:#fff; border-color:var(--accent); }
 .hint-btn:active  { transform:scale(0.92); }
 
@@ -264,7 +264,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .sr-metre { font-family:'Inconsolata',monospace; font-size:0.62rem; letter-spacing:0.02em; }
 .sr-metre-dash { font-family:'Inconsolata',monospace; font-size:0.62rem; color:var(--text-light); }
 .lesson-sr-badges { display:flex; align-items:center; gap:0.5rem; flex-shrink:0; }
-.sr-level-badge { font-family:'Inconsolata',monospace; font-size:0.54rem; letter-spacing:0.06em; padding:0.12rem 0.35rem; border-radius:4px; background:rgba(0,0,0,0.06); color:var(--text-light); }
+.sr-level-badge { font-family:'Inconsolata',monospace; font-size:0.54rem; letter-spacing:0.06em; padding:0.12rem 0.35rem; border-radius:4px; background:rgba(196,98,45,0.12); color:var(--terracotta); font-weight:600; }
 /* Vertical charge-bar (chapter list) */
 .sr-chargebar { display:inline-flex; align-items:center; gap:3px; }
 .sr-chargebar-track { width:5px; height:18px; background:var(--border); border-radius:3px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; flex-shrink:0; }
@@ -352,7 +352,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .dialect-row-tick { font-family:'Inconsolata',monospace; font-size:0.8rem; color:var(--text-dark); flex-shrink:0; width:1rem; text-align:right; }
 
 /* ── SETTINGS ── */
-.splash-settings-btn { position:absolute; top:1.1rem; right:1.1rem; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--card-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-mid); transition:transform 0.1s; }
+.splash-settings-btn { position:fixed; bottom:calc(1.1rem + var(--safe-b)); right:1.1rem; width:36px; height:36px; border-radius:10px; border:1px solid var(--border); background:var(--card-bg); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1rem; color:var(--text-mid); transition:transform 0.1s; z-index:50; }
 .splash-settings-btn:active { transform:scale(0.92); }
 #settingsScreen { overflow-y:auto; }
 .settings-section { padding:1.25rem; }
@@ -445,7 +445,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .sl-deck-item:active { background:rgba(0,0,0,0.03); }
 .sl-deck-item.disabled { opacity:0.4; cursor:default; pointer-events:none; }
 .sl-deck-name { font-family:'Lora',serif; font-size:0.9rem; color:var(--text-dark); flex:1; }
-.sl-level-badge-sl { font-family:'Inconsolata',monospace; font-size:0.54rem; letter-spacing:0.06em; padding:0.12rem 0.35rem; border-radius:4px; background:rgba(0,0,0,0.06); color:var(--text-light); flex-shrink:0; }
+.sl-level-badge-sl { font-family:'Inconsolata',monospace; font-size:0.54rem; letter-spacing:0.06em; padding:0.12rem 0.35rem; border-radius:4px; background:rgba(196,98,45,0.12); color:var(--terracotta); font-weight:600; flex-shrink:0; }
 .sl-deck-metre { font-family:'Inconsolata',monospace; font-size:0.6rem; color:var(--text-light); flex-shrink:0; min-width:32px; text-align:right; }
 .sl-deck-metres { display:flex; align-items:center; gap:0.65rem; flex-shrink:0; }
 .sl-deck-metre-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
@@ -472,9 +472,16 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 
 /* ── DECK BOTTOM BAR ── */
 .deck-bottom-bar { flex-shrink:0; display:none; align-items:center; justify-content:space-between; padding:0.55rem 1rem calc(0.55rem + env(safe-area-inset-bottom,0px)); background:var(--card-bg); border-top:1px solid var(--border); gap:0.5rem; }
+.menu-bottom-bar { flex-shrink:0; display:flex; align-items:center; justify-content:flex-start; gap:0.5rem; padding:0.55rem 1rem calc(0.55rem + env(safe-area-inset-bottom,0px)); background:var(--card-bg); border-top:1px solid var(--border); }
 .deck-bottom-bar.active { display:flex; }
 .deck-bottom-right { display:flex; align-items:center; gap:0.4rem; flex-shrink:0; }
-.deck-hint-fill { flex:1; margin:0 0.5rem; }
+.deck-bottom-left { display:flex; align-items:center; gap:0.4rem; flex-shrink:0; }
+.theory-icon-btn { width:36px; height:36px; border-radius:10px; border:1px solid var(--terracotta); background:var(--bg); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; font-size:1.05rem; color:var(--terracotta); transition:transform 0.1s; }
+.theory-icon-btn:active { transform:scale(0.92); }
+.speed-icon-btn.disabled, .mute-icon-btn.disabled { opacity:0.32; pointer-events:none; }
+.theory-overlay { position:fixed; inset:0; background:var(--bg); z-index:300; display:none; flex-direction:column; overflow-y:auto; padding:2.6rem 1.25rem calc(2rem + var(--safe-b)); cursor:pointer; }
+.theory-overlay.open { display:flex; }
+.theory-overlay-hint { position:absolute; top:0.9rem; right:1.1rem; font-size:0.56rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-light); font-family:'Inconsolata',monospace; }
 
 /* ── BROWSE PROGRESS (slim bar below card) ── */
 .browse-progress-bar { flex-shrink:0; height:3px; background:var(--border); display:none; }
@@ -599,9 +606,9 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .vc-practice-speaking { background:var(--text-dark); color:var(--card-bg); }
 
 /* Verbs: Explore / Understand / Speak tabs */
-.vc-tabs { display:flex; flex-shrink:0; background:var(--card-bg); border-bottom:1px solid var(--border); }
-.vc-tab { flex:1; padding:0.7rem 0.4rem; border:none; border-bottom:2px solid transparent; background:transparent; font-family:'Inconsolata',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light); cursor:pointer; }
-.vc-tab.active { color:var(--text-dark); border-bottom-color:var(--accent); }
+.vc-tabs { display:flex; flex-shrink:0; background:var(--card-bg); border-top:2px solid var(--terracotta); border-bottom:2px solid var(--terracotta); }
+.vc-tab { flex:1; padding:0.7rem 0.4rem; border:none; border-bottom:2px solid transparent; background:transparent; font-family:'Inconsolata',monospace; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--terracotta); cursor:pointer; }
+.vc-tab.active { color:var(--terracotta); border-bottom-color:var(--terracotta); font-weight:600; }
 .vc-pane { flex:1; min-height:0; display:flex; flex-direction:column; }
 .vc-pane.hidden { display:none; }
 .vc-pane .vc-verb-list { min-height:0; }
@@ -652,7 +659,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.3</div>
+    <div class="splash-sub" id="appVersionLine">v25.4</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -671,10 +678,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <!-- LESSON LIST -->
 <div class="screen hidden" id="lessonScreen">
   <div class="topbar">
-    <div class="topbar-back" id="lessonBack">←</div>
-    <div class="topbar-title" id="lessonScreenTitle">Grammar</div>
-    <div class="dict-icon-btn" style="margin-left:auto" title="Dictionary" onclick="openDictionaryFrom('lessonScreen')">📖</div>
-    <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
+    <div class="topbar-title" id="lessonScreenTitle" style="text-align:left">Grammar</div>
   </div>
   <!-- Top-level tabs — Grammar only: Explore | Structured Learning -->
   <div id="grammarTabsBar" class="grammar-tabs-bar" style="display:none">
@@ -684,17 +688,15 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div class="lesson-list" id="lessonList"></div>
   <!-- Structured Learning panel (Grammar only) -->
   <div id="structuredPanel" style="display:none"></div>
+  <div class="menu-bottom-bar">
+    <div class="topbar-back" id="lessonBack">←</div>
+    <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('lessonScreen')">📖</div>
+    <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
+  </div>
 </div>
 
 <!-- CARD SCREEN -->
 <div class="screen hidden" id="cardScreen">
-  <div class="topbar" id="cardTopbar">
-    <div class="topbar-back" onclick="goLessons()">←</div>
-    <div class="dict-icon-btn" style="margin-left:auto" title="Dictionary" onclick="openDictionaryFrom('cardScreen')">📖</div>
-    <button class="mute-icon-btn" id="muteBtn" onclick="toggleAudioMute()" title="Audio">🔊</button>
-    <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
-  </div>
-
   <div class="lesson-title-bar" id="lessonTitleBar">
     <h1 id="lessonTitleHeading">Lesson</h1>
   </div>
@@ -802,14 +804,23 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   </div>
 
   <!-- Deck bottom bar (shown during any active deck: browse or SR) -->
-  <div class="deck-bottom-bar" id="deckBottomBar">
-    <div class="topbar-back" onclick="_deckBack()" title="Back">←</div>
-    <button class="hint-btn deck-hint-fill" id="deckHintBtn" onclick="_deckHint()" style="display:none">hint</button>
-    <div class="deck-bottom-right">
-      <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
-      <button class="mute-icon-btn mute-btn-deck" id="muteBtnDeck" onclick="toggleAudioMute()" title="Audio">🔊</button>
+  <div class="deck-bottom-bar active" id="deckBottomBar">
+    <div class="deck-bottom-left">
+      <div class="topbar-back" onclick="_deckBack()" title="Back">←</div>
       <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('cardScreen')">📖</div>
+      <button class="hint-btn" id="deckHintBtn" onclick="_deckHint()" style="display:none">hint</button>
+      <button class="theory-icon-btn" id="deckTheoryBtn" onclick="_openTheoryOverlay()" title="Theory" style="display:none">ⓘ</button>
     </div>
+    <div class="deck-bottom-right">
+      <button class="speed-icon-btn" id="deckSpeedBtn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
+      <button class="mute-icon-btn mute-btn-deck" id="muteBtnDeck" onclick="toggleAudioMute()" title="Audio">🔊</button>
+    </div>
+  </div>
+
+  <!-- Theory peek overlay (shown over the deck during Understanding/Speaking) -->
+  <div class="theory-overlay" id="theoryOverlay" onclick="_closeTheoryOverlay()">
+    <span class="theory-overlay-hint">tap anywhere to close</span>
+    <div class="info-panel active" id="theoryOverlayContent" style="padding:0;display:block"></div>
   </div>
 
 </div>
@@ -821,15 +832,12 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <!-- VC VERB LIST SCREEN -->
 <div class="screen hidden" id="vcListScreen">
   <div class="topbar">
-    <div class="topbar-back" onclick="closeVerbConjugator()">←</div>
-    <div class="topbar-title">Verbs</div>
-    <div style="margin-left:auto"></div>
+    <div class="topbar-title" style="text-align:left">Verbs</div>
     <button class="vc-gear-btn" onclick="vcToggleSettings()" title="Settings">⚙</button>
   </div>
   <div class="vc-tabs">
-    <button class="vc-tab active" id="vcTabExplore"    onclick="vcSetTab('explore')">Explore</button>
-    <button class="vc-tab"        id="vcTabUnderstand" onclick="vcSetTab('understanding')">Understand</button>
-    <button class="vc-tab"        id="vcTabSpeak"      onclick="vcSetTab('speaking')">Speak</button>
+    <button class="vc-tab active" id="vcTabExplore"      onclick="vcSetTab('explore')">Explore</button>
+    <button class="vc-tab"        id="vcTabConjugations" onclick="vcSetTab('conjugations')">Conjugations</button>
   </div>
 
   <!-- EXPLORE pane -->
@@ -842,7 +850,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
     <div class="vc-verb-list" id="vcVerbList"></div>
   </div>
 
-  <!-- UNDERSTAND / SPEAK pane (shared; mode follows the active tab) -->
+  <!-- CONJUGATIONS pane: one list of tenses, each opens its own Theory/Understanding/Speaking screen -->
   <div class="vc-pane hidden" id="vcPaneStudy">
     <div class="vc-study-head">
       <div class="vc-settings-section-label" style="margin-top:0">Verb sets</div>
@@ -850,11 +858,6 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
       <div class="vc-study-hint" id="vcStudyHint"></div>
     </div>
     <div class="vc-verb-list" id="vcStudyList"></div>
-  </div>
-
-  <!-- Deck landing: Continue / New session / Browse -->
-  <div class="vc-settings-panel hidden" id="vcLandingPanel" onclick="if(event.target===this)vbCloseLanding()">
-    <div class="vc-settings-inner" id="vcLandingInner"></div>
   </div>
 
   <!-- Settings panel -->
@@ -877,14 +880,16 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
       <button class="vc-apply-btn" onclick="vcApplySettings()">Apply</button>
     </div>
   </div>
+  <div class="menu-bottom-bar">
+    <div class="topbar-back" onclick="closeVerbConjugator()">←</div>
+    <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcListScreen')">📖</div>
+  </div>
 </div>
 
 <!-- VC VERB DETAIL SCREEN (conjugation table) -->
 <div class="screen hidden" id="vcDetailScreen">
   <div class="topbar">
-    <div class="topbar-back" onclick="closeVerbDetail()">←</div>
-    <div class="topbar-title" id="vcDetailTitle">hablar</div>
-    <div style="margin-left:auto"></div>
+    <div class="topbar-title" id="vcDetailTitle" style="text-align:left">hablar</div>
     <button class="vc-gear-btn" onclick="vcToggleSettings()" title="Settings">⚙</button>
   </div>
 
@@ -898,6 +903,10 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   <div class="vc-detail-practice-bar">
     <button class="vc-practice-btn vc-practice-understanding" onclick="vcStartPractice('understanding')">Understanding</button>
     <button class="vc-practice-btn vc-practice-speaking" onclick="vcStartPractice('speaking')">Speaking</button>
+  </div>
+  <div class="menu-bottom-bar">
+    <div class="topbar-back" onclick="closeVerbDetail()">←</div>
+    <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcDetailScreen')">📖</div>
   </div>
 
   <!-- Settings panel -->
@@ -919,12 +928,28 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   </div>
 </div>
 
+<!-- VC TENSE SCREEN (Theory / Understanding / Speaking for one tense) -->
+<div class="screen hidden" id="vcTenseScreen">
+  <div class="topbar">
+    <div class="topbar-title" id="vcTenseScreenTitle" style="text-align:left">Present</div>
+  </div>
+  <div class="chapter-tabs" id="vcTenseTabs">
+    <button class="chapter-tab active" id="vcTTabTheory"      onclick="vcTenseSetTab('theory')">Theory</button>
+    <button class="chapter-tab"        id="vcTTabUnderstand"  onclick="vcTenseSetTab('understanding')">Understanding</button>
+    <button class="chapter-tab"        id="vcTTabSpeak"       onclick="vcTenseSetTab('speaking')">Speaking</button>
+  </div>
+  <div class="info-panel active" id="vcTenseTheoryPanel"></div>
+  <div class="vc-pane hidden" id="vcTensePracticePanel" style="padding:1.25rem;overflow-y:auto"></div>
+  <div class="menu-bottom-bar">
+    <div class="topbar-back" onclick="closeVcTenseScreen()">←</div>
+    <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcTenseScreen')">📖</div>
+  </div>
+</div>
+
 <!-- VC DECK SCREEN -->
 <div class="screen hidden" id="vcDeckScreen">
   <div class="topbar">
-    <div class="topbar-back" onclick="closeVerbDeck()">←</div>
-    <div class="topbar-title" id="vcDeckTitle">hablar</div>
-    <div style="margin-left:auto"></div>
+    <div class="topbar-title" id="vcDeckTitle" style="text-align:left">hablar</div>
     <button class="vc-gear-btn" onclick="vcToggleSettings()" title="Settings">⚙</button>
   </div>
 
@@ -973,7 +998,10 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 
   <!-- Bottom bar -->
   <div class="deck-bottom-bar active" id="vcBottomBar">
-    <div class="topbar-back" onclick="closeVerbDeck()" title="Back">←</div>
+    <div class="deck-bottom-left">
+      <div class="topbar-back" onclick="closeVerbDeck()" title="Back">←</div>
+      <div class="dict-icon-btn" title="Dictionary" onclick="openDictionaryFrom('vcDeckScreen')">📖</div>
+    </div>
     <div class="deck-bottom-right">
       <button class="vc-shuffle-btn" onclick="vcShuffle()" title="Shuffle">⇄</button>
       <button class="speed-icon-btn" onclick="cycleGlobalSpeed()" title="Playback speed"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="18 3.5 7.5 3.5 5 3.5 7.5 3.5" stroke-linecap="round" transform="rotate(-78 12 12)"/><polygon points="10.5,7.5 10.5,16.5 18.5,12"/></svg><span class="speed-icon-rate">1×</span></button>
@@ -57896,14 +57924,11 @@ function _playRatingSound(positive) {
 // ── DECK MODE HELPERS ─────────────────────────────────────
 // Toggle deck-active state: hide topbar, show deck bottom bar + progress
 function _setDeckMode(active) {
-  const topbar      = document.getElementById('cardTopbar');
-  const deckBar     = document.getElementById('deckBottomBar');
   const chapterTabs = document.getElementById('chapterTabs');
   const progressArea = document.getElementById('progressArea');
-  if (topbar)      topbar.style.display      = active ? 'none' : '';
   if (chapterTabs) chapterTabs.style.display = active ? 'none' : '';
   if (progressArea) progressArea.style.display = 'none';  // always hidden; moved to browseProgressBar
-  if (deckBar) deckBar.classList.toggle('active', active);
+  // deckBottomBar is now always visible (back/dict/theory/speed/audio live there regardless of mode)
   // Activate/deactivate edge capture zones
   ['edgeSwipeLeft','edgeSwipeRight'].forEach(id => {
     const el = document.getElementById(id);
@@ -57922,6 +57947,15 @@ function _deckBack() {
 }
 
 // Hint button in deck bottom bar
+function _openTheoryOverlay() {
+  const src = document.getElementById('infoPanelContent');
+  if (!src) return;
+  document.getElementById('theoryOverlayContent').innerHTML = src.innerHTML;
+  document.getElementById('theoryOverlay').classList.add('open');
+}
+function _closeTheoryOverlay() {
+  document.getElementById('theoryOverlay').classList.remove('open');
+}
 function _deckHint() {
   // Sync with both hint btn variants; show hint in deck mode
   const overlay = document.getElementById('hintOverlay');
@@ -59047,6 +59081,8 @@ let vcRevealed         = false;   // mirrors browse-mode 'revealed'
 let vcBrowseActive     = false;   // true when VC deck screen is open (hooks into swipe handler)
 let vcSettingsOpen     = false;
 let vcPracticeDirection = 'speaking';  // 'speaking' (EN→ES) | 'understanding' (ES→EN) — set by the detail screen's practice buttons
+let vcCurrentTenseKind  = null;       // tense key currently open on vcTenseScreen ('infinitive' or a VC_TENSE_LABELS key)
+let vcTenseTab          = 'theory';   // 'theory' | 'understanding' | 'speaking' — active tab on vcTenseScreen
 
 const VC_SETTINGS_KEY = 'vc_settings';
 
@@ -59168,6 +59204,13 @@ function _dialectResolve(o, d) {
 }
 
 const _DIALECT_CARD_KEYS = ['cards','cardsL1','cardsL2','cardsL3','cardsL4','cardsL5','conceptCards'];
+function _chapterHasAudio(ch) {
+  if (!ch) return false;
+  return _DIALECT_CARD_KEYS.some(key => {
+    const arr = ch[key];
+    return Array.isArray(arr) && arr.some(c => c && (c.audioES || c.audioEN));
+  });
+}
 
 function dialectApply() {
   const d = appGetDialect();
@@ -59263,6 +59306,140 @@ const VC_STUDY_GLOSS = {
   subjPresente:   'that I do — wishes, doubts, emotions',
   subjImperfecto: 'if I did — hypotheticals, past wishes',
 };
+
+// ── TENSE THEORY (shown on the Theory tab of vcTenseScreen) ──────────────
+// Tables use the app's core Rioplatense persons (yo / vos / él-ella / nosotros /
+// ellos-ellas) across the three regular paradigms: -ar (hablar), -er (comer),
+// -ir (vivir) — the same forms stored in the verb data.
+function _vcConjTable(rows) {
+  return '<table class="conj-table"><tr><th></th><th>-AR hablar</th><th>-ER comer</th><th>-IR vivir</th></tr>' +
+    rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('') +
+    '</table>';
+}
+const VC_TENSE_THEORY = {
+  presente: {
+    usage: `Describes what's true right now, habitual actions, and general facts. <span class="rio">Hablo español</span> means "I speak Spanish" as a habit or fact — not necessarily this exact second (that's Progressive).`,
+    formation: `Drop the <strong>-ar/-er/-ir</strong> ending and add the present-tense endings below. The <strong>vos</strong> form is its own thing: it stresses the last syllable and is always regular — <span class="rio">hablás, comés, vivís</span> — never the stem-changing forms tú uses (hablas, comes, vives, or vuelves, pedís, etc.).`,
+    table: _vcConjTable([
+      ['yo','hablo','como','vivo'],
+      ['vos','hablás','comés','vivís'],
+      ['él/ella','habla','come','vive'],
+      ['nosotros','hablamos','comemos','vivimos'],
+      ['ellos/ellas','hablan','comen','viven'],
+    ]),
+    watchout: `Because vos is always regular here, don't carry over an irregular tú stem — it's <span class="rio">volvés</span>, not "vuelvés".`,
+  },
+  progresivo: {
+    usage: `An action happening right now, in progress. <span class="rio">Estoy hablando</span> = I am (right now) talking.`,
+    formation: `<strong>estar</strong> (conjugated for the person) + the <strong>gerundio</strong>: -ando for -ar verbs, -iendo for -er/-ir verbs. Only estar changes — the gerundio itself is the same for every person.`,
+    table: _vcConjTable([
+      ['yo','estoy hablando','estoy comiendo','estoy viviendo'],
+      ['vos','estás hablando','estás comiendo','estás viviendo'],
+      ['él/ella','está hablando','está comiendo','está viviendo'],
+      ['nosotros','estamos hablando','estamos comiendo','estamos viviendo'],
+      ['ellos/ellas','están hablando','están comiendo','están viviendo'],
+    ]),
+    watchout: `Spanish uses the plain present far more than English uses "-ing": <span class="rio">trabajo acá</span> usually just means "I work here", not "I'm working here". Reach for progresivo specifically when the action is unfolding at this exact moment.`,
+  },
+  indefinido: {
+    usage: `A completed action at a specific point in the past — something that happened and finished. <span class="rio">Hablé con ella ayer</span> = I spoke with her yesterday (done).`,
+    formation: `Drop the infinitive ending and add the preterite endings below.`,
+    table: _vcConjTable([
+      ['yo','hablé','comí','viví'],
+      ['vos','hablaste','comiste','viviste'],
+      ['él/ella','habló','comió','vivió'],
+      ['nosotros','hablamos','comimos','vivimos'],
+      ['ellos/ellas','hablaron','comieron','vivieron'],
+    ]),
+    watchout: `vos borrows the same form as tú here (<span class="rio">hablaste</span>) — one of the few tenses where vos doesn't have its own distinct ending.`,
+  },
+  imperfecto: {
+    usage: `An ongoing or repeated action in the past with no clear end — background description, habits, "used to". <span class="rio">Hablaba todos los días</span> = I used to talk every day / I was talking.`,
+    formation: `-ar verbs take -aba endings; -er/-ir verbs take -ía endings. Very regular — only <strong>ser</strong>, <strong>ir</strong> and <strong>ver</strong> are irregular in this tense.`,
+    table: _vcConjTable([
+      ['yo','hablaba','comía','vivía'],
+      ['vos','hablabas','comías','vivías'],
+      ['él/ella','hablaba','comía','vivía'],
+      ['nosotros','hablábamos','comíamos','vivíamos'],
+      ['ellos/ellas','hablaban','comían','vivían'],
+    ]),
+    watchout: `Preterite vs imperfect is the classic trap: imperfecto sets the scene or describes a habit (<span class="rio">llovía</span> — it was raining), preterito reports the one event that happened inside that scene (<span class="rio">salí</span> — I left).`,
+  },
+  perfecto: {
+    usage: `Something that happened and still feels relevant, or an experience up to now — close to English "have done". <span class="rio">He hablado con él</span> = I have spoken with him.`,
+    formation: `<strong>haber</strong> (present tense) + past participle: -ado for -ar verbs, -ido for -er/-ir verbs. The participle never changes to agree with the subject.`,
+    table: _vcConjTable([
+      ['yo','he hablado','he comido','he vivido'],
+      ['vos','has hablado','has comido','has vivido'],
+      ['él/ella','ha hablado','ha comido','ha vivido'],
+      ['nosotros','hemos hablado','hemos comido','hemos vivido'],
+      ['ellos/ellas','han hablado','han comido','han vivido'],
+    ]),
+    watchout: `Rioplatense Spanish leans on the simple preterite for most everyday past events far more than Spain does — perfecto here is mostly for very recent or still-open actions ("hoy", "esta semana").`,
+  },
+  futuro: {
+    usage: `What will happen, and also a common way to guess or speculate about the present — <span class="rio">¿Qué hora será?</span> roughly means "I wonder what time it is".`,
+    formation: `Unlike other tenses, the endings attach to the <strong>whole infinitive</strong>, not a shortened stem: hablar + é, ás, á, emos, án. Regular across -ar/-er/-ir.`,
+    table: _vcConjTable([
+      ['yo','hablaré','comeré','viviré'],
+      ['vos','hablarás','comerás','vivirás'],
+      ['él/ella','hablará','comerá','vivirá'],
+      ['nosotros','hablaremos','comeremos','viviremos'],
+      ['ellos/ellas','hablarán','comerán','vivirán'],
+    ]),
+    watchout: `In everyday speech <span class="rio">ir a + infinitivo</span> ("voy a hablar") is far more common than this tense for near-future plans — futuro simple reads more formal/written, or is used for guessing.`,
+  },
+  condicional: {
+    usage: `What would happen under some condition, and politeness — <span class="rio">Me gustaría...</span> = I would like...`,
+    formation: `Same base as the future (the whole infinitive) + imperfect-style endings: -ía, -ías, -ía, -íamos, -ían.`,
+    table: _vcConjTable([
+      ['yo','hablaría','comería','viviría'],
+      ['vos','hablarías','comerías','vivirías'],
+      ['él/ella','hablaría','comería','viviría'],
+      ['nosotros','hablaríamos','comeríamos','viviríamos'],
+      ['ellos/ellas','hablarían','comerían','vivirían'],
+    ]),
+    watchout: `Any verb irregular in the future (tener → tendr-, poder → podr-, hacer → har-) uses that same irregular stem here too.`,
+  },
+  subjPresente: {
+    usage: `Used after expressions of wish, doubt, emotion, or influence over someone else's action — <span class="rio">espero que, quiero que, es importante que</span>. It's not about time, it's about attitude toward the action.`,
+    formation: `Take the <strong>yo</strong> form of the present indicative, drop the -o, then add the "opposite vowel" endings: -ar verbs get -e endings, -er/-ir verbs get -a endings.`,
+    table: _vcConjTable([
+      ['yo','hable','coma','viva'],
+      ['vos','hablés','comás','vivás'],
+      ['él/ella','hable','coma','viva'],
+      ['nosotros','hablemos','comamos','vivamos'],
+      ['ellos/ellas','hablen','coman','vivan'],
+    ]),
+    watchout: `The vos form drops the present indicative's stress shift too — <span class="rio">hablés, comás, vivás</span> — but still never stem-changes, same rule as the indicative vos.`,
+  },
+  subjImperfecto: {
+    usage: `The subjunctive's past-tense (and hypothetical) counterpart — used after the same triggers as subjPresente when the main clause is in the past, or in "if" clauses with would. <span class="rio">Si vivieras acá...</span> = If you lived here...`,
+    formation: `Take the <strong>ellos</strong> form of the preterite, drop -ron, add -ra endings: hablaron → hablara.`,
+    table: _vcConjTable([
+      ['yo','hablara','comiera','viviera'],
+      ['vos','hablaras','comieras','vivieras'],
+      ['él/ella','hablara','comiera','viviera'],
+      ['nosotros','habláramos','comiéramos','viviéramos'],
+      ['ellos/ellas','hablaran','comieran','vivieran'],
+    ]),
+    watchout: `One of the few tenses where vos simply borrows the tú-style form (<span class="rio">vivieras</span>) rather than having its own ending. Spain also has a -se alternative (hablase); Argentina almost always uses -ra.`,
+  },
+};
+function _vcTenseTheoryHTML(kind) {
+  if (kind === 'infinitive') {
+    return `<h3>WHEN TO USE IT</h3>
+      <p>The infinitive — <span class="rio">hablar, comer, vivir</span> — is the dictionary form: it never changes for person. Use it right after another verb (<span class="rio">quiero hablar, voy a comer, tengo que vivir</span>), after a preposition (<span class="rio">antes de salir, para entender</span>), and as a general instruction or sign (<span class="rio">no fumar</span>).</p>
+      <h3>WATCH OUT</h3>
+      <p>English often uses an "-ing" form where Spanish uses the infinitive: "I like swimming" → <span class="rio">me gusta nadar</span>, not nadando.</p>`;
+  }
+  const t = VC_TENSE_THEORY[kind];
+  if (!t) return '<p>Theory for this tense is coming soon.</p>';
+  return `<h3>USAGE</h3><p>${t.usage}</p>
+    <h3>FORMATION</h3><p>${t.formation}</p>
+    ${t.table}
+    <h3>WATCH OUT</h3><p>${t.watchout}</p>`;
+}
 
 // ── ENGLISH CONJUGATION ENGINE ──────────────────────────────────────────
 // Builds a natural English phrase with the subject baked in (e.g. "she brings",
@@ -59605,15 +59782,13 @@ function closeVerbConjugator() {
 }
 
 function vcSetTab(tab) {
-  vcTab = tab;
-  if (tab !== 'explore') vcPracticeDirection = tab;
-  document.getElementById('vcTabExplore').classList.toggle('active',    tab === 'explore');
-  document.getElementById('vcTabUnderstand').classList.toggle('active', tab === 'understanding');
-  document.getElementById('vcTabSpeak').classList.toggle('active',      tab === 'speaking');
-  document.getElementById('vcPaneExplore').classList.toggle('hidden', tab !== 'explore');
-  document.getElementById('vcPaneStudy').classList.toggle('hidden',   tab === 'explore');
+  vcTab = (tab === 'explore') ? 'explore' : 'conjugations';   // legacy 'understanding'/'speaking' values fold into 'conjugations'
+  document.getElementById('vcTabExplore').classList.toggle('active',       vcTab === 'explore');
+  document.getElementById('vcTabConjugations').classList.toggle('active', vcTab === 'conjugations');
+  document.getElementById('vcPaneExplore').classList.toggle('hidden', vcTab !== 'explore');
+  document.getElementById('vcPaneStudy').classList.toggle('hidden',   vcTab === 'explore');
   vcRefreshVerbScreens();
-  cdSaveLocation({ type: 'verbList', tab });
+  cdSaveLocation({ type: 'verbList', tab: vcTab });
 }
 
 function vcRefreshVerbScreens() {
@@ -59708,16 +59883,14 @@ function vcRenderStudyList() {
   const list = document.getElementById('vcStudyList');
   if (!list) return;
   list.innerHTML = '';
-  const mode = vcPracticeDirection;
   document.getElementById('vcStudyHint').textContent =
-    (mode === 'understanding' ? 'Spanish → recognise it. ' : 'English → say it. ') +
-    'Tap a deck to continue or start a session. Flip the card, then rate it: Got it or Again. ' +
+    'Tap a tense for its theory, then practise Understanding (recognise it) or Speaking (say it). ' +
     'Persons: ' + vcPersonsShort(vcSettings.persons) + ' (⚙ to change).';
 
   const rows = [{
     kind: 'infinitive',
     title: 'Infinitives',
-    sub: mode === 'understanding' ? 'abrir → to open' : 'to open → abrir',
+    sub: 'the dictionary form — abrir, comer, vivir…',
   }].concat(VC_ALL_TENSES.map(t => ({
     kind: t,
     title: VC_TENSE_LABELS[t],
@@ -59729,17 +59902,16 @@ function vcRenderStudyList() {
     const badge = !st.total ? '0 cards'
                 : st.left   ? `resume · ${st.left} left`
                 : `${st.due + st.missed} due · ${st.fresh} new`;
-    const sub = r.sub + (st.conf !== null ? ` · ${st.conf}% known` : '');
     const row = document.createElement('div');
     row.className = 'vc-verb-row';
     row.innerHTML = `
       <div class="vc-verb-left">
         <span class="vc-verb-infinitive">${r.title}</span>
-        <span class="vc-verb-meaning">${sub}</span>
+        <span class="vc-verb-meaning">${r.sub}</span>
       </div>
       <span class="vc-regularity-badge">${badge}</span>
       <span class="vc-verb-arrow">›</span>`;
-    row.onclick = () => { if (st.total) vbOpenLanding(r.kind); };
+    row.onclick = () => { if (st.total) openVcTenseScreen(r.kind); };
     list.appendChild(row);
   });
 }
@@ -60001,13 +60173,42 @@ function vbDeckStats(kind) {
 }
 
 // Landing sheet: Continue / New session / Browse
+function openVcTenseScreen(kind, startTab) {
+  vcCurrentTenseKind = kind;
+  document.getElementById('vcTenseScreenTitle').textContent =
+    kind === 'infinitive' ? 'Infinitives' : (VC_TENSE_LABELS[kind] || kind);
+  showScreen('vcTenseScreen');
+  vcTenseSetTab(startTab || 'theory');
+  cdSaveLocation({ type: 'verbList', tab: 'conjugations' });
+}
+function closeVcTenseScreen() {
+  cdSaveLocation({ type: 'verbList', tab: vcTab });
+  showScreen('vcListScreen');
+}
+function vcTenseSetTab(tab) {
+  vcTenseTab = tab;
+  document.getElementById('vcTTabTheory').classList.toggle('active',     tab === 'theory');
+  document.getElementById('vcTTabUnderstand').classList.toggle('active', tab === 'understanding');
+  document.getElementById('vcTTabSpeak').classList.toggle('active',      tab === 'speaking');
+  const theoryPanel   = document.getElementById('vcTenseTheoryPanel');
+  const practicePanel = document.getElementById('vcTensePracticePanel');
+  if (tab === 'theory') {
+    theoryPanel.classList.add('active');
+    practicePanel.classList.add('hidden');
+    theoryPanel.innerHTML = _vcTenseTheoryHTML(vcCurrentTenseKind);
+  } else {
+    theoryPanel.classList.remove('active');
+    practicePanel.classList.remove('hidden');
+    vcPracticeDirection = tab;   // 'understanding' | 'speaking' — read by vbDeckStats / vbStartSession etc.
+    vbOpenLanding(vcCurrentTenseKind);
+  }
+}
 function vbOpenLanding(kind) {
+  const target = document.getElementById('vcTensePracticePanel');
+  if (!target || !kind) return;
   const st = vbDeckStats(kind);
-  const title = (vcPracticeDirection === 'understanding' ? 'Understand' : 'Speak') + ' · ' +
-                (kind === 'infinitive' ? 'Infinitives' : (VC_TENSE_LABELS[kind] || kind));
   const resume = st.left > 0;
-  document.getElementById('vcLandingInner').innerHTML = `
-    <div class="vc-settings-title">${title}</div>
+  target.innerHTML = `
     <div class="vc-landing-stats">
       <span><strong>${st.due}</strong> due</span>
       <span><strong>${st.missed}</strong> missed</span>
@@ -60019,9 +60220,8 @@ function vbOpenLanding(kind) {
     <button class="vc-landing-btn" onclick="vbLaunch('${kind}','browse')">Browse (untracked)</button>
     ${kind !== 'infinitive' ? `<button class="vc-landing-btn" onclick="vbNewDeck('${kind}')">New ${vbGetDeckLen()} cards</button>` : ''}
     <div class="vc-landing-note">A new session starts with cards that are due or that you missed, then cards you hadn't reached yet, then new ones, all in random order. The deck is the same cards each time; “New cards” swaps in a fresh set. Nothing is lost if you leave part-way.</div>`;
-  document.getElementById('vcLandingPanel').classList.remove('hidden');
 }
-function vbCloseLanding() { document.getElementById('vcLandingPanel').classList.add('hidden'); }
+function vbCloseLanding() {}
 function vbLaunch(kind, how) {
   vbCloseLanding();
   if (how === 'browse') vcOpenBrowseDeck(kind);
@@ -60323,11 +60523,12 @@ function closeVerbDeck() {
   vcBrowseActive = false;
   vbSr = null; vbUpdateBar();     // progress is saved after every rating; leaving mid-session resumes later
   document.getElementById('vcDeckSettingsPanel').classList.add('hidden');
-  if (vcStudyActive) {            // study deck → back to the Understand / Speak list
+  if (vcStudyActive) {            // study deck → back to this tense's Understanding/Speaking tab
     vcStudyActive = false;
-    vcRenderStudyList();
-    cdSaveLocation({ type: 'verbList', tab: vcTab });
-    showScreen('vcListScreen');
+    const kind = vcCurrentTenseKind;
+    const dir  = vcPracticeDirection === 'speaking' ? 'speaking' : 'understanding';
+    cdSaveLocation({ type: 'verbDeck', verbKind: kind, direction: dir });
+    openVcTenseScreen(kind, dir);
     return;
   }
   cdSaveLocation({ type: 'verbDetail', verbIndex: vcCurrentVerbIndex });
@@ -60633,6 +60834,10 @@ function openLesson(subjectIdx, lessonIdx) {
   document.getElementById('lessonTitleHeading').textContent = chapterLabel;
 
   const hasInfo    = ch.info !== null;
+  const chHasAudio = _chapterHasAudio(ch);
+  const deckSpeedBtn  = document.getElementById('deckSpeedBtn');
+  const muteBtnDeckEl = document.getElementById('muteBtnDeck');
+  [deckSpeedBtn, muteBtnDeckEl].forEach(btn => { if (btn) btn.classList.toggle('disabled', !chHasAudio); });
   const isGrammar  = prefix === 'G';
   const isVocab    = prefix === 'V';
   const isExpressions = prefix === 'EX';
@@ -60816,6 +61021,12 @@ function showTab(tab) {
   const tabS = document.getElementById('tabSpeaking');
   if (tabU) tabU.classList.toggle('active', isUnderstanding);
   if (tabS) tabS.classList.toggle('active', isSpeaking);
+  const deckTheoryBtn = document.getElementById('deckTheoryBtn');
+  if (deckTheoryBtn) {
+    const tabInfoEl = document.getElementById('tabInfo');
+    const hasInfoTab = tabInfoEl && tabInfoEl.style.display !== 'none';
+    deckTheoryBtn.style.display = (isSession && hasInfoTab) ? '' : 'none';
+  }
   // SL locked tab: active when on the session panel
   const tabSL = document.getElementById('tabSLMode');
   if (tabSL && slFromPhase) tabSL.classList.toggle('active', isSession);
@@ -61005,7 +61216,8 @@ function showScreen(id) {
     else if (id==='dictionaryScreen'){ s.classList.add('slide-left'); }
     else if (id==='vcListScreen')    { s.id==='splashScreen' ? s.classList.add('slide-left') : s.classList.add('hidden'); }
     else if (id==='vcDetailScreen')  { (s.id==='splashScreen'||s.id==='vcListScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
-    else if (id==='vcDeckScreen')    { (s.id==='splashScreen'||s.id==='vcListScreen'||s.id==='vcDetailScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
+    else if (id==='vcTenseScreen')   { (s.id==='splashScreen'||s.id==='vcListScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
+    else if (id==='vcDeckScreen')    { (s.id==='splashScreen'||s.id==='vcListScreen'||s.id==='vcDetailScreen'||s.id==='vcTenseScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
     else if (id==='deckViewScreen')  { (s.id==='splashScreen'||s.id==='lessonScreen') ? s.classList.add('slide-left') : s.classList.add('hidden'); }
   });
 }
@@ -61354,8 +61566,8 @@ function cdResumeLocation() {
 
     } else if (loc.type === 'verbDeck' && loc.verbKind) {
       openVerbConjugator();
-      vcPracticeDirection = loc.direction === 'speaking' ? 'speaking' : 'understanding';
-      vcSetTab(vcPracticeDirection);
+      vcSetTab('conjugations');
+      openVcTenseScreen(loc.verbKind, loc.direction === 'speaking' ? 'speaking' : 'understanding');
       vbLaunch(loc.verbKind, 'continue');
     }
   } catch (e) {
