@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.6</title>
+<title>Flippy — v25.7</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -47,14 +47,10 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .splash-header { padding:2.5rem 1.5rem 1.5rem; text-align:center; }
 .splash-logo { font-family:'Lora',serif; font-weight:400; font-size:1.9rem; color:var(--text-dark); letter-spacing:-0.01em; margin-bottom:0.3rem; }
 .splash-sub { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-light); }
-.splash-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; padding:0.5rem 1rem 1rem; }
-.subject-card { background:var(--card-bg); border:1px solid var(--border); border-radius:16px; padding:1.25rem 1rem; cursor:pointer; transition:transform 0.12s; display:flex; flex-direction:column; gap:0.4rem; min-height:110px; position:relative; overflow:hidden; }
-.subject-card:active { transform:scale(0.97); }
-.subject-card-accent { position:absolute; top:0; left:0; right:0; height:3px; border-radius:16px 16px 0 0; }
-.subject-card-icon { font-size:1.4rem; line-height:1; }
-.subject-card-name { font-family:'Lora',serif; font-weight:400; font-size:1rem; color:var(--text-dark); line-height:1.2; }
-.subject-card-meta { font-size:0.6rem; color:var(--text-light); letter-spacing:0.06em; }
-.subject-card-sub  { font-size:0.6rem; color:var(--text-light); font-style:italic; }
+.splash-grid { display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:0.5rem 1.25rem 1rem; }
+.splash-btn { width:100%; max-width:320px; padding:0.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card-bg); font-family:'Lora',serif; font-weight:400; font-size:1rem; color:var(--text-dark); text-align:center; cursor:pointer; transition:transform 0.12s; }
+.splash-btn:active { transform:scale(0.97); }
+.splash-btn-gap { height:0.7rem; flex-shrink:0; }
 
 /* ── LESSON LIST ── */
 #lessonScreen { overflow:hidden; }
@@ -661,13 +657,12 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.6</div>
+    <div class="splash-sub" id="appVersionLine">v25.7</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
   <div class="dialect-note hidden" id="dialectNote"></div>
   <div class="splash-grid" id="splashGrid"></div>
-  <button class="dict-fab" onclick="openDictionary()"><span class="dict-fab-icon">📖</span><span class="dict-fab-label">Dict</span></button>
   <div class="vc-settings-panel hidden" id="dialectPanel" onclick="if(event.target===this)closeDialectPicker()">
     <div class="vc-settings-inner">
       <div class="vc-settings-title">Dialect</div>
@@ -939,7 +934,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
   </div>
   <div class="chapter-tabs" id="vcTenseTabs">
     <button class="chapter-tab active" id="vcTTabTheory"      onclick="vcTenseSetTab('theory')">Theory</button>
-    <button class="chapter-tab"        id="vcTTabUnderstand"  onclick="vcTenseSetTab('understanding')">Understanding</button>
+    <button class="chapter-tab"        id="vcTTabUnderstand"  onclick="vcTenseSetTab('understanding')">Conjugate</button>
     <button class="chapter-tab"        id="vcTTabSpeak"       onclick="vcTenseSetTab('speaking')">Speaking</button>
   </div>
   <div class="info-panel active" id="vcTenseTheoryPanel"></div>
@@ -60378,27 +60373,32 @@ function vcShowStudyCard(card) {
   const tenseEl  = document.getElementById('vcTenseLabel');
   const personEl = document.getElementById('vcPersonLabel');
 
+  let sentLang;
   if (card.kind === 'inf') {
     tenseEl.textContent = 'Infinitive';
     personEl.textContent = '';
     ctx.textContent = '';
     if (mode === 'understanding') { tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL'; tgt.textContent = card.verb.infinitive; }
     else                          { tag.className = 'card-tag en'; tag.textContent = 'ENGLISH'; tgt.textContent = card.verb.meaning; }
+    sentLang = mode === 'understanding' ? 'es' : 'en';
   } else {
     tenseEl.innerHTML = `${VC_TENSE_LABELS[card.tense]} <span class="vc-tense-gloss">(${VC_STUDY_GLOSS[card.tense] || ''})</span>`;
     if (mode === 'understanding') {
+      // Front = the bare infinitive (the prompt); conjugating it is the task, revealed on flip.
       personEl.textContent = '';
-      ctx.textContent = '';
+      ctx.textContent = card.verb.meaning;
       tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
-      tgt.textContent = card.form;
+      tgt.textContent = card.verb.infinitive;
+      sentLang = 'en';  // English sentence gives context without giving away the Spanish conjugation
     } else {
       personEl.textContent = '';
       ctx.textContent = card.verb.meaning;
       tag.className = 'card-tag en'; tag.textContent = 'ENGLISH';
       tgt.textContent = vcEnConjugate(card.verb.meaning, card.tense, card.persons, card.verb.infinitive);
+      sentLang = 'en';
     }
   }
-  document.getElementById('vcCardSentence').textContent = vbSentence(card, mode === 'understanding' ? 'es' : 'en');
+  document.getElementById('vcCardSentence').textContent = vbSentence(card, sentLang);
   _vcUpdateSwipeHints(false);
   vbUpdateBar();
 }
@@ -60414,21 +60414,26 @@ function vcRevealStudy(card) {
   const tgt = document.getElementById('vcCardTarget');
   const ctx = document.getElementById('vcCardContext');
 
+  let sentLang;
   if (card.kind === 'inf') {
     if (mode === 'understanding') { tag.className = 'card-tag en'; tag.textContent = 'ENGLISH'; tgt.textContent = card.verb.meaning; }
     else                          { tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL'; tgt.textContent = card.verb.infinitive; }
     ctx.textContent = card.verb.regularity || '';
+    sentLang = mode === 'understanding' ? 'en' : 'es';
   } else if (mode === 'understanding') {
+    // Back = the actual conjugated Spanish form, confirmed in context.
     tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
-    tgt.textContent = card.verb.infinitive;
+    tgt.textContent = card.form;
     ctx.textContent = card.verb.meaning;
     document.getElementById('vcPersonLabel').textContent = vcPersonsShort(card.persons);
+    sentLang = 'es';
   } else {
     tag.className = 'card-tag es'; tag.textContent = 'ESPAÑOL';
     tgt.textContent = card.form;
     ctx.textContent = card.verb.infinitive;
+    sentLang = 'es';
   }
-  document.getElementById('vcCardSentence').textContent = vbSentence(card, mode === 'understanding' ? 'en' : 'es');
+  document.getElementById('vcCardSentence').textContent = vbSentence(card, sentLang);
   _vcUpdateSwipeHints(true);
   vbUpdateBar();
 }
@@ -60683,52 +60688,37 @@ function buildSplash() {
   const grid = document.getElementById('splashGrid');
   grid.innerHTML = '';
 
+  const byLabel = label => sections.findIndex(s => s.label === label);
 
-  const direct = sections.filter(s => !subjectConfig[s.label]?.group && s.prefix !== 'CD');
-  const groups = {};
+  appendSplashBtn(grid, 'Vocabulary',        () => openSubject(byLabel('Vocabulary')));
+  appendSplashBtn(grid, 'Grammar',           () => openSubject(byLabel('Grammar')));
+  appendSplashBtn(grid, 'Verb Conjugations', () => openVerbConjugator());
+  appendSplashBtn(grid, 'Expressions',       () => openSubject(byLabel('Expressions')));
+  appendSplashBtn(grid, 'Situations',        () => openSubject(byLabel('Situations')));
+
+  const topicsItems = [];
   sections.forEach((s, i) => {
-    const g = subjectConfig[s.label]?.group;
-    if (g) {
-      if (!groups[g]) groups[g] = { label:g, items:[] };
-      groups[g].items.push({ s, i });
-    }
+    if (subjectConfig[s.label]?.group === 'Topics') topicsItems.push({ s, i });
   });
+  if (topicsItems.length) {
+    appendSplashBtn(grid, 'Specialist Topics',
+      () => openGroup({ label:'Specialist Topics', items: topicsItems }));
+  }
 
-  // Assign group icons/colours
-  const groupMeta = {
-    'Dialects': { icon:'🗺', color:'#74ACDF' },
-    'Topics':   { icon:'🔬', color:'#C9973A' },
-  };
+  const gap = document.createElement('div');
+  gap.className = 'splash-btn-gap';
+  grid.appendChild(gap);
 
-  direct.forEach(s => {
-    const i = sections.indexOf(s);
-    const cfg = subjectConfig[s.label] || { icon:'📚', color:'#999' };
-    appendSubjectCard(grid, cfg.icon, cfg.color, s.label, s.chapters.length + ' lessons', null, () => openSubject(i));
-    // Insert Verb Conjugations directly after Grammar
-    if (s.label === 'Grammar') {
-      appendSubjectCard(grid, '🔤', '#74ACDF', 'Verb Conjugations',
-        (typeof verbConjugationData !== 'undefined' ? verbConjugationData.length : 0) + ' verbs · explore & practise',
-        null, () => openVerbConjugator());
-    }
-  });
-
-  Object.values(groups).forEach(group => {
-    const meta = groupMeta[group.label] || { icon:'📚', color:'#999' };
-    const sub  = group.items.map(it => it.s.label).join(', ');
-    appendSubjectCard(grid, meta.icon, meta.color, group.label, group.items.length + ' subjects', sub, () => openGroup(group));
-  });
-
-  cdAppendMyDecksTile(grid);
+  appendSplashBtn(grid, 'My Decks',   cdOpenMyDecks);
+  appendSplashBtn(grid, 'Dictionary', openDictionary);
 }
 
-function appendSubjectCard(grid, icon, color, name, meta, sub, onclick) {
-  const card = document.createElement('div');
-  card.className = 'subject-card';
-  card.innerHTML = `<div class="subject-card-accent" style="background:${color}"></div>
-    <div class="subject-card-icon">${icon}</div>
-    <div class="subject-card-name">${name}</div>`;
-  card.onclick = onclick;
-  grid.appendChild(card);
+function appendSplashBtn(grid, name, onclick) {
+  const btn = document.createElement('div');
+  btn.className = 'splash-btn';
+  btn.textContent = name;
+  btn.onclick = onclick;
+  grid.appendChild(btn);
 }
 
 function openGroup(group) {
@@ -61707,19 +61697,6 @@ function cdCloseAddOverlay() {
 }
 
 // ── My Decks — splash tile ────────────────────────────────────────────
-function cdAppendMyDecksTile(grid) {
-  const n = customDecks.length;
-  const sub = n === 0 ? 'No decks yet' : (n + (n===1 ? ' deck' : ' decks'));
-  const card = document.createElement('div');
-  card.className = 'subject-card';
-  card.innerHTML = `<div class="subject-card-accent" style="background:#7c6fa0"></div>
-    <div class="subject-card-icon">🗂</div>
-    <div class="subject-card-name">My Decks</div>
-    <div class="subject-card-sub">${sub}</div>`;
-  card.onclick = cdOpenMyDecks;
-  grid.appendChild(card);
-}
-
 // ── My Decks — list screen (reuses #lessonScreen's chrome) ────────────
 function cdOpenMyDecks() {
   document.getElementById('lessonScreenTitle').textContent = 'My Decks';
