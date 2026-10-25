@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Flippy — v25.7</title>
+<title>Flippy — v25.8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 .splash-logo { font-family:'Lora',serif; font-weight:400; font-size:1.9rem; color:var(--text-dark); letter-spacing:-0.01em; margin-bottom:0.3rem; }
 .splash-sub { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-light); }
 .splash-grid { display:flex; flex-direction:column; align-items:center; gap:0.6rem; padding:0.5rem 1.25rem 1rem; }
-.splash-btn { width:100%; max-width:320px; padding:0.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card-bg); font-family:'Lora',serif; font-weight:400; font-size:1rem; color:var(--text-dark); text-align:center; cursor:pointer; transition:transform 0.12s; }
+.splash-btn { width:100%; max-width:320px; padding:0.9rem 1rem; border:1px solid var(--border); border-radius:12px; background:var(--card-bg); font-family:'Lora',serif; font-weight:400; font-size:1rem; color:var(--text-dark); text-align:center; cursor:pointer; transition:transform 0.12s; box-shadow:inset 4px 0 0 0 var(--btn-accent, transparent); }
 .splash-btn:active { transform:scale(0.97); }
 .splash-btn-gap { height:0.7rem; flex-shrink:0; }
 
@@ -657,7 +657,7 @@ html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text
 <div class="screen" id="splashScreen">
   <div class="splash-header" style="position:relative">
     <div class="splash-logo">Flippy</div>
-    <div class="splash-sub" id="appVersionLine">v25.7</div>
+    <div class="splash-sub" id="appVersionLine">v25.8</div>
     <button class="splash-flag-btn" id="splashFlagBtn" onclick="openDialectPicker()" title="Dialect">🇦🇷</button>
     <button class="splash-settings-btn" onclick="openSettings()" title="Settings">⚙️</button>
   </div>
@@ -60684,6 +60684,17 @@ window.addEventListener('app-dialect-change', () => {
 });
 
 // ── SPLASH ──
+const SPLASH_BTN_COLORS = {
+  'Vocabulary':        '#4A7C59',  // green
+  'Grammar':            '#C4622D', // terracotta
+  'Verb Conjugations':  '#74ACDF', // blue
+  'Expressions':        '#C9973A', // gold
+  'Situations':         '#2F8F80', // teal
+  'Specialist Topics':  '#8E2257', // dark plum
+  'My Decks':           '#7c6fa0', // purple
+  'Dictionary':          '#2C3E63', // navy
+};
+
 function buildSplash() {
   const grid = document.getElementById('splashGrid');
   grid.innerHTML = '';
@@ -60717,6 +60728,7 @@ function appendSplashBtn(grid, name, onclick) {
   const btn = document.createElement('div');
   btn.className = 'splash-btn';
   btn.textContent = name;
+  btn.style.setProperty('--btn-accent', SPLASH_BTN_COLORS[name] || 'transparent');
   btn.onclick = onclick;
   grid.appendChild(btn);
 }
